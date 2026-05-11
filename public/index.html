@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xanadu</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div>
+          <p class="eyebrow">Xanadu</p>
+          <h1>Muses of Inspiration</h1>
+        </div>
+        <nav>
+          <div class="nav-section game-nav-section" aria-label="Game Mode navigation">
+            <p class="nav-label">Game Mode</p>
+            <a href="#play">PLAY</a>
+            <a href="#muse-deck">Muse Deck</a>
+            <a href="#epoch-deck">Epoch Deck</a>
+            <a href="#artist-deck">Artist Deck</a>
+            <a href="#rules">Rules</a>
+          </div>
+          <div class="nav-section companion-nav-section" aria-label="Companion Mode navigation">
+            <p class="nav-label">Companion Mode</p>
+            <a href="#dashboard">Companion Home</a>
+            <a href="#cards">Cards</a>
+            <a href="#scoring">Scoring</a>
+            <a href="#playtests">Playtests</a>
+            <a href="#print">Print</a>
+          </div>
+        </nav>
+      </aside>
+      <main>
+        <section id="muse-deck" class="game-mode muse-deck-page">
+          <div class="muse-deck-stage">
+            <div class="muse-draw-zone">
+              <button id="muse-deck-pile" type="button" class="muse-deck-pile" aria-label="Deal next Muse card"></button>
+              <div class="muse-deck-status" aria-live="polite">
+                <p id="muse-cards-remaining">Cards remaining: 9</p>
+                <p id="muse-cards-dealt">Cards dealt: 0 of 9</p>
+              </div>
+              <div class="muse-deck-actions" aria-label="Muse deck controls">
+                <button id="muse-deal-next" type="button" class="command-button">Deal next Muse</button>
+                <button id="muse-restart-deck" type="button" class="command-button secondary">Shuffle / Restart deck</button>
+              </div>
+            </div>
+            <div id="muse-dealt-area" class="muse-dealt-area" aria-label="Dealt Muse cards"></div>
+          </div>
+        </section>
+
+        <section id="epoch-deck" class="game-mode muse-deck-page">
+          <div class="muse-deck-stage">
+            <div class="muse-draw-zone">
+              <button id="epoch-deck-pile" type="button" class="muse-deck-pile" aria-label="Deal next Epoch card"></button>
+              <div class="muse-deck-status" aria-live="polite">
+                <p id="epoch-cards-remaining">Cards remaining: 90</p>
+                <p id="epoch-cards-dealt">Cards dealt: 0 of 90</p>
+              </div>
+              <div class="muse-deck-actions" aria-label="Epoch deck controls">
+                <button id="epoch-deal-next" type="button" class="command-button">Deal next Epoch</button>
+                <button id="epoch-restart-deck" type="button" class="command-button secondary">Shuffle / Restart Epoch deck</button>
+              </div>
+            </div>
+            <div id="epoch-dealt-area" class="muse-dealt-area" aria-label="Dealt Epoch cards"></div>
+          </div>
+        </section>
+
+        <section id="artist-deck" class="game-mode muse-deck-page">
+          <div class="muse-deck-stage">
+            <div class="muse-draw-zone">
+              <button id="artist-deck-pile" type="button" class="muse-deck-pile" aria-label="Deal next Artist card"></button>
+              <div class="muse-deck-status" aria-live="polite">
+                <p id="artist-cards-remaining">Cards remaining: 150</p>
+                <p id="artist-cards-dealt">Cards dealt: 0 of 150</p>
+              </div>
+              <div class="muse-deck-actions" aria-label="Artist deck controls">
+                <button id="artist-deal-next" type="button" class="command-button">Deal next Artist</button>
+                <button id="artist-restart-deck" type="button" class="command-button secondary">Shuffle / Restart Artist deck</button>
+              </div>
+            </div>
+            <div id="artist-dealt-area" class="muse-dealt-area artist-dealt-area" aria-label="Dealt Artist cards"></div>
+          </div>
+        </section>
+
+        <section id="play" class="game-mode">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Game Mode</p>
+              <h2>Play Xanadu</h2>
+              <p>Start a local turn-based game, choose a Muse, play cards, build a tableau, and race to the end condition.</p>
+            </div>
+            <div class="game-start-controls">
+              <label>
+                <span>Players</span>
+                <select id="game-player-count">
+                  <option value="2">2 players</option>
+                  <option value="3">3 players</option>
+                  <option value="4" selected>4 players</option>
+                  <option value="5">5 players</option>
+                  <option value="6">6 players</option>
+                  <option value="7">7 players</option>
+                  <option value="8">8 players</option>
+                  <option value="9">9 players</option>
+                </select>
+              </label>
+              <button id="new-game" type="button" class="command-button">New Game</button>
+            </div>
+          </div>
+          <article class="content-item game-setup-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Player Setup</h3>
+                <p class="muted">Set player count and names before starting. Muse selection happens in dice-roll order after the deal.</p>
+              </div>
+            </div>
+            <div id="game-setup" class="game-setup-grid"></div>
+          </article>
+          <div class="game-layout">
+            <article class="content-item game-table">
+              <div class="panel-heading">
+                <div>
+                  <h3 id="game-turn-title">No game in progress</h3>
+                  <p id="game-phase" class="muted">Start a new game to roll turn order, choose Muses, and deal cards.</p>
+                </div>
+                <div id="game-decks" class="deck-counts"></div>
+              </div>
+              <div id="muse-choice" class="muse-choice"></div>
+              <div id="game-controls" class="turn-controls"></div>
+              <div id="game-players" class="game-player-grid"></div>
+              <h3>Tableau</h3>
+              <div id="game-tableau" class="tableau-grid"></div>
+              <h3 id="player-hand-title">Current Player Hand</h3>
+              <div id="player-hand" class="play-card-grid"></div>
+            </article>
+            <aside class="content-item">
+              <h3>Action Log</h3>
+              <div id="game-log" class="game-log"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="dashboard" class="hero-band">
+          <p class="eyebrow">Companion Mode</p>
+          <h2>Companion / admin console</h2>
+          <p>Browse cards, inspect rules, log playtests, and keep development content organized. Play belongs in Game Mode.</p>
+          <div id="summary" class="summary-grid" aria-live="polite"></div>
+        </section>
+
+        <section id="cards">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Card Library</p>
+              <h2>Card library</h2>
+            </div>
+            <label>
+              <span>Search</span>
+              <input id="card-search" type="search" placeholder="Find cards by name, text, Epoch, Muse, or category">
+            </label>
+          </div>
+          <div class="toolbar" aria-label="Card filters">
+            <div class="segmented" id="card-type-tabs" role="tablist" aria-label="Card type"></div>
+            <label>
+              <span>Epoch</span>
+              <select id="epoch-filter">
+                <option value="">All Epochs</option>
+              </select>
+            </label>
+            <label>
+              <span>Muse</span>
+              <select id="muse-filter">
+                <option value="">All Muses</option>
+              </select>
+            </label>
+            <label>
+              <span>Action category</span>
+              <select id="action-filter">
+                <option value="">All categories</option>
+              </select>
+            </label>
+            <label>
+              <span>Status</span>
+              <select id="status-filter">
+                <option value="">All statuses</option>
+              </select>
+            </label>
+          </div>
+          <p id="card-count" class="result-count" aria-live="polite"></p>
+          <div class="library-layout">
+            <div id="cards-list" class="card-grid"></div>
+            <aside id="card-detail" class="detail-panel" aria-live="polite"></aside>
+          </div>
+        </section>
+
+        <section id="rules" class="game-rules">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Game Mode</p>
+              <h2>Rules</h2>
+              <p class="muted">Player-facing rules for setup, turns, tableau, scoring, and end game while playing Xanadu.</p>
+            </div>
+            <label>
+              <span>Search rules</span>
+              <input id="rules-search" type="search" placeholder="Find setup, scoring, tableau, or glossary terms">
+            </label>
+          </div>
+          <div class="rules-layout">
+            <nav id="rules-nav" class="rules-nav" aria-label="Rules sections"></nav>
+            <div>
+              <div id="rules-list" class="content-list"></div>
+              <h3>Glossary</h3>
+              <div id="glossary-list" class="glossary-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="scoring">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Setup & Scoring</p>
+              <h2>Table companion</h2>
+            </div>
+            <label>
+              <span>Player count</span>
+              <select id="player-count">
+                <option value="2">2 players</option>
+                <option value="3">3 players</option>
+                <option value="4" selected>4 players</option>
+                <option value="5">5 players</option>
+                <option value="6">6 players</option>
+                <option value="7">7 players</option>
+                <option value="8">8 players</option>
+                <option value="9">9 players</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="companion-layout">
+            <article class="content-item">
+              <div class="panel-heading">
+                <div>
+                  <h3>Setup Guide</h3>
+                  <p id="end-condition" class="muted"></p>
+                </div>
+                <button id="roll-dice" type="button" class="command-button">Roll Dice</button>
+              </div>
+              <ol id="setup-steps" class="step-list"></ol>
+              <div id="players-setup" class="player-grid"></div>
+              <p id="setup-warning" class="warning-text" aria-live="polite"></p>
+            </article>
+
+            <article class="content-item">
+              <div class="panel-heading">
+                <div>
+                  <h3>Score Sheet</h3>
+                  <p class="muted">Add completed Epoch + Artist sets. Each Artist scores its value for that player’s Muse.</p>
+                </div>
+                <div class="button-row">
+                  <button id="add-score-row" type="button" class="command-button">Add Set</button>
+                  <button id="save-playtest" type="button" class="command-button secondary">Save Playtest</button>
+                </div>
+              </div>
+              <div id="score-rows" class="score-rows"></div>
+              <div id="score-summary" class="score-summary" aria-live="polite"></div>
+              <div class="panel-heading">
+                <div>
+                  <h3>Tiebreaker</h3>
+                  <p id="tie-status" class="muted"></p>
+                </div>
+                <button id="run-tiebreaker" type="button" class="command-button">Artist Duel</button>
+              </div>
+              <div id="tiebreaker-result" class="content-list" aria-live="polite"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="playtests">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Playtests</p>
+              <h2>Logging & balance</h2>
+              <p class="muted">Save completed score sheets, attach feedback, and compare Muse results over time.</p>
+            </div>
+            <button id="clear-playtests" type="button" class="command-button secondary">Clear Draft Logs</button>
+          </div>
+          <div class="playtest-layout">
+            <article class="content-item">
+              <h3>Session Details</h3>
+              <div class="form-grid">
+                <label>
+                  <span>Date</span>
+                  <input id="playtest-date" type="date">
+                </label>
+                <label>
+                  <span>Duration minutes</span>
+                  <input id="playtest-duration" type="number" min="0" value="45">
+                </label>
+                <label>
+                  <span>End condition</span>
+                  <select id="playtest-end-condition">
+                    <option value="Epoch Threshold">Epoch Threshold</option>
+                    <option value="Action Deck Exhausted">Action Deck Exhausted</option>
+                    <option value="Manual Stop">Manual Stop</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Feedback severity</span>
+                  <select id="feedback-severity">
+                    <option value="Note">Note</option>
+                    <option value="Confusing">Confusing</option>
+                    <option value="Blocking">Blocking</option>
+                    <option value="Balance Concern">Balance Concern</option>
+                  </select>
+                </label>
+              </div>
+              <label>
+                <span>Session notes</span>
+                <textarea id="playtest-notes" rows="4" placeholder="What happened? What felt strong, weak, slow, confusing, or exciting?"></textarea>
+              </label>
+              <label>
+                <span>Card or rule feedback</span>
+                <textarea id="feedback-text" rows="3" placeholder="Optional targeted feedback for a card, rule, or balance issue."></textarea>
+              </label>
+              <p id="playtest-save-status" class="warning-text" aria-live="polite"></p>
+            </article>
+
+            <article class="content-item">
+              <h3>Balance Summary</h3>
+              <div id="balance-summary" class="balance-grid"></div>
+            </article>
+          </div>
+          <div class="panel-heading">
+            <div>
+              <h3>Session History</h3>
+              <p class="muted">Stored locally in this browser for playtest iteration.</p>
+            </div>
+          </div>
+          <div id="playtest-list" class="content-list"></div>
+        </section>
+
+        <section id="print">
+          <p class="eyebrow">Print</p>
+          <h2>Manifest readiness</h2>
+          <div id="manifest" class="content-list"></div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
