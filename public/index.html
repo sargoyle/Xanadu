@@ -21,6 +21,7 @@
             <a href="#muse-deck">Muse Deck</a>
             <a href="#epoch-deck">Epoch Deck</a>
             <a href="#artist-deck">Artist Deck</a>
+            <a href="#action-deck">Action Deck</a>
             <a href="#rules">Rules</a>
           </div>
           <div class="nav-section companion-nav-section" aria-label="Companion Mode navigation">
@@ -85,6 +86,23 @@
           </div>
         </section>
 
+        <section id="action-deck" class="game-mode muse-deck-page">
+          <div class="muse-deck-stage">
+            <div class="muse-draw-zone">
+              <button id="action-deck-pile" type="button" class="muse-deck-pile" aria-label="Deal next Action card"></button>
+              <div class="muse-deck-status" aria-live="polite">
+                <p id="action-cards-remaining">Cards remaining: 64</p>
+                <p id="action-cards-dealt">Cards dealt: 0 of 64</p>
+              </div>
+              <div class="muse-deck-actions" aria-label="Action deck controls">
+                <button id="action-deal-next" type="button" class="command-button">Deal next Action</button>
+                <button id="action-restart-deck" type="button" class="command-button secondary">Shuffle / Restart Action deck</button>
+              </div>
+            </div>
+            <div id="action-dealt-area" class="muse-dealt-area action-dealt-area" aria-label="Dealt Action cards"></div>
+          </div>
+        </section>
+
         <section id="play" class="game-mode">
           <div class="section-heading">
             <div>
@@ -129,6 +147,7 @@
               </div>
               <div id="muse-choice" class="muse-choice"></div>
               <div id="game-controls" class="turn-controls"></div>
+              <div id="dice-roller" class="dice-roller" aria-live="polite"></div>
               <div id="game-players" class="game-player-grid"></div>
               <h3>Tableau</h3>
               <div id="game-tableau" class="tableau-grid"></div>

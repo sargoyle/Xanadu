@@ -46,6 +46,7 @@ const gamePhase = document.querySelector("#game-phase");
 const gameDecks = document.querySelector("#game-decks");
 const museChoice = document.querySelector("#muse-choice");
 const gameControls = document.querySelector("#game-controls");
+const diceRoller = document.querySelector("#dice-roller");
 const gamePlayers = document.querySelector("#game-players");
 const gameTableau = document.querySelector("#game-tableau");
 const playerHandTitle = document.querySelector("#player-hand-title");
@@ -69,6 +70,12 @@ const artistRestartDeckButton = document.querySelector("#artist-restart-deck");
 const artistCardsRemaining = document.querySelector("#artist-cards-remaining");
 const artistCardsDealt = document.querySelector("#artist-cards-dealt");
 const artistDealtArea = document.querySelector("#artist-dealt-area");
+const actionDeckPile = document.querySelector("#action-deck-pile");
+const actionDealNextButton = document.querySelector("#action-deal-next");
+const actionRestartDeckButton = document.querySelector("#action-restart-deck");
+const actionCardsRemaining = document.querySelector("#action-cards-remaining");
+const actionCardsDealt = document.querySelector("#action-cards-dealt");
+const actionDealtArea = document.querySelector("#action-dealt-area");
 
 const CARD_TYPES = ["All", "Muse", "Epoch", "Artist", "Action"];
 const PLAYTEST_STORAGE_KEY = "xanadu.playtests";
@@ -88,6 +95,12 @@ const state = {
     lastDealtIndex: null
   },
   artistDeck: {
+    nextIndex: 0,
+    order: [],
+    dealt: [],
+    lastDealtIndex: null
+  },
+  actionDeck: {
     nextIndex: 0,
     order: [],
     dealt: [],
@@ -187,6 +200,56 @@ function artistDeckCards() {
   });
 }
 
+function actionCategoryLabel(category) {
+  const labels = {
+    bonus: "Bonus / Buff",
+    fate: "Fate Dice",
+    disruption: "Disruption",
+    swap: "Swap / Steal",
+    group: "Group / Party"
+  };
+  return labels[category] ?? formatCategory(category);
+}
+
+function actionCategoryIcon(category) {
+  const icons = {
+    bonus: "*",
+    fate: "*",
+    disruption: "!",
+    swap: "<>",
+    group: "*"
+  };
+  return icons[category] ?? "?";
+}
+
+function actionPrimaryTag(action) {
+  if (action.diceOutcomes) return "DICE ROLL";
+  if (action.persistent) return "PERSISTENT";
+  if (String(action.timing ?? action.playCondition ?? "").toLowerCase().includes("immediately")) return "PLAY IMMEDIATELY";
+  return action.timing ?? action.playCondition ?? "ACTION";
+}
+
+function generateActionArtworkPrompt(action) {
+  return [
+    `Create premium tabletop action-card artwork for "${action.name}".`,
+    `Category: ${actionCategoryLabel(action.category)}.`,
+    `Effect: ${action.effectText}.`,
+    "Style: dramatic theatrical poster meets elegant fantasy spell card, deep burgundy and antique gold, symbolic imagery, painterly, tactile, premium physical card game.",
+    "Use motifs that fit the action such as lightning, masks, shattered frames, celestial symbols, ink splashes, scrolls, mirrors, flames, dice, or stage lights.",
+    "Do not include text, labels, borders, card rules, logos, UI, watermarks, or card frame elements in the artwork."
+  ].join(" ");
+}
+
+function actionDeckCards() {
+  return seed.actions.map((action) => ({
+    ...action,
+    cardKind: "action",
+    artworkPath: action.artworkPath ?? "",
+    artworkPrompt: action.artworkPrompt ?? generateActionArtworkPrompt(action),
+    backImagePath: "/assets/actions/action-back.png"
+  }));
+}
+
 function physicalDeckConfig(deckKey) {
   const configs = {
     muse: {
@@ -224,6 +287,18 @@ function physicalDeckConfig(deckKey) {
       dealt: artistCardsDealt,
       table: artistDealtArea,
       emptyText: "Click the deck pile to deal an Artist."
+    },
+    action: {
+      label: "Action",
+      state: state.actionDeck,
+      cards: actionDeckCards(),
+      pile: actionDeckPile,
+      dealButton: actionDealNextButton,
+      restartButton: actionRestartDeckButton,
+      remaining: actionCardsRemaining,
+      dealt: actionCardsDealt,
+      table: actionDealtArea,
+      emptyText: "Click the deck pile to deal an Action."
     }
   };
   return configs[deckKey];
@@ -295,6 +370,8 @@ function renderPhysicalDealtCard(deckKey, dealtCard, index, backPath) {
   const frontMarkup =
     deckKey === "artist"
       ? renderArtistCardFront(card)
+      : deckKey === "action"
+        ? renderActionCardFront(card)
       : `<img src="${escapeHtml(card.imagePath)}" alt="${escapeHtml(card.name)} ${escapeHtml(config.label)} card front">`;
   return `
     <button type="button" class="muse-table-card ${dealtCard.faceUp ? "is-face-up" : ""} ${config.state.lastDealtIndex === index ? "just-dealt" : ""}" data-deck-key="${escapeHtml(deckKey)}" data-dealt-index="${index}" aria-pressed="${dealtCard.faceUp}" aria-label="${escapeHtml(dealtCard.faceUp ? `Flip ${card.name} face down` : `Flip dealt ${config.label} card ${index + 1} face up`)}">
@@ -332,11 +409,14 @@ function renderArtistArtworkPanel(card) {
 function renderArtistScoreGrid(card) {
   return `
     <span class="artist-score-grid" aria-label="Muse scores">
+      <span class="artist-score-cell artist-score-heading">
+        <span>MUSES</span>
+      </span>
       ${seed.muses
         .map(
           (muse) => `
             <span class="artist-score-cell">
-              <span>${escapeHtml(muse.name.slice(0, 2))}</span>
+              <span>${escapeHtml(muse.name)}</span>
               <strong>${card.scores?.[muse.id] ?? 0}</strong>
             </span>
           `
@@ -346,23 +426,112 @@ function renderArtistScoreGrid(card) {
   `;
 }
 
+function artistNameSizeClass(name) {
+  const length = String(name ?? "").length;
+  if (length >= 28) return "artist-name-extra-long";
+  if (length >= 21) return "artist-name-long";
+  return "";
+}
+
 function renderArtistCardFront(card) {
   return `
     <span class="artist-card-front">
-      <span class="artist-card-top">
-        <span class="artist-card-name">${escapeHtml(card.name)}</span>
-        <span class="artist-artwork-frame">${renderArtistArtworkPanel(card)}</span>
-      </span>
+      <span class="artist-card-name ${artistNameSizeClass(card.name)}">${escapeHtml(card.name)}</span>
+      <span class="artist-artwork-frame">${renderArtistArtworkPanel(card)}</span>
       <span class="artist-card-middle">
         <span class="artist-card-meta">
-          <strong>${escapeHtml(card.epochName)}</strong>
-          <span>${escapeHtml(card.artistType)}</span>
+          <span class="artist-epoch-block">
+            <span class="artist-info-label">EPOCH</span>
+            <strong>${escapeHtml(card.epochName)}</strong>
+          </span>
+          <span class="artist-type-block">
+            <span class="artist-info-label">TYPE</span>
+            <span>${escapeHtml(card.artistType)}</span>
+          </span>
         </span>
         <span class="artist-card-flavour">${escapeHtml(card.description)}</span>
       </span>
       <span class="artist-card-bottom">
         ${renderArtistScoreGrid(card)}
       </span>
+    </span>
+  `;
+}
+
+function renderDiceOutcomePanel(card) {
+  if (!card.diceOutcomes) return "";
+  return `
+    <span class="action-dice-panel" aria-label="D6 outcomes">
+      ${Object.entries(card.diceOutcomes)
+        .map(
+          ([roll, outcome]) => `
+            <span class="action-dice-outcome">
+              <strong>${escapeHtml(roll)}</strong>
+              <span>${escapeHtml(outcome)}</span>
+            </span>
+          `
+        )
+        .join("")}
+    </span>
+  `;
+}
+
+function actionFlavorText(card) {
+  return card.flavourText ?? card.flavorText ?? "";
+}
+
+function actionEffectSizeClass(effectText) {
+  const length = String(effectText ?? "").length;
+  if (length >= 130) return "action-effect-extra-long";
+  if (length >= 92) return "action-effect-long";
+  return "";
+}
+
+function actionTitleSizeClass(name) {
+  const length = String(name ?? "").length;
+  if (length >= 22) return "action-title-extra-long";
+  if (length >= 16) return "action-title-long";
+  return "";
+}
+
+function renderActionCategoryLine(card) {
+  return `
+    <span class="action-category-line">
+      <span class="action-line-rule"></span>
+      <span class="action-category-mark" aria-hidden="true">${escapeHtml(actionCategoryIcon(card.category))}</span>
+      <strong>${escapeHtml(actionCategoryLabel(card.category))}</strong>
+      <span class="action-line-rule"></span>
+    </span>
+  `;
+}
+
+function renderActionCardFront(card) {
+  const hasDice = Boolean(card.diceOutcomes);
+  const flavor = actionFlavorText(card);
+  if (hasDice) {
+    return `
+      <span class="action-card-front action-dice-card action-category-${escapeHtml(card.category)}">
+        <span class="action-card-title ${actionTitleSizeClass(card.name)}">${escapeHtml(card.name)}</span>
+        ${renderActionCategoryLine(card)}
+        <span class="action-dice-stage" aria-hidden="true">
+          <span class="action-die-face">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </span>
+        </span>
+        ${renderDiceOutcomePanel(card)}
+        <span class="action-decorative-footer" aria-hidden="true"></span>
+      </span>
+    `;
+  }
+  return `
+    <span class="action-card-front action-standard-card action-category-${escapeHtml(card.category)}">
+      <span class="action-card-title ${actionTitleSizeClass(card.name)}">${escapeHtml(card.name)}</span>
+      ${renderActionCategoryLine(card)}
+      <span class="action-flavour-line">${flavor ? escapeHtml(flavor) : "&nbsp;"}</span>
+      <span class="action-effect-panel">
+        <span class="action-effect-text ${actionEffectSizeClass(card.effectText)}">${escapeHtml(card.effectText)}</span>
+      </span>
+      <span class="action-decorative-footer" aria-hidden="true"></span>
     </span>
   `;
 }
@@ -408,6 +577,10 @@ function renderEpochDeckViewer() {
 
 function renderArtistDeckViewer() {
   renderPhysicalDeckViewer("artist");
+}
+
+function renderActionDeckViewer() {
+  renderPhysicalDeckViewer("action");
 }
 
 function cardDescription(card) {
@@ -1265,7 +1438,7 @@ function resolveNpcMuseChoices() {
   if (!picker) {
     game.log.unshift("All Muses selected. The first digital turn is ready.");
     startFirstTurn(game);
-    runNpcTurnIfNeeded();
+    void runNpcTurnIfNeeded();
   }
 }
 
@@ -1294,6 +1467,13 @@ function startNewGame() {
     selectedCards: { epoch: "", artist: "", action: "" },
     inspectedCard: null,
     draggedCard: null,
+    diceRoll: {
+      isRolling: false,
+      value: null,
+      actionName: "",
+      outcome: "",
+      history: []
+    },
     players,
     decks: { artist: artistDeck, epoch: epochDeck, action: actionDeck },
     discards: { artist: [], epoch: [], action: [] },
@@ -1566,23 +1746,57 @@ function renderTurnControls(game, player) {
   }
 
   const isHumanTurn = player?.isHuman;
+  const isRolling = Boolean(game.diceRoll?.isRolling);
   return `
     <div class="button-row">
-      <button id="draw-action" type="button" class="command-button" ${!isHumanTurn || game.phase !== "Draw Action" ? "disabled" : ""}>Draw Action</button>
-      <button id="play-action" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" || game.actionPlayedThisTurn ? "disabled" : ""}>Play Action</button>
-      <button id="play-tableau-card" type="button" class="command-button" ${!isHumanTurn || game.phase === "Draw Action" ? "disabled" : ""}>Play Epoch / Artist</button>
-      <button id="auto-tableau-play" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" ? "disabled" : ""}>Auto Play Legal Set</button>
-      <button id="end-turn" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" ? "disabled" : ""}>End Turn</button>
+      <button id="draw-action" type="button" class="command-button" ${!isHumanTurn || game.phase !== "Draw Action" || isRolling ? "disabled" : ""}>Draw Action</button>
+      <button id="play-action" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" || game.actionPlayedThisTurn || isRolling ? "disabled" : ""}>Play Action</button>
+      <button id="play-tableau-card" type="button" class="command-button" ${!isHumanTurn || game.phase === "Draw Action" || isRolling ? "disabled" : ""}>Play Epoch / Artist</button>
+      <button id="auto-tableau-play" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" || isRolling ? "disabled" : ""}>Auto Play Legal Set</button>
+      <button id="end-turn" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" || isRolling ? "disabled" : ""}>End Turn</button>
     </div>
     <p class="muted">${escapeHtml(turnHint(game, player))}</p>
   `;
 }
 
 function turnHint(game, player) {
+  if (game.diceRoll?.isRolling) return "The Fate Dice is rolling. Wait for the result to settle.";
   if (!player?.isHuman) return "NPC is thinking through its turn automatically.";
   if (game.phase === "Draw Action") return "Draw 1 Action card to begin your turn.";
   if (game.phase === "Main") return "Select cards from your hand to play, use Auto Play Legal Set, or end your turn to pass.";
   return "Resolve the current game state.";
+}
+
+function dicePips(value) {
+  const layouts = {
+    1: [5],
+    2: [1, 9],
+    3: [1, 5, 9],
+    4: [1, 3, 7, 9],
+    5: [1, 3, 5, 7, 9],
+    6: [1, 3, 4, 6, 7, 9]
+  };
+  const positions = new Set(layouts[value] ?? []);
+  return Array.from({ length: 9 }, (_, index) =>
+    positions.has(index + 1) ? `<span class="animated-die-pip"></span>` : `<span></span>`
+  ).join("");
+}
+
+function renderDiceRoller(game) {
+  const roll = game.diceRoll;
+  if (!roll?.isRolling && !roll?.value) return "";
+  const value = roll.value ?? 1;
+  const displayValue = roll.isRolling ? 6 : value;
+  return `
+    <section class="dice-roll-panel ${roll.isRolling ? "is-rolling" : "has-result"}" aria-label="Fate Dice roll result">
+      <div class="animated-die" data-value="${value}" aria-hidden="true">${dicePips(displayValue)}</div>
+      <div class="dice-result-copy">
+        <span>${escapeHtml(roll.isRolling ? "Rolling Fate Dice" : `Rolled: ${value}`)}</span>
+        <strong>${escapeHtml(roll.actionName || "Fate Dice")}</strong>
+        ${roll.outcome ? `<p>${escapeHtml(roll.outcome)}</p>` : `<p>The die is tumbling across the table...</p>`}
+      </div>
+    </section>
+  `;
 }
 
 function renderGame() {
@@ -1594,6 +1808,7 @@ function renderGame() {
     gameDecks.innerHTML = "";
     museChoice.innerHTML = "";
     gameControls.innerHTML = "";
+    diceRoller.innerHTML = "";
     gamePlayers.innerHTML = `<div class="empty-state">Game Mode is the primary experience. Start here to play Xanadu digitally.</div>`;
     gameTableau.innerHTML = `<div class="empty-state">Tableau sets will appear here after cards are played.</div>`;
     playerHandTitle.textContent = "Current Player Hand";
@@ -1642,6 +1857,7 @@ function renderGame() {
       `
       : "";
   gameControls.innerHTML = renderTurnControls(game, currentPlayer);
+  diceRoller.innerHTML = renderDiceRoller(game);
 
   gamePlayers.innerHTML = gameSelectionOrder(game)
     .map((player, index) => {
@@ -1714,10 +1930,10 @@ function renderGame() {
   gameLog.innerHTML = game.log.map((entry) => `<p>${escapeHtml(entry)}</p>`).join("");
 }
 
-function drawActionForCurrentPlayer() {
+async function drawActionForCurrentPlayer() {
   const game = state.game;
   const player = activePlayer(game);
-  if (!game || !player || game.phase !== "Draw Action") return;
+  if (!game || !player || game.phase !== "Draw Action" || game.diceRoll?.isRolling) return;
   const card = draw(game.decks.action, 1)[0];
   if (!card) {
     endGame("Action deck exhausted.");
@@ -1726,7 +1942,7 @@ function drawActionForCurrentPlayer() {
   player.hand.actions.push(card);
   addGameLog(`${player.name} drew Action: ${card.name}.`);
   if (card.playCondition === "Play Immediately") {
-    resolveActionCard(player, card);
+    await resolveActionCard(player, card);
     removeByInstance(player.hand.actions, card.instanceId);
     game.discards.action.push(card);
     endTurn();
@@ -1736,17 +1952,17 @@ function drawActionForCurrentPlayer() {
   renderGame();
 }
 
-function playSelectedAction() {
+async function playSelectedAction() {
   const game = state.game;
   const player = activePlayer(game);
-  if (!game || !player || !player.isHuman || game.actionPlayedThisTurn) return;
+  if (!game || !player || !player.isHuman || game.actionPlayedThisTurn || game.diceRoll?.isRolling) return;
   const action = selectedHandCards(player).action;
   if (!action) {
     addGameLog("Select an Action card before playing an Action.");
     renderGame();
     return;
   }
-  resolveActionCard(player, action);
+  await resolveActionCard(player, action);
   removeByInstance(player.hand.actions, action.instanceId);
   game.discards.action.push(action);
   game.actionPlayedThisTurn = true;
@@ -1755,12 +1971,12 @@ function playSelectedAction() {
   renderGame();
 }
 
-function resolveActionCard(player, action) {
+async function resolveActionCard(player, action) {
   const game = state.game;
   addGameLog(`${player.name} played Action: ${action.name}.`);
 
   if (action.category === "fate" && action.diceOutcomes) {
-    const roll = Math.floor(Math.random() * 6) + 1;
+    const roll = await rollFateDie(action);
     const outcome = action.diceOutcomes[String(roll)];
     addGameLog(`Fate roll ${roll}: ${outcome}`);
     applySimpleEffect(player, outcome);
@@ -1768,6 +1984,38 @@ function resolveActionCard(player, action) {
   }
 
   applySimpleEffect(player, action.effectText ?? action.rulesText ?? "");
+}
+
+function diceAnimationDuration() {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? 260 : 1500;
+}
+
+function rollFateDie(action) {
+  const game = state.game;
+  const value = Math.floor(Math.random() * 6) + 1;
+  const outcome = action.diceOutcomes?.[String(value)] ?? "";
+  game.diceRoll = {
+    isRolling: true,
+    value,
+    actionName: action.name,
+    outcome: "",
+    history: [...(game.diceRoll?.history ?? []), { actionId: action.id, actionName: action.name, value, outcome }]
+  };
+  renderGame();
+  return new Promise((resolve) => {
+    window.setTimeout(() => {
+      if (!state.game) return resolve(value);
+      state.game.diceRoll = {
+        ...state.game.diceRoll,
+        isRolling: false,
+        value,
+        actionName: action.name,
+        outcome
+      };
+      renderGame();
+      resolve(value);
+    }, diceAnimationDuration());
+  });
 }
 
 function applySimpleEffect(player, effectText) {
@@ -1883,7 +2131,7 @@ function playCardFromHandElement(cardElement) {
   if (!cardElement || !state.game) return;
   selectHandCard(cardElement, true);
   if (cardElement.dataset.cardType === "action") {
-    playSelectedAction();
+    void playSelectedAction();
     return;
   }
   playSelectedTableauCards();
@@ -1926,7 +2174,7 @@ function nextPlayerId(game) {
 
 function endTurn() {
   const game = state.game;
-  if (!game || game.phase === "Game Over") return;
+  if (!game || game.phase === "Game Over" || game.diceRoll?.isRolling) return;
   const player = activePlayer(game);
   refillActionHand(player);
   if (checkEndGame()) return;
@@ -1939,9 +2187,10 @@ function endTurn() {
   game.selectedCards = { epoch: "", artist: "", action: "" };
   game.inspectedCard = null;
   game.draggedCard = null;
+  game.diceRoll = { ...(game.diceRoll ?? {}), isRolling: false, value: null, actionName: "", outcome: "" };
   addGameLog(`${activePlayer(game).name} starts turn ${game.turnNumber}.`);
   renderGame();
-  runNpcTurnIfNeeded();
+  void runNpcTurnIfNeeded();
 }
 
 function checkEndGame() {
@@ -1992,12 +2241,13 @@ function endGame(reason) {
   return true;
 }
 
-function runNpcTurnIfNeeded() {
+async function runNpcTurnIfNeeded() {
   const game = state.game;
   const player = activePlayer(game);
   if (!game || !player || player.isHuman || game.phase === "Game Over") return;
-  drawActionForCurrentPlayer();
+  await drawActionForCurrentPlayer();
   if (game.phase === "Game Over") return;
+  if (activePlayer(game)?.id !== player.id) return;
 
   const move = findPlayableTableauMove(player);
 
@@ -2144,6 +2394,14 @@ function bindEvents() {
     if (!card) return;
     flipDealtPhysicalCard("artist", Number(card.dataset.dealtIndex));
   });
+  actionDeckPile.addEventListener("click", () => dealNextPhysicalCard("action"));
+  actionDealNextButton.addEventListener("click", () => dealNextPhysicalCard("action"));
+  actionRestartDeckButton.addEventListener("click", () => restartPhysicalDeck("action"));
+  actionDealtArea.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-dealt-index]");
+    if (!card) return;
+    flipDealtPhysicalCard("action", Number(card.dataset.dealtIndex));
+  });
   document.addEventListener("keydown", (event) => {
     const activeDeckKey =
       location.hash === "#muse-deck" || Boolean(event.target.closest?.("#muse-deck"))
@@ -2152,7 +2410,9 @@ function bindEvents() {
           ? "epoch"
           : location.hash === "#artist-deck" || Boolean(event.target.closest?.("#artist-deck"))
             ? "artist"
-            : "";
+            : location.hash === "#action-deck" || Boolean(event.target.closest?.("#action-deck"))
+              ? "action"
+              : "";
     if (!activeDeckKey) return;
     if ((event.key === " " || event.key === "Enter") && event.target === document.body) {
       event.preventDefault();
@@ -2187,8 +2447,8 @@ function bindEvents() {
   gameControls.addEventListener("click", (event) => {
     const button = event.target.closest("button");
     if (!button) return;
-    if (button.id === "draw-action") drawActionForCurrentPlayer();
-    if (button.id === "play-action") playSelectedAction();
+    if (button.id === "draw-action") void drawActionForCurrentPlayer();
+    if (button.id === "play-action") void playSelectedAction();
     if (button.id === "play-tableau-card") playSelectedTableauCards();
     if (button.id === "auto-tableau-play") autoPlayTableauCards();
     if (button.id === "end-turn") endTurn();
@@ -2265,6 +2525,7 @@ function init() {
   renderMuseDeckViewer();
   renderEpochDeckViewer();
   renderArtistDeckViewer();
+  renderActionDeckViewer();
   populateFilters();
   bindEvents();
   renderCards();

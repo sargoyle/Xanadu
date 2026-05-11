@@ -65,9 +65,20 @@ Keep entries concise. One line per decision when possible.
 - Every button or action labelled `Shuffle` must use a real random shuffle, reset dealt cards, reset card state, and avoid mutating the original source card array.
 - The Epoch Deck viewer uses extracted card images from the supplied Epoch front/back PDFs, creates three copies of each of the 30 Epoch fronts, and deals a 90-card physical deck.
 - The Artist Deck viewer uses the supplied Artist back artwork and renders generated premium physical fronts from canonical Artist data until final artwork files are available.
-- Artist card fronts must reserve the top 55-60% for artist name and artwork, the middle 20-25% for Epoch/type/flavour, and the bottom 20% for a readable nine-Muse score grid.
+- Artist card fronts use fixed internal rows of 14% name, 34% artwork, 24% Epoch/type/flavour, and 24% nine-Muse score grid to prevent overflow inside the physical frame.
+- Artist card names must be centered, clamp to a maximum of two lines, and use smaller type for long names.
+- Artist card info panels must clearly label `EPOCH` and `TYPE`, with the Epoch value more visually prominent than Type.
+- Artist Muse score grids must show full Muse names, include a `MUSES` header cell, and use a compact 2-column by 5-row layout.
 - Artist cards must support `artworkPath` for future artwork files and `artworkPrompt` for prompt-only image generation support; the app must not call image APIs automatically.
 - Artist deck dealing uses the shared physical deck component with a 150-card deck, face-up dealt cards, independent flipping, persistent table layout, and real shuffle/restart behavior.
+- The Action Deck viewer uses the supplied Action back artwork and renders 64 physical Action card fronts from canonical Action seed data.
+- Action card fronts follow the theatrical `Applause Break` direction: large centered title, one subtle category line, optional flavour, prominent effect text, and decorative footer only.
+- Action category/type may appear once on the card face; do not repeat it in the artwork area, effect area, or footer.
+- Fate Dice Action cards use a distinct layout with one die motif and vertically stacked outcomes so dice rules remain readable and are never cramped into columns.
+- Action card titles must fit within two lines without clipping; Fate Dice outcome rows must not use arrows and should use clean numbered rows with comfortable spacing.
+- Game Mode Fate Dice Actions must animate a premium D6 roll, store the rolled value before settling, prevent duplicate rolls while active, respect reduced-motion preferences, then apply the matching outcome.
+- Action cards must support `artworkPath` for future artwork files and `artworkPrompt` for prompt-only image generation support; the app must not call image APIs automatically.
+- Action deck dealing uses the shared physical deck component with a 64-card deck, face-up dealt cards, independent flipping, persistent table layout, and real shuffle/restart behavior.
 - Use the palette from `docs/design.md`: Midnight Ink, Parchment, Antique Gold, Ivory, Deep Plum, and restrained secondary accents.
 - Use clear status labels alongside color; never rely on color alone.
 - Use player-facing screens for rules, setup, scoring, and lookup; expose validation and source-path details only in development workflows.

@@ -23,6 +23,9 @@ All notable changes to this project will be documented in this file.
 - 2026-05-11: Confirmed and aligned the project-wide rules and decisions template in `docs/rules.md`. Files affected: `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Added a focused Muse Deck viewer with one physical flip card, supplied Muse front/back artwork, next/previous/restart controls, progress text, and keyboard support. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Added an Epoch Deck viewer with extracted Epoch PDF artwork, a separate face-down deck pile, 90-card three-copy deck, face-up dealing, independent flipping, deck status, and restart controls. Files affected: `public/assets/epochs/`, `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-11: Added the Artist Card system with supplied Artist back artwork, premium generated Artist fronts, placeholder artwork support, prompt-only artwork metadata, Muse score grids, and a 150-card physical deck viewer. Files affected: `public/assets/artists/`, `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-11: Added the Action Card system with supplied Action back artwork, burgundy/gold physical card fronts, category badges, timing/effect panels, Fate dice outcome panels, prompt-only artwork metadata, and a 64-card physical deck viewer. Files affected: `public/assets/actions/`, `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-11: Added animated Game Mode Fate Dice rolling with a burgundy/gold D6, stored roll state/history, spam prevention during rolling, reduced-motion support, and outcome application after the die settles. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 
 ### Changed
 
@@ -33,10 +36,13 @@ All notable changes to this project will be documented in this file.
 - 2026-05-11: Changed Muse Deck dealing so cards land face up by default and resized contained image rendering to keep full Muse card artwork visible. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Changed physical deck viewer logic to share draw-pile, dealt-card, flip, status, and restart behavior across Muse and Epoch decks. Files affected: `public/app.js`, `public/styles.css`.
 - 2026-05-11: Changed all physical deck Shuffle / Restart actions to use real Fisher-Yates randomized deck orders, reset dealt cards, and preserve source card arrays. Files affected: `public/app.js`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-11: Refined Artist card fronts with centered two-line names, stronger labelled Epoch/Type hierarchy, a `MUSES` header cell, 2-column/5-row score layout, and tighter info-panel spacing. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-11: Redesigned Action card fronts around the `Applause Break` theatrical reference, removing repeated category labels and UI-heavy panels while giving Fate Dice cards a single die motif and vertical outcome layout. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-11: Polished Action card typography by reducing and length-scaling titles, enlarging category labels, removing Fate Dice outcome arrows, shrinking the die motif, and increasing dice outcome spacing. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 
 ### Fixed
 
-- (none yet)
+- 2026-05-11: Fixed Artist card layout overflow by clamping long names to two lines, switching score cells to full Muse names, and using fixed internal card sections that stay inside the poker-card frame. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 
 ---
 

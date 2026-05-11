@@ -44,6 +44,12 @@
 - [x] Add an Epoch Deck viewer using supplied Epoch front/back artwork with three physical copies of each Epoch card.
 - [x] Fix Shuffle / Restart deck behavior to randomize physical deck order globally.
 - [x] Build the Artist Card system with premium physical fronts, Artist back artwork, prompt-ready placeholder art, Muse score grids, and a 150-card tabletop deck viewer.
+- [x] Fix Artist card layout so long names clamp to two lines, full Muse names appear in scores, and card content stays inside the physical frame.
+- [x] Refine Artist card front layout with centered titles, stronger Epoch labelling, a 2-column/5-row Muse grid, and tighter information-panel spacing.
+- [x] Build the Action Card system with physical burgundy/gold fronts, Action back artwork, category accents, dice outcome panels, prompt-ready placeholder art, and a 64-card tabletop deck viewer.
+- [x] Redesign Action card fronts around the Applause Break theatrical layout, with one category line and a dedicated readable Fate Dice layout.
+- [x] Polish Action card typography and Fate Dice layout with safer title sizing, larger category labels, smaller die motif, no arrows, and cleaner outcome spacing.
+- [x] Add animated Game Mode Fate Dice rolling with stored results, spam prevention, reduced-motion support, and outcome resolution after the die settles.
 
 ## Backlog
 
