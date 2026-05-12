@@ -50,6 +50,11 @@
 - [x] Redesign Action card fronts around the Applause Break theatrical layout, with one category line and a dedicated readable Fate Dice layout.
 - [x] Polish Action card typography and Fate Dice layout with safer title sizing, larger category labels, smaller die motif, no arrows, and cleaner outcome spacing.
 - [x] Add animated Game Mode Fate Dice rolling with stored results, spam prevention, reduced-motion support, and outcome resolution after the die settles.
+- [x] Refine Action card type/icon layout by removing the small category icon, adding large category motifs to standard Action cards, and rebalancing title centering.
+- [x] Reframe the app as a game-first experience with GAME navigation, Studio/Admin card tooling, and a tabletop Play shell.
+- [x] Polish Action card category motif alignment and add a Studio/Admin Dice Roll Tester.
+- [x] Rework the Play page into a digital tabletop layout and remove Card Library / Print UI routes.
+- [x] Convert the app to compact top navigation and rework Play into a single-screen poker-table-style layout.
 
 ## Backlog
 

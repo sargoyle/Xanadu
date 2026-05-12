@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
 - 2026-05-11: Added the Artist Card system with supplied Artist back artwork, premium generated Artist fronts, placeholder artwork support, prompt-only artwork metadata, Muse score grids, and a 150-card physical deck viewer. Files affected: `public/assets/artists/`, `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Added the Action Card system with supplied Action back artwork, burgundy/gold physical card fronts, category badges, timing/effect panels, Fate dice outcome panels, prompt-only artwork metadata, and a 64-card physical deck viewer. Files affected: `public/assets/actions/`, `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Added animated Game Mode Fate Dice rolling with a burgundy/gold D6, stored roll state/history, spam prevention during rolling, reduced-motion support, and outcome application after the die settles. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-12: Added a Studio/Admin Dice Roll Tester with the shared animated D6, roll button, stored result display, recent result history, and test value mapping. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 
 ### Changed
 
@@ -39,10 +40,19 @@ All notable changes to this project will be documented in this file.
 - 2026-05-11: Refined Artist card fronts with centered two-line names, stronger labelled Epoch/Type hierarchy, a `MUSES` header cell, 2-column/5-row score layout, and tighter info-panel spacing. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Redesigned Action card fronts around the `Applause Break` theatrical reference, removing repeated category labels and UI-heavy panels while giving Fate Dice cards a single die motif and vertical outcome layout. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Polished Action card typography by reducing and length-scaling titles, enlarging category labels, removing Fate Dice outcome arrows, shrinking the die motif, and increasing dice outcome spacing. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-12: Refined Action card type/icon layout by removing the small category-line icon, adding large engraved motifs to standard Action cards, and vertically balancing title placement above the type label. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-12: Reframed the app as game-first by moving deck viewers into Studio/Admin navigation and rebuilding the Play page as a tabletop shell with header, score/status, table, hand, turn, and log zones. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-12: Polished Action card category motifs by centering icons, normalizing the Swap/Steal circular frame, and replacing the Group/Party placeholder icon with a celebratory spark. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-12: Reworked the Play page away from a setup-dashboard feel into a digital tabletop layout with compact HUD, central playmat, deck/discard zone, current card spot, player areas, bottom hand dock, and side action panel. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-12: Converted the app from left navigation to a compact top navigation bar and reworked Play into a single-screen poker-table-style layout with player seats around a central table, opponent card backs, and a bottom current-player hand. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 
 ### Fixed
 
 - 2026-05-11: Fixed Artist card layout overflow by clamping long names to two lines, switching score cells to full Muse names, and using fixed internal card sections that stay inside the poker-card frame. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+
+### Removed
+
+- 2026-05-12: Removed Card Library and Print from Studio/Admin navigation and removed their visible UI routes while preserving card data, card components, and physical deck viewers. Files affected: `public/index.html`, `public/app.js`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 
 ---
 

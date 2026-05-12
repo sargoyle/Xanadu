@@ -23,8 +23,10 @@ Keep entries concise. One line per decision when possible.
 
 - Xanadu has two product modes: Game Mode is primary, and Companion Mode is secondary.
 - Game Mode is where users play the digital card game with turns, hands, tableau, actions, scoring, and win conditions.
-- Game Mode navigation contains `PLAY` and player-facing `Rules`.
-- Companion Mode contains card browsing, scoring helper, playtest logging, balance tools, and print/export utilities.
+- Game Mode navigation contains `PLAY`, `New Game`, and player-facing `Rules`.
+- Studio/Admin navigation contains Studio Home, Muse Cards, Epoch Cards, Artist Cards, Action Cards, Dice Tester, and Playtest Notes.
+- Primary navigation uses a compact top bar with Studio/Admin grouped in a dropdown so Play Mode can use the full browser width.
+- Companion/Studio/Admin Mode contains card browsing, scoring helper, playtest logging, balance tools, and print/export utilities.
 - Do not expand Companion Mode dashboards until playable Game Mode foundations are implemented.
 - Build Xanadu as a local-first web application that supports the physical tabletop game without requiring a screen during normal play.
 - Use dependency-free Node scripts for the initial foundation until package installation is available or explicitly requested.
@@ -52,6 +54,8 @@ Keep entries concise. One line per decision when possible.
 ## Design Patterns
 
 - The first screen and first navigation item must be the top-level `PLAY` Game Mode, not the companion dashboard.
+- The Play page uses a compact Game HUD, central tabletop playmat, shared deck/discard zones, player tableau areas, bottom hand dock, and side turn/action/log panel.
+- The Play page should be desktop-first and poker-table-inspired: players sit around a central shared table, opponents show face-down hand backs, and the current player hand stays face up at the bottom.
 - Use the card artwork as the primary visual focus and keep the interface quieter than the cards.
 - Preserve the 59:89 card aspect ratio for card thumbnails and previews.
 - Muse card previews use the supplied front artwork and shared back asset at the normal playing-card proportion of 63.5 x 88.9 mm.
@@ -74,9 +78,12 @@ Keep entries concise. One line per decision when possible.
 - The Action Deck viewer uses the supplied Action back artwork and renders 64 physical Action card fronts from canonical Action seed data.
 - Action card fronts follow the theatrical `Applause Break` direction: large centered title, one subtle category line, optional flavour, prominent effect text, and decorative footer only.
 - Action category/type may appear once on the card face; do not repeat it in the artwork area, effect area, or footer.
+- Action card category lines must show type text only; category icons belong as a separate large engraved motif between the type label and effect area.
+- Action card category motifs must be horizontally centered, use a consistent circular gold frame across categories, and use a celebratory spark for Group/Party.
 - Fate Dice Action cards use a distinct layout with one die motif and vertically stacked outcomes so dice rules remain readable and are never cramped into columns.
 - Action card titles must fit within two lines without clipping; Fate Dice outcome rows must not use arrows and should use clean numbered rows with comfortable spacing.
 - Game Mode Fate Dice Actions must animate a premium D6 roll, store the rolled value before settling, prevent duplicate rolls while active, respect reduced-motion preferences, then apply the matching outcome.
+- Studio/Admin may include a Dice Roll Tester utility for validating the shared D6 animation, stored result, and recent roll history outside gameplay.
 - Action cards must support `artworkPath` for future artwork files and `artworkPrompt` for prompt-only image generation support; the app must not call image APIs automatically.
 - Action deck dealing uses the shared physical deck component with a 64-card deck, face-up dealt cards, independent flipping, persistent table layout, and real shuffle/restart behavior.
 - Use the palette from `docs/design.md`: Midnight Ink, Parchment, Antique Gold, Ivory, Deep Plum, and restrained secondary accents.

@@ -39,10 +39,17 @@ const playtestSaveStatus = document.querySelector("#playtest-save-status");
 const balanceSummary = document.querySelector("#balance-summary");
 const playtestList = document.querySelector("#playtest-list");
 const newGameButton = document.querySelector("#new-game");
+const setupModal = document.querySelector("#new-game-panel");
+const closeSetupModalButton = document.querySelector("#close-setup-modal");
+const setupStartGameButton = document.querySelector("#setup-start-game");
+const setupEnterPlayButton = document.querySelector("#setup-enter-play");
+const setupStepIndicator = document.querySelector("#setup-step-indicator");
+const setupStepContent = document.querySelector("#setup-step-content");
 const gamePlayerCountSelect = document.querySelector("#game-player-count");
 const gameSetup = document.querySelector("#game-setup");
 const gameTurnTitle = document.querySelector("#game-turn-title");
 const gamePhase = document.querySelector("#game-phase");
+const gameTurnNumber = document.querySelector("#game-turn-number");
 const gameDecks = document.querySelector("#game-decks");
 const museChoice = document.querySelector("#muse-choice");
 const gameControls = document.querySelector("#game-controls");
@@ -51,6 +58,7 @@ const gamePlayers = document.querySelector("#game-players");
 const gameTableau = document.querySelector("#game-tableau");
 const playerHandTitle = document.querySelector("#player-hand-title");
 const playerHand = document.querySelector("#player-hand");
+const selectedCardPanel = document.querySelector("#selected-card-panel");
 const gameLog = document.querySelector("#game-log");
 const museDeckPile = document.querySelector("#muse-deck-pile");
 const museDealNextButton = document.querySelector("#muse-deal-next");
@@ -76,6 +84,10 @@ const actionRestartDeckButton = document.querySelector("#action-restart-deck");
 const actionCardsRemaining = document.querySelector("#action-cards-remaining");
 const actionCardsDealt = document.querySelector("#action-cards-dealt");
 const actionDealtArea = document.querySelector("#action-dealt-area");
+const diceTesterStage = document.querySelector("#dice-tester-stage");
+const diceTesterRollButton = document.querySelector("#dice-tester-roll");
+const diceTesterResult = document.querySelector("#dice-tester-result");
+const diceTesterHistory = document.querySelector("#dice-tester-history");
 
 const CARD_TYPES = ["All", "Muse", "Epoch", "Artist", "Action"];
 const PLAYTEST_STORAGE_KEY = "xanadu.playtests";
@@ -105,6 +117,15 @@ const state = {
     order: [],
     dealt: [],
     lastDealtIndex: null
+  },
+  diceTester: {
+    value: null,
+    isRolling: false,
+    history: []
+  },
+  setupFlow: {
+    open: false,
+    step: 1
   },
   players: [],
   scoreRows: [],
@@ -213,11 +234,11 @@ function actionCategoryLabel(category) {
 
 function actionCategoryIcon(category) {
   const icons = {
-    bonus: "*",
-    fate: "*",
+    bonus: "+",
+    fate: "6",
     disruption: "!",
     swap: "<>",
-    group: "*"
+    group: "✦"
   };
   return icons[category] ?? "?";
 }
@@ -498,9 +519,16 @@ function renderActionCategoryLine(card) {
   return `
     <span class="action-category-line">
       <span class="action-line-rule"></span>
-      <span class="action-category-mark" aria-hidden="true">${escapeHtml(actionCategoryIcon(card.category))}</span>
       <strong>${escapeHtml(actionCategoryLabel(card.category))}</strong>
       <span class="action-line-rule"></span>
+    </span>
+  `;
+}
+
+function renderActionTypeMotif(card) {
+  return `
+    <span class="action-motif-stage" aria-hidden="true">
+      <span class="action-type-motif action-motif-${escapeHtml(card.category)}">${escapeHtml(actionCategoryIcon(card.category))}</span>
     </span>
   `;
 }
@@ -527,6 +555,7 @@ function renderActionCardFront(card) {
     <span class="action-card-front action-standard-card action-category-${escapeHtml(card.category)}">
       <span class="action-card-title ${actionTitleSizeClass(card.name)}">${escapeHtml(card.name)}</span>
       ${renderActionCategoryLine(card)}
+      ${renderActionTypeMotif(card)}
       <span class="action-flavour-line">${flavor ? escapeHtml(flavor) : "&nbsp;"}</span>
       <span class="action-effect-panel">
         <span class="action-effect-text ${actionEffectSizeClass(card.effectText)}">${escapeHtml(card.effectText)}</span>
@@ -647,6 +676,7 @@ function normalizedCards() {
 }
 
 function populateFilters() {
+  if (!epochFilter || !museFilter || !actionFilter || !statusFilter) return;
   epochFilter.insertAdjacentHTML(
     "beforeend",
     seed.epochs.map((epoch) => `<option value="${escapeHtml(epoch.id)}">${escapeHtml(epoch.name)}</option>`).join("")
@@ -670,6 +700,7 @@ function populateFilters() {
 }
 
 function renderCardTabs() {
+  if (!cardTypeTabs) return;
   cardTypeTabs.innerHTML = CARD_TYPES.map(
     (type) => `
       <button type="button" class="${state.activeType === type ? "active" : ""}" data-type="${escapeHtml(type)}">
@@ -680,7 +711,7 @@ function renderCardTabs() {
 }
 
 function matchesFilters(card) {
-  const query = cardSearch.value.trim().toLowerCase();
+  const query = cardSearch?.value.trim().toLowerCase() ?? "";
   const haystack = [
     card.name,
     card.cardType,
@@ -703,14 +734,14 @@ function matchesFilters(card) {
 
   if (state.activeType !== "All" && card.cardType !== state.activeType) return false;
   if (query && !haystack.includes(query)) return false;
-  if (statusFilter.value && card.printStatus !== statusFilter.value) return false;
-  if (epochFilter.value && card.cardType === "Artist" && card.epochId !== epochFilter.value) return false;
-  if (epochFilter.value && card.cardType === "Epoch" && card.id !== epochFilter.value) return false;
-  if (epochFilter.value && card.cardType !== "Artist" && card.cardType !== "Epoch") return false;
-  if (museFilter.value && card.cardType === "Artist" && !Object.hasOwn(card.scores ?? {}, museFilter.value)) return false;
-  if (museFilter.value && card.cardType === "Muse" && card.id !== museFilter.value) return false;
-  if (museFilter.value && card.cardType !== "Artist" && card.cardType !== "Muse") return false;
-  if (actionFilter.value && (card.cardType !== "Action" || card.category !== actionFilter.value)) return false;
+  if (statusFilter?.value && card.printStatus !== statusFilter.value) return false;
+  if (epochFilter?.value && card.cardType === "Artist" && card.epochId !== epochFilter.value) return false;
+  if (epochFilter?.value && card.cardType === "Epoch" && card.id !== epochFilter.value) return false;
+  if (epochFilter?.value && card.cardType !== "Artist" && card.cardType !== "Epoch") return false;
+  if (museFilter?.value && card.cardType === "Artist" && !Object.hasOwn(card.scores ?? {}, museFilter.value)) return false;
+  if (museFilter?.value && card.cardType === "Muse" && card.id !== museFilter.value) return false;
+  if (museFilter?.value && card.cardType !== "Artist" && card.cardType !== "Muse") return false;
+  if (actionFilter?.value && (card.cardType !== "Action" || card.category !== actionFilter.value)) return false;
 
   return true;
 }
@@ -720,6 +751,7 @@ function filteredCards() {
 }
 
 function renderCards() {
+  if (!cardsList || !cardCount || !cardDetail) return;
   renderCardTabs();
   const cards = filteredCards();
   cardCount.textContent = `${cards.length} card${cards.length === 1 ? "" : "s"} shown`;
@@ -807,7 +839,7 @@ function renderDiceOutcomes(action) {
 }
 
 function renderCardDetail(card) {
-  if (!card) return;
+  if (!card || !cardDetail) return;
   const related = relatedCards(card);
   const epoch = card.cardType === "Artist" ? epochById.get(card.epochId) : null;
   const sizeLabel = cardSizeLabel(card);
@@ -903,6 +935,7 @@ function renderRules() {
 }
 
 function renderManifest() {
+  if (!manifest) return;
   const counts = countManifest();
   manifest.innerHTML = Object.entries(seed.deckManifest.targets)
     .map(([cardType, target]) => {
@@ -1713,12 +1746,80 @@ function renderCardPile(label, count, variant = "deck") {
   `;
 }
 
+function renderFaceDownHand(count) {
+  const visible = Math.max(0, Math.min(7, count));
+  if (visible === 0) return `<span class="opponent-hand-empty">0 cards</span>`;
+  return `
+    <div class="opponent-hand-backs" aria-label="${count} hidden cards">
+      ${Array.from({ length: visible }, (_, index) => `
+        <span class="opponent-card-back" style="--hidden-index:${index}; --hidden-total:${visible};">
+          <img src="${sharedCardBackPath}" alt="">
+        </span>
+      `).join("")}
+      <strong>${count}</strong>
+    </div>
+  `;
+}
+
 function handCardsForPlayer(player) {
   return [
     ...player.hand.epochs.map((card) => ({ card, type: "Epoch" })),
     ...player.hand.artists.map((card) => ({ card, type: "Artist" })),
     ...player.hand.actions.map((card) => ({ card, type: "Action" }))
   ];
+}
+
+function renderPlayerHandZones(cards) {
+  const groups = [
+    { type: "Epoch", label: "Epoch Cards" },
+    { type: "Artist", label: "Artist Cards" },
+    { type: "Action", label: "Action Cards" }
+  ];
+  return groups
+    .map(({ type, label }) => {
+      const groupCards = cards.filter((entry) => entry.type === type);
+      return `
+        <section class="hand-lane hand-lane-${type.toLowerCase()}">
+          <div class="hand-lane-heading">
+            <h4>${escapeHtml(label)}</h4>
+            <span>${groupCards.length}</span>
+          </div>
+          <div class="hand-lane-cards">
+            ${
+              groupCards.length
+                ? groupCards.map(({ card }, index) => renderGameCard(card, type, index, groupCards.length)).join("")
+                : `<p class="muted">No ${escapeHtml(type)} cards.</p>`
+            }
+          </div>
+        </section>
+      `;
+    })
+    .join("");
+}
+
+function selectedCardSummary(game, player) {
+  if (!game || !player) return `<p class="muted">Start a game to select cards.</p>`;
+  const selected = selectedHandCards(player);
+  const selectedEntry =
+    (selected.action && { card: selected.action, type: "Action" }) ||
+    (selected.artist && { card: selected.artist, type: "Artist" }) ||
+    (selected.epoch && { card: selected.epoch, type: "Epoch" });
+  if (!selectedEntry) return `<p class="muted">Select a card from your hand to inspect possible actions.</p>`;
+
+  const { card, type } = selectedEntry;
+  const detail =
+    type === "Action"
+      ? card.effectText ?? card.playCondition ?? "Action card selected."
+      : type === "Artist"
+      ? `${epochById.get(card.epochId)?.name ?? card.epoch ?? "Epoch"} | ${card.artistType ?? "Artist"}`
+      : card.description ?? "Epoch card selected.";
+  return `
+    <article class="selected-card-summary-card">
+      <span>${escapeHtml(type)}</span>
+      <strong>${escapeHtml(card.name)}</strong>
+      <p>${escapeHtml(detail)}</p>
+    </article>
+  `;
 }
 
 function renderTurnControls(game, player) {
@@ -1782,6 +1883,10 @@ function dicePips(value) {
   ).join("");
 }
 
+function renderAnimatedDie(value = 1, displayValue = value) {
+  return `<div class="animated-die" data-value="${value}" aria-hidden="true">${dicePips(displayValue)}</div>`;
+}
+
 function renderDiceRoller(game) {
   const roll = game.diceRoll;
   if (!roll?.isRolling && !roll?.value) return "";
@@ -1789,12 +1894,149 @@ function renderDiceRoller(game) {
   const displayValue = roll.isRolling ? 6 : value;
   return `
     <section class="dice-roll-panel ${roll.isRolling ? "is-rolling" : "has-result"}" aria-label="Fate Dice roll result">
-      <div class="animated-die" data-value="${value}" aria-hidden="true">${dicePips(displayValue)}</div>
+      ${renderAnimatedDie(value, displayValue)}
       <div class="dice-result-copy">
         <span>${escapeHtml(roll.isRolling ? "Rolling Fate Dice" : `Rolled: ${value}`)}</span>
         <strong>${escapeHtml(roll.actionName || "Fate Dice")}</strong>
         ${roll.outcome ? `<p>${escapeHtml(roll.outcome)}</p>` : `<p>The die is tumbling across the table...</p>`}
       </div>
+    </section>
+  `;
+}
+
+function renderDiceTester() {
+  if (!diceTesterStage) return;
+  const tester = state.diceTester;
+  const value = tester.value ?? 1;
+  const displayValue = tester.isRolling ? 6 : value;
+  diceTesterStage.innerHTML = `
+    <section class="dice-roll-panel dice-tester-panel ${tester.isRolling ? "is-rolling" : tester.value ? "has-result" : ""}" aria-label="Studio dice tester result">
+      ${renderAnimatedDie(value, displayValue)}
+      <div class="dice-result-copy">
+        <span>${escapeHtml(tester.isRolling ? "Rolling test die" : tester.value ? `Rolled: ${tester.value}` : "Ready to roll")}</span>
+        <strong>Fate Dice Test</strong>
+        <p>${escapeHtml(tester.value ? `Displayed result and stored value both equal ${tester.value}.` : "Press Roll Dice to test the animation.")}</p>
+      </div>
+    </section>
+  `;
+  if (diceTesterRollButton) diceTesterRollButton.disabled = tester.isRolling;
+  if (diceTesterResult) diceTesterResult.textContent = tester.value ? `Stored value: ${tester.value}` : "Stored value: none";
+  if (diceTesterHistory) diceTesterHistory.innerHTML = tester.history.length
+    ? tester.history.map((result) => `<li>Rolled ${result}</li>`).join("")
+    : `<li>No rolls yet.</li>`;
+}
+
+function rollStudioDice() {
+  if (state.diceTester.isRolling) return;
+  const value = Math.floor(Math.random() * 6) + 1;
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  state.diceTester.value = value;
+  state.diceTester.isRolling = true;
+  renderDiceTester();
+  window.setTimeout(
+    () => {
+      state.diceTester.isRolling = false;
+      state.diceTester.history = [value, ...state.diceTester.history].slice(0, 8);
+      renderDiceTester();
+    },
+    reduceMotion ? 180 : 1500
+  );
+}
+
+function setupStepForGame(game = state.game) {
+  if (!game) return 1;
+  if (game.phase === "Muse Selection") return 3;
+  return 4;
+}
+
+function openSetupModal() {
+  state.setupFlow.open = true;
+  state.setupFlow.step = setupStepForGame();
+  renderGameSetup();
+  renderSetupFlow();
+}
+
+function closeSetupModal() {
+  state.setupFlow.open = false;
+  renderSetupFlow();
+}
+
+function renderSetupOrder(game) {
+  if (!game) return "";
+  return `
+    <ol class="setup-order-list">
+      ${gameSelectionOrder(game)
+        .map((player) => `<li><strong>${escapeHtml(player.name)}</strong><span>Roll ${player.roll}</span><em>${escapeHtml(museById.get(player.museId)?.name ?? "Choosing...")}</em></li>`)
+        .join("")}
+    </ol>
+  `;
+}
+
+function renderSetupMuseChoices(game) {
+  const picker = currentMusePicker(game);
+  if (!picker) return "";
+  if (!picker.isHuman) return `<p class="muted">${escapeHtml(picker.name)} is choosing automatically.</p>`;
+  return `
+    <div class="setup-muse-panel">
+      <h3>${escapeHtml(picker.name)}, choose your Muse</h3>
+      <div class="muse-button-grid setup-muse-grid">
+        ${availableMuseIds(game)
+          .map((museId) => {
+            const muse = museById.get(museId);
+            return `<button type="button" class="muse-pick setup-muse-pick" data-muse-id="${escapeHtml(muse.id)}">${escapeHtml(muse.name)}</button>`;
+          })
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderSetupFlow() {
+  if (!setupModal) return;
+  setupModal.hidden = !state.setupFlow.open;
+  setupModal.classList.toggle("is-open", state.setupFlow.open);
+  if (!state.setupFlow.open) return;
+
+  const game = state.game;
+  const step = setupStepForGame(game);
+  state.setupFlow.step = step;
+  setupModal.dataset.setupStep = String(step);
+  setupStepIndicator.innerHTML = [1, 2, 3, 4]
+    .map((number) => `<span class="${number === step ? "active" : number < step ? "complete" : ""}">Step ${number}</span>`)
+    .join("");
+  setupStartGameButton.hidden = step !== 1;
+  setupEnterPlayButton.hidden = step !== 4;
+
+  if (step === 1) {
+    setupStepContent.innerHTML = `
+      <section>
+        <h3>Step 1: Player setup</h3>
+        <p class="muted">Choose player count, edit names, and confirm which seat is human. Other seats are NPCs for now.</p>
+      </section>
+    `;
+    return;
+  }
+
+  if (step === 3) {
+    setupStepContent.innerHTML = `
+      <section>
+        <h3>Step 2: Muse order</h3>
+        <p class="muted">Dice have been rolled. Muses are selected from highest roll to lowest.</p>
+        ${renderSetupOrder(game)}
+      </section>
+      <section>
+        <h3>Step 3: Muse selection</h3>
+        ${renderSetupMuseChoices(game)}
+      </section>
+    `;
+    return;
+  }
+
+  setupStepContent.innerHTML = `
+    <section>
+      <h3>Step 4: Starting hands dealt</h3>
+      <p class="muted">Each player has 5 Epoch cards, 5 Artist cards, and 3 Action cards. The table is ready.</p>
+      ${renderSetupOrder(game)}
     </section>
   `;
 }
@@ -1805,7 +2047,15 @@ function renderGame() {
     renderGameSetup();
     gameTurnTitle.textContent = "No game in progress";
     gamePhase.textContent = "Start a new game to roll turn order, choose Muses, and deal cards.";
-    gameDecks.innerHTML = "";
+    gameTurnNumber.textContent = "0";
+    gameDecks.innerHTML = `
+      ${renderCardPile("Artist Deck", 0, "deck")}
+      ${renderCardPile("Epoch Deck", 0, "deck")}
+      ${renderCardPile("Action Deck", 0, "deck")}
+      ${renderCardPile("Artist Discard", 0, "discard")}
+      ${renderCardPile("Epoch Discard", 0, "discard")}
+      ${renderCardPile("Action Discard", 0, "discard")}
+    `;
     museChoice.innerHTML = "";
     gameControls.innerHTML = "";
     diceRoller.innerHTML = "";
@@ -1813,6 +2063,7 @@ function renderGame() {
     gameTableau.innerHTML = `<div class="empty-state">Tableau sets will appear here after cards are played.</div>`;
     playerHandTitle.textContent = "Current Player Hand";
     playerHand.innerHTML = `<div class="empty-state">Your hand will appear after a game starts.</div>`;
+    selectedCardPanel.innerHTML = `<p class="muted">Select a card from your hand to inspect possible actions.</p>`;
     gameLog.innerHTML = `<p class="muted">No game actions yet.</p>`;
     return;
   }
@@ -1828,6 +2079,7 @@ function renderGame() {
       ? `${picker?.name ?? "Players"} choosing Muses`
       : `${currentPlayer?.name ?? "Player"}'s turn`;
   gamePhase.textContent = game.phase;
+  gameTurnNumber.textContent = String(game.turnNumber ?? 0);
   gameDecks.innerHTML = `
     ${renderCardPile("Artist Deck", game.decks.artist.length, "deck")}
     ${renderCardPile("Epoch Deck", game.decks.epoch.length, "deck")}
@@ -1879,12 +2131,26 @@ function renderGame() {
   gameTableau.innerHTML =
     game.players
       .map(
-        (player) => `
-          <article class="tableau-player">
-            <h4>${escapeHtml(player.name)} Tableau</h4>
+        (player, index) => {
+          const muse = museById.get(player.museId);
+          const handCount = player.hand.artists.length + player.hand.epochs.length + player.hand.actions.length;
+          return `
+          <article class="tableau-player seat-${index + 1} ${player.id === game.currentPlayerId ? "active-seat" : ""}">
+            <div class="tableau-player-header">
+              <h4>${escapeHtml(player.name)}</h4>
+              <span>${escapeHtml(muse?.name ?? "Empty Muse slot")}</span>
+            </div>
+            <div class="seat-stats">
+              <strong>${player.score} pts</strong>
+              <span>${player.tableau.length} Epochs</span>
+            </div>
+            ${player.isHuman && player.id === game.currentPlayerId ? `<p class="active-hand-note">Your hand is below</p>` : renderFaceDownHand(handCount)}
             ${
               player.tableau.length === 0
-                ? `<p class="muted">No Epochs yet.</p>`
+                ? `<div class="empty-tableau-slots">
+                    <span>Empty Epoch slot</span>
+                    <span>Empty Artist slot</span>
+                  </div>`
                 : player.tableau
                     .map(
                       (set) => `
@@ -1912,7 +2178,8 @@ function renderGame() {
                     .join("")
             }
           </article>
-        `
+        `;
+        }
       )
       .join("");
 
@@ -1922,10 +2189,11 @@ function renderGame() {
   const showVisibleHand = game.phase === "Muse Selection" || currentPlayer?.isHuman;
   const visibleHandCards = handCardsForPlayer(visiblePlayer);
   playerHand.innerHTML = showVisibleHand
-    ? `
-      ${visibleHandCards.map(({ card, type }, index) => renderGameCard(card, type, index, visibleHandCards.length)).join("")}
-    `
+    ? renderPlayerHandZones(visibleHandCards)
     : `<div class="empty-state">${escapeHtml(currentPlayer?.name ?? "NPC")} is taking an automated turn. Your hand returns when it is your turn.</div>`;
+  selectedCardPanel.innerHTML = showVisibleHand
+    ? selectedCardSummary(game, visiblePlayer)
+    : `<p class="muted">NPC turn in progress. Your selected card will return on your turn.</p>`;
 
   gameLog.innerHTML = game.log.map((entry) => `<p>${escapeHtml(entry)}</p>`).join("");
 }
@@ -2300,14 +2568,14 @@ function runTiebreaker() {
 }
 
 function bindEvents() {
-  cardTypeTabs.addEventListener("click", (event) => {
-    const button = event.target.closest("button[data-type]");
-    if (!button) return;
-    state.activeType = button.dataset.type;
-    renderCards();
-  });
+  cardTypeTabs?.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-type]");
+      if (!button) return;
+      state.activeType = button.dataset.type;
+      renderCards();
+    });
 
-  cardsList.addEventListener("click", (event) => {
+  cardsList?.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-card-key]");
     if (!button) return;
     state.selectedCardKey = button.dataset.cardKey;
@@ -2315,7 +2583,7 @@ function bindEvents() {
   });
 
   for (const control of [cardSearch, epochFilter, museFilter, actionFilter, statusFilter]) {
-    control.addEventListener("input", renderCards);
+    control?.addEventListener("input", renderCards);
   }
 
   rulesSearch.addEventListener("input", renderRules);
@@ -2402,6 +2670,7 @@ function bindEvents() {
     if (!card) return;
     flipDealtPhysicalCard("action", Number(card.dataset.dealtIndex));
   });
+  diceTesterRollButton?.addEventListener("click", rollStudioDice);
   document.addEventListener("keydown", (event) => {
     const activeDeckKey =
       location.hash === "#muse-deck" || Boolean(event.target.closest?.("#muse-deck"))
@@ -2526,6 +2795,7 @@ function init() {
   renderEpochDeckViewer();
   renderArtistDeckViewer();
   renderActionDeckViewer();
+  renderDiceTester();
   populateFilters();
   bindEvents();
   renderCards();
