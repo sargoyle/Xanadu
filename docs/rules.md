@@ -55,11 +55,20 @@ Keep entries concise. One line per decision when possible.
 
 - The first screen and first navigation item must be the top-level `PLAY` Game Mode, not the companion dashboard.
 - The Play page uses a compact Game HUD, central tabletop playmat, shared deck/discard zones, player tableau areas, bottom hand dock, and side turn/action/log panel.
+- The Play page uses a stable 3-row game-app layout: compact HUD, contained central table/action panel, and fixed always-visible current-player hand.
 - The Play page should be desktop-first and poker-table-inspired: players sit around a central shared table, opponents show face-down hand backs, and the current player hand stays face up at the bottom.
+- Play page player seats must occupy defined grid zones around the central playmat; avoid absolute floating seats that overlap the shared table.
+- The Play page should fit within one desktop viewport where practical; the hand remains visible and only compact subpanels such as logs may scroll internally.
+- Player hand lanes must show full card faces without vertical clipping; reduce scale or allocate more hand height before using clipping.
+- The top navigation must never cover Play content; page anchors and main content need enough top spacing for the sticky nav.
+- New Game setup belongs in a clean modal or setup screen, not as loose controls layered over the playmat.
+- Muse selection during New Game must use modal/panel card or button choices, not long dropdowns over the shared table.
 - Use the card artwork as the primary visual focus and keep the interface quieter than the cards.
 - Preserve the 59:89 card aspect ratio for card thumbnails and previews.
 - Muse card previews use the supplied front artwork and shared back asset at the normal playing-card proportion of 63.5 x 88.9 mm.
 - Game Mode cards must render as fixed-ratio physical tabletop cards, not dashboard tiles, records, articles, or detail-page previews.
+- Card faces must use the same final physical designs everywhere they appear; hand, tableau, selected preview, deck viewer, and Studio/Admin may differ only by scale.
+- Face-down cards and piles must use the correct type-specific deck back for Muse, Epoch, Artist, and Action cards.
 - Game Mode card zones should use tactile tabletop behavior: fanned hands, overlapping tableau stacks, visible card backs, hover lift, inspect scaling, and animated movement between zones where practical.
 - Card typography, frames, artwork, score hints, and rules text belong inside the card face; external labels should only identify zones or pile counts.
 - Play Mode card interactions should happen directly on cards: click to inspect/select, double-click or drag to play, and drop playable cards onto the tableau instead of opening separate gameplay detail screens.
@@ -94,6 +103,7 @@ Keep entries concise. One line per decision when possible.
 
 - Xanadu supports 2-9 players.
 - Muse selection is user choice in order from highest dice roll to lowest; each Muse can be selected by only one player.
+- New Game setup proceeds through player setup, dice roll order, unique Muse selection, starting hand deal, then Play mode.
 - For 2-3 players, the game ends at first to 5 Epochs or when the Action deck is exhausted.
 - For 4-9 players, the game ends at first to 4 Epochs or when the Action deck is exhausted.
 - A valid scoring set requires a Muse, an Epoch, and an Artist associated with that Epoch.
@@ -108,6 +118,9 @@ Keep entries concise. One line per decision when possible.
 - Fate cards must define exactly 6 dice outcomes.
 - Action design should favor strategy over chaos and avoid hard resets.
 - The first Action engine resolves simple draw, Fate dice, and extra-Artist effects automatically; complex Actions use manual-resolution log fallback until dedicated handlers exist.
+- Selected Action cards must expose playable controls: play or roll, discard, cancel selection, and resolve/discard for pending Fate Dice cards.
+- Playing or discarding an Action card must remove it from the current player's hand, move it to the Action discard, update counts, and write to the game log.
+- Selected card controls in the preview panel and Available Actions must route through the same gameplay command handlers.
 - Game Mode must allow both manual card selection and an `Auto Play Legal Set` helper so a local game can always progress during digital playtesting.
 - Every card must have a print status.
 

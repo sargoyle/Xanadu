@@ -55,9 +55,14 @@
 - [x] Polish Action card category motif alignment and add a Studio/Admin Dice Roll Tester.
 - [x] Rework the Play page into a digital tabletop layout and remove Card Library / Print UI routes.
 - [x] Convert the app to compact top navigation and rework Play into a single-screen poker-table-style layout.
+- [x] Fix Play page containment and New Game setup flow with a step-based modal outside the game table.
+- [x] Reuse final physical card faces and correct deck backs in player hands, tableaus, piles, and selected-card previews.
+- [x] Tighten Play into a one-screen game table and make selected Action cards playable with discard, Fate dice, and simple effect resolution.
+- [x] Fix Play hand card clipping, rebalance table space, redesign selected-card controls, and harden Action execution commands.
+- [x] Rebuild the Play page as a stable 3-row game app with a central grid playmat and working Action-card command layer.
 
 ## Backlog
 
-- [ ] Expand Action handlers for steal, swap, protect, cancel, and discard effects.
+- [ ] Expand Action handlers for steal, swap, protect, cancel, and targeted discard effects.
 - [ ] Add richer card-targeting UI for player interaction Actions.
 - [ ] Add print production dashboard and validation after playable Game Mode is stable.

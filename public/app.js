@@ -50,6 +50,7 @@ const gameSetup = document.querySelector("#game-setup");
 const gameTurnTitle = document.querySelector("#game-turn-title");
 const gamePhase = document.querySelector("#game-phase");
 const gameTurnNumber = document.querySelector("#game-turn-number");
+const gameScoreSummary = document.querySelector("#game-score-summary");
 const gameDecks = document.querySelector("#game-decks");
 const museChoice = document.querySelector("#muse-choice");
 const gameControls = document.querySelector("#game-controls");
@@ -135,6 +136,7 @@ const state = {
 
 const museById = new Map(seed.muses.map((muse) => [muse.id, muse]));
 const epochById = new Map(seed.epochs.map((epoch) => [epoch.id, epoch]));
+const epochIndexById = new Map(seed.epochs.map((epoch, index) => [epoch.id, index]));
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -1414,7 +1416,7 @@ function renderGameSetup() {
       return `
         <div class="game-setup-row ${player.id === state.game?.currentPlayerId ? "active" : ""}" data-game-player-index="${index}">
           <label>
-            <span>${player.isHuman ? "Human Player" : `Player ${index + 1}`}</span>
+            <span>${player.isHuman ? "Human Player" : `NPC Player ${index + 1}`}</span>
             <input class="game-setup-name" value="${escapeHtml(player.name)}" aria-label="Player ${index + 1} name">
           </label>
           <div>
@@ -1507,6 +1509,7 @@ function startNewGame() {
       outcome: "",
       history: []
     },
+    pendingFateAction: null,
     players,
     decks: { artist: artistDeck, epoch: epochDeck, action: actionDeck },
     discards: { artist: [], epoch: [], action: [] },
@@ -1517,6 +1520,7 @@ function startNewGame() {
     ]
   };
 
+  state.setupFlow.open = true;
   resolveNpcMuseChoices();
   renderGame();
 }
@@ -1612,6 +1616,7 @@ function startFirstTurn(game = state.game) {
   game.selectedCards = { epoch: "", artist: "", action: "" };
   game.inspectedCard = null;
   game.draggedCard = null;
+  game.pendingFateAction = null;
   addGameLog(`${activePlayer(game).name} starts turn 1.`);
 }
 
@@ -1648,6 +1653,79 @@ function gameCardScoreLabel(card, type, museId) {
   return `${score} for ${muse?.name ?? "Muse"}`;
 }
 
+function deckBackPathForType(type) {
+  return {
+    Muse: "/assets/muses/muse-back.png",
+    Epoch: "/assets/epochs/epoch-back.png",
+    Artist: "/assets/artists/artist-back.png",
+    Action: "/assets/actions/action-back.png"
+  }[type] ?? sharedCardBackPath;
+}
+
+function cardTypeFromPileLabel(label) {
+  if (/artist/i.test(label)) return "Artist";
+  if (/epoch/i.test(label)) return "Epoch";
+  if (/action/i.test(label)) return "Action";
+  if (/muse/i.test(label)) return "Muse";
+  return "";
+}
+
+function epochImagePath(card) {
+  const epochIndex = epochIndexById.get(card.id);
+  if (epochIndex === undefined) return card.imagePath ?? "";
+  return `/assets/epochs/epoch-front-${String(epochIndex + 1).padStart(2, "0")}.png`;
+}
+
+function finalDisplayCard(card, type) {
+  if (type === "Muse") {
+    const muse = museById.get(card.id) ?? card;
+    return {
+      ...muse,
+      ...card,
+      imagePath: card.imagePath ?? muse.imagePath,
+      backImagePath: card.backImagePath ?? deckBackPathForType(type)
+    };
+  }
+  if (type === "Epoch") {
+    return {
+      ...card,
+      imagePath: card.imagePath ?? epochImagePath(card),
+      backImagePath: card.backImagePath ?? deckBackPathForType(type)
+    };
+  }
+  if (type === "Artist") {
+    const epoch = epochById.get(card.epochId);
+    return {
+      ...card,
+      cardKind: "artist",
+      epochName: card.epochName ?? epoch?.name ?? card.epochId,
+      artworkPath: card.artworkPath ?? "",
+      artworkPrompt: card.artworkPrompt ?? generateArtistArtworkPrompt(card),
+      backImagePath: card.backImagePath ?? deckBackPathForType(type)
+    };
+  }
+  if (type === "Action") {
+    return {
+      ...card,
+      cardKind: "action",
+      artworkPath: card.artworkPath ?? "",
+      artworkPrompt: card.artworkPrompt ?? generateActionArtworkPrompt(card),
+      backImagePath: card.backImagePath ?? deckBackPathForType(type)
+    };
+  }
+  return card;
+}
+
+function renderFinalCardFront(card, type) {
+  const displayCard = finalDisplayCard(card, type);
+  if (type === "Artist") return renderArtistCardFront(displayCard);
+  if (type === "Action") return renderActionCardFront(displayCard);
+  if (displayCard.imagePath) {
+    return `<img class="physical-card-full-art" src="${escapeHtml(displayCard.imagePath)}" alt="${escapeHtml(`${displayCard.name} ${type} card front`)}">`;
+  }
+  return `<span class="card-art-window"><span class="card-glyph">${escapeHtml(gameCardGlyph(type))}</span></span>`;
+}
+
 function handCardStyle(index = 0, total = 1) {
   const middle = (total - 1) / 2;
   const rotation = Math.max(-12, Math.min(12, (index - middle) * 2.8));
@@ -1669,12 +1747,13 @@ function renderPhysicalCard(card, type, options = {}) {
   const attrs = interactive
     ? `type="button" draggable="true" data-card-type="${escapeHtml(type.toLowerCase())}" data-instance-id="${escapeHtml(card.instanceId)}"`
     : `role="img"`;
-  const backPath = card.backImagePath ?? sharedCardBackPath;
-  const scoreLabel = gameCardScoreLabel(card, type, scoreMuseId);
+  const displayCard = finalDisplayCard(card, type);
+  const backPath = displayCard.backImagePath ?? deckBackPathForType(type);
   const style = handCardStyle(index, total);
   const cardClasses = [
     "play-card",
     "physical-card",
+    "final-design-card",
     `card-type-${type.toLowerCase()}`,
     selected ? "selected" : "",
     inspected ? "inspected" : "",
@@ -1694,21 +1773,10 @@ function renderPhysicalCard(card, type, options = {}) {
     `;
   }
 
-  const fullArt = card.imagePath
-    ? `<img class="physical-card-full-art" src="${escapeHtml(card.imagePath)}" alt="${escapeHtml(`${card.name} artwork`)}">`
-    : `<span class="card-art-window"><span class="card-glyph">${escapeHtml(gameCardGlyph(type))}</span></span>`;
-
   return `
-    <${tag} ${attrs} class="${cardClasses}" style="${style}" aria-label="${escapeHtml(`${type} card: ${card.name}`)}">
+    <${tag} ${attrs} class="${cardClasses}" style="${style}" aria-label="${escapeHtml(`${type} card: ${displayCard.name}`)}">
       <span class="physical-card-face">
-        <span class="card-inner-frame">
-          <span class="card-kicker">${escapeHtml(type)}</span>
-          <strong class="card-title">${escapeHtml(card.name)}</strong>
-          <span class="card-subtitle">${escapeHtml(gameCardSubtitle(card, type) ?? "")}</span>
-          ${fullArt}
-          <span class="card-rules-text">${escapeHtml(gameCardBody(card, type))}</span>
-          ${scoreLabel ? `<span class="card-score-chip">${escapeHtml(scoreLabel)}</span>` : ""}
-        </span>
+        ${renderFinalCardFront(displayCard, type)}
       </span>
     </${tag}>
   `;
@@ -1729,11 +1797,12 @@ function renderGameCard(card, type, index = 0, total = 1) {
 
 function renderCardPile(label, count, variant = "deck") {
   const stackCount = Math.max(1, Math.min(3, count));
+  const backPath = deckBackPathForType(cardTypeFromPileLabel(label));
   const stack = Array.from({ length: stackCount }, (_, index) => {
     const offset = count === 0 ? 0 : index;
     return `
       <span class="pile-card-back" style="--pile-offset:${offset};">
-        <img src="${sharedCardBackPath}" alt="">
+        <img src="${escapeHtml(backPath)}" alt="">
       </span>
     `;
   }).join("");
@@ -1746,14 +1815,28 @@ function renderCardPile(label, count, variant = "deck") {
   `;
 }
 
-function renderFaceDownHand(count) {
+function hiddenBackPathsForPlayer(player) {
+  return [
+    ...player.hand.epochs.map(() => deckBackPathForType("Epoch")),
+    ...player.hand.artists.map(() => deckBackPathForType("Artist")),
+    ...player.hand.actions.map(() => deckBackPathForType("Action"))
+  ];
+}
+
+function renderFaceDownHand(count, backPaths = []) {
   const visible = Math.max(0, Math.min(7, count));
   if (visible === 0) return `<span class="opponent-hand-empty">0 cards</span>`;
+  const visibleBacks = backPaths.length > 0
+    ? backPaths.slice(0, visible)
+    : Array.from({ length: visible }, (_, index) => {
+        const types = ["Epoch", "Artist", "Action"];
+        return deckBackPathForType(types[index % types.length]);
+      });
   return `
     <div class="opponent-hand-backs" aria-label="${count} hidden cards">
-      ${Array.from({ length: visible }, (_, index) => `
+      ${visibleBacks.map((backPath, index) => `
         <span class="opponent-card-back" style="--hidden-index:${index}; --hidden-total:${visible};">
-          <img src="${sharedCardBackPath}" alt="">
+          <img src="${escapeHtml(backPath)}" alt="">
         </span>
       `).join("")}
       <strong>${count}</strong>
@@ -1797,27 +1880,95 @@ function renderPlayerHandZones(cards) {
     .join("");
 }
 
-function selectedCardSummary(game, player) {
-  if (!game || !player) return `<p class="muted">Start a game to select cards.</p>`;
+function selectedEntryForPlayer(player) {
+  if (!state.game || !player) return null;
   const selected = selectedHandCards(player);
-  const selectedEntry =
+  return (
     (selected.action && { card: selected.action, type: "Action" }) ||
     (selected.artist && { card: selected.artist, type: "Artist" }) ||
-    (selected.epoch && { card: selected.epoch, type: "Epoch" });
-  if (!selectedEntry) return `<p class="muted">Select a card from your hand to inspect possible actions.</p>`;
+    (selected.epoch && { card: selected.epoch, type: "Epoch" }) ||
+    null
+  );
+}
+
+function selectedTableauPlayStatus(game, player, entry) {
+  if (!entry || entry.type === "Action") return { canPlay: false, reason: "Select an Epoch or Artist to build a tableau set." };
+  if (game.phase === "Draw Action") return { canPlay: false, reason: "Draw your Action card before playing tableau cards." };
+  const selected = selectedHandCards(player);
+  const maxArtists = 1 + (game.extraArtistPlays ?? 0);
+  if (game.artistsPlayedThisTurn >= maxArtists) return { canPlay: false, reason: "Artist play limit reached this turn." };
+  if (selected.epoch && selected.artist) {
+    return selected.epoch.id === selected.artist.epochId
+      ? { canPlay: true, reason: "Play this Epoch + Artist set." }
+      : { canPlay: false, reason: "Artist must match the selected Epoch." };
+  }
+  if (selected.artist) {
+    return matchingTableauSet(player, selected.artist)
+      ? { canPlay: true, reason: "Attach this Artist to an existing matching Epoch." }
+      : { canPlay: false, reason: "Select the matching Epoch, or play that Epoch first." };
+  }
+  return { canPlay: false, reason: "Select an Artist with this Epoch to play a set." };
+}
+
+function selectedCardCategory(card, type) {
+  if (type === "Action") return actionCategoryLabel(card.category);
+  if (type === "Artist") return epochById.get(card.epochId)?.name ?? card.epochId;
+  if (type === "Epoch") return "Epoch";
+  return type;
+}
+
+function renderSelectedCardPanelActions(game, player, entry, commandAttribute = "data-panel-command") {
+  if (!entry) return "";
+  const { card, type } = entry;
+  const isHumanTurn = player?.id === game.currentPlayerId && player.isHuman;
+  const canAct = isHumanTurn && game.phase !== "Draw Action" && !game.diceRoll?.isRolling;
+  if (type === "Action") {
+    const pendingFate = game.pendingFateAction?.instanceId === card.instanceId;
+    return `
+      <div class="selected-card-actions">
+        ${
+          card.diceOutcomes
+            ? pendingFate
+              ? `<button type="button" class="command-button" ${commandAttribute}="resolve-fate-action" ${!canAct ? "disabled" : ""}>Resolve / Discard</button>`
+              : `<button type="button" class="command-button" ${commandAttribute}="roll-selected-fate" ${!canAct || game.actionPlayedThisTurn ? "disabled" : ""}>Roll Dice</button>`
+            : `<button type="button" class="command-button" ${commandAttribute}="play-action" ${!canAct || game.actionPlayedThisTurn ? "disabled" : ""}>Play Action</button>`
+        }
+        <button type="button" class="command-button secondary" ${commandAttribute}="discard-action" ${!canAct ? "disabled" : ""}>Discard</button>
+        <button type="button" class="command-button secondary" ${commandAttribute}="cancel-selection">Cancel</button>
+      </div>
+      ${!canAct ? `<p class="selected-card-reason">${escapeHtml(game.phase === "Draw Action" ? "Draw an Action before playing cards." : "Wait for your turn.")}</p>` : ""}
+    `;
+  }
+
+  const status = selectedTableauPlayStatus(game, player, entry);
+  return `
+    <div class="selected-card-actions">
+      <button type="button" class="command-button" ${commandAttribute}="play-selected-card" ${!canAct || !status.canPlay ? "disabled" : ""}>Play Set</button>
+      <button type="button" class="command-button secondary" ${commandAttribute}="cancel-selection">Cancel</button>
+    </div>
+    <p class="selected-card-reason">${escapeHtml(status.reason)}</p>
+  `;
+}
+
+function selectedCardSummary(game, player) {
+  if (!game || !player) return `<p class="muted">Start a game to select cards.</p>`;
+  const selectedEntry = selectedEntryForPlayer(player);
+  if (!selectedEntry) return `<p class="muted">Select a card from your hand.</p>`;
 
   const { card, type } = selectedEntry;
-  const detail =
-    type === "Action"
-      ? card.effectText ?? card.playCondition ?? "Action card selected."
-      : type === "Artist"
-      ? `${epochById.get(card.epochId)?.name ?? card.epoch ?? "Epoch"} | ${card.artistType ?? "Artist"}`
-      : card.description ?? "Epoch card selected.";
   return `
     <article class="selected-card-summary-card">
-      <span>${escapeHtml(type)}</span>
-      <strong>${escapeHtml(card.name)}</strong>
-      <p>${escapeHtml(detail)}</p>
+      ${renderPhysicalCard(card, type, {
+        interactive: false,
+        inspected: true,
+        extraClass: "selected-card-preview",
+        scoreMuseId: player.museId
+      })}
+      <div class="selected-card-meta">
+        <strong>${escapeHtml(card.name)}</strong>
+        <span>${escapeHtml(type)}${selectedCardCategory(card, type) ? ` | ${escapeHtml(selectedCardCategory(card, type))}` : ""}</span>
+      </div>
+      ${renderSelectedCardPanelActions(game, player, selectedEntry)}
     </article>
   `;
 }
@@ -1848,14 +1999,46 @@ function renderTurnControls(game, player) {
 
   const isHumanTurn = player?.isHuman;
   const isRolling = Boolean(game.diceRoll?.isRolling);
+  const selected = player ? selectedHandCards(player) : {};
+  const selectedAction = selected.action;
+  const selectedEntry = selectedEntryForPlayer(player);
+  const tableauStatus = selectedEntry ? selectedTableauPlayStatus(game, player, selectedEntry) : null;
+  const legalAutoMove = player?.isHuman && game.phase !== "Draw Action" ? findPlayableTableauMove(player) : null;
+  const pendingFate = selectedAction && game.pendingFateAction?.instanceId === selectedAction.instanceId;
+  const canAct = isHumanTurn && game.phase !== "Draw Action" && !isRolling;
   return `
-    <div class="button-row">
-      <button id="draw-action" type="button" class="command-button" ${!isHumanTurn || game.phase !== "Draw Action" || isRolling ? "disabled" : ""}>Draw Action</button>
-      <button id="play-action" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" || game.actionPlayedThisTurn || isRolling ? "disabled" : ""}>Play Action</button>
-      <button id="play-tableau-card" type="button" class="command-button" ${!isHumanTurn || game.phase === "Draw Action" || isRolling ? "disabled" : ""}>Play Epoch / Artist</button>
-      <button id="auto-tableau-play" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" || isRolling ? "disabled" : ""}>Auto Play Legal Set</button>
-      <button id="end-turn" type="button" class="command-button secondary" ${!isHumanTurn || game.phase === "Draw Action" || isRolling ? "disabled" : ""}>End Turn</button>
+    <div class="button-row turn-primary-actions">
+      ${game.phase === "Draw Action" ? `<button id="draw-action" type="button" class="command-button" ${!isHumanTurn || isRolling ? "disabled" : ""}>Draw Action</button>` : ""}
+      ${
+        selectedEntry && selectedEntry.type !== "Action"
+          ? `<button id="play-selected-card" type="button" class="command-button" ${!canAct || !tableauStatus?.canPlay ? "disabled" : ""}>Play Selected Card</button>`
+          : ""
+      }
+      ${legalAutoMove ? `<button id="auto-tableau-play" type="button" class="command-button secondary" ${!canAct ? "disabled" : ""}>Auto Play Legal Set</button>` : ""}
+      ${game.phase !== "Draw Action" ? `<button id="end-turn" type="button" class="command-button secondary" ${!isHumanTurn || isRolling ? "disabled" : ""}>End Turn</button>` : ""}
     </div>
+    ${
+      selectedAction
+        ? `
+          <div class="selected-action-controls">
+            <strong>${escapeHtml(selectedAction.name)}</strong>
+            <span>${escapeHtml(selectedAction.effectText ?? selectedAction.rulesText ?? "Action selected.")}</span>
+            <div class="button-row">
+              ${
+                selectedAction.diceOutcomes
+                  ? pendingFate
+                    ? `<button id="resolve-fate-action" type="button" class="command-button" ${!canAct || isRolling ? "disabled" : ""}>Resolve / Discard</button>`
+                    : `<button id="roll-selected-fate" type="button" class="command-button" ${!canAct || game.actionPlayedThisTurn || isRolling ? "disabled" : ""}>Roll Dice</button>`
+                  : `<button id="play-action" type="button" class="command-button" ${!canAct || game.actionPlayedThisTurn ? "disabled" : ""}>Play Action</button>`
+              }
+              <button id="discard-action" type="button" class="command-button secondary" ${!canAct ? "disabled" : ""}>Discard Action</button>
+              <button id="cancel-selection" type="button" class="command-button secondary">Cancel Selection</button>
+            </div>
+            ${pendingFate ? `<p class="muted">Rolled ${game.pendingFateAction.roll}: ${escapeHtml(game.pendingFateAction.outcome)}</p>` : ""}
+          </div>
+        `
+        : ""
+    }
     <p class="muted">${escapeHtml(turnHint(game, player))}</p>
   `;
 }
@@ -2041,13 +2224,48 @@ function renderSetupFlow() {
   `;
 }
 
+function renderPlaceholderPlayerSeats(count = 4) {
+  return Array.from(
+    { length: count },
+    (_, index) => `
+      <article class="tableau-player seat-${index + 1} placeholder-seat">
+        <div class="tableau-player-header">
+          <h4>${index === 0 ? "You" : `NPC ${index}`}</h4>
+          <span>Empty Muse slot</span>
+        </div>
+        <div class="seat-stats">
+          <strong>0 pts</strong>
+          <span>0 Epochs</span>
+        </div>
+        ${renderFaceDownHand(index === 0 ? 0 : 3)}
+        <div class="empty-tableau-slots">
+          <span>Empty Epoch slot</span>
+          <span>Empty Artist slot</span>
+        </div>
+      </article>
+    `
+  ).join("");
+}
+
+function chooseHumanMuse(museId) {
+  if (!state.game) return;
+  const picker = currentMusePicker(state.game);
+  if (!picker?.isHuman) return;
+  picker.museId = museId;
+  state.game.log.unshift(`You chose ${museById.get(picker.museId)?.name ?? "a Muse"}.`);
+  resolveNpcMuseChoices();
+  renderGame();
+}
+
 function renderGame() {
   const game = state.game;
   if (!game) {
     renderGameSetup();
+    renderSetupFlow();
     gameTurnTitle.textContent = "No game in progress";
     gamePhase.textContent = "Start a new game to roll turn order, choose Muses, and deal cards.";
     gameTurnNumber.textContent = "0";
+    gameScoreSummary.textContent = "No scores yet";
     gameDecks.innerHTML = `
       ${renderCardPile("Artist Deck", 0, "deck")}
       ${renderCardPile("Epoch Deck", 0, "deck")}
@@ -2060,16 +2278,20 @@ function renderGame() {
     gameControls.innerHTML = "";
     diceRoller.innerHTML = "";
     gamePlayers.innerHTML = `<div class="empty-state">Game Mode is the primary experience. Start here to play Xanadu digitally.</div>`;
-    gameTableau.innerHTML = `<div class="empty-state">Tableau sets will appear here after cards are played.</div>`;
+    gameTableau.innerHTML = renderPlaceholderPlayerSeats();
     playerHandTitle.textContent = "Current Player Hand";
     playerHand.innerHTML = `<div class="empty-state">Your hand will appear after a game starts.</div>`;
-    selectedCardPanel.innerHTML = `<p class="muted">Select a card from your hand to inspect possible actions.</p>`;
+    selectedCardPanel.innerHTML = `<p class="muted">Select a card from your hand.</p>`;
     gameLog.innerHTML = `<p class="muted">No game actions yet.</p>`;
     return;
   }
 
   refreshScores(game);
   renderGameSetup();
+  if (game.phase === "Muse Selection" && !state.setupFlow.open) {
+    state.setupFlow.open = true;
+  }
+  renderSetupFlow();
   const currentPlayer = game.players.find((player) => player.id === game.currentPlayerId);
   const picker = currentMusePicker(game);
   gameTurnTitle.textContent =
@@ -2080,6 +2302,7 @@ function renderGame() {
       : `${currentPlayer?.name ?? "Player"}'s turn`;
   gamePhase.textContent = game.phase;
   gameTurnNumber.textContent = String(game.turnNumber ?? 0);
+  gameScoreSummary.textContent = game.players.map((player) => `${player.name}: ${player.score}`).join(" | ");
   gameDecks.innerHTML = `
     ${renderCardPile("Artist Deck", game.decks.artist.length, "deck")}
     ${renderCardPile("Epoch Deck", game.decks.epoch.length, "deck")}
@@ -2094,20 +2317,7 @@ function renderGame() {
     </article>
   `;
 
-  museChoice.innerHTML =
-    picker?.isHuman
-      ? `
-        <h3>Choose Your Muse</h3>
-        <div class="muse-button-grid">
-          ${availableMuseIds(game)
-            .map((museId) => {
-              const muse = museById.get(museId);
-              return `<button type="button" class="muse-pick" data-muse-id="${escapeHtml(muse.id)}">${escapeHtml(muse.name)}</button>`;
-            })
-            .join("")}
-        </div>
-      `
-      : "";
+  museChoice.innerHTML = "";
   gameControls.innerHTML = renderTurnControls(game, currentPlayer);
   diceRoller.innerHTML = renderDiceRoller(game);
 
@@ -2144,7 +2354,7 @@ function renderGame() {
               <strong>${player.score} pts</strong>
               <span>${player.tableau.length} Epochs</span>
             </div>
-            ${player.isHuman && player.id === game.currentPlayerId ? `<p class="active-hand-note">Your hand is below</p>` : renderFaceDownHand(handCount)}
+            ${player.isHuman && player.id === game.currentPlayerId ? `<p class="active-hand-note">Your hand is below</p>` : renderFaceDownHand(handCount, hiddenBackPathsForPlayer(player))}
             ${
               player.tableau.length === 0
                 ? `<div class="empty-tableau-slots">
@@ -2230,28 +2440,113 @@ async function playSelectedAction() {
     renderGame();
     return;
   }
+  if (action.diceOutcomes) {
+    await rollSelectedFateAction();
+    return;
+  }
   await resolveActionCard(player, action);
   removeByInstance(player.hand.actions, action.instanceId);
   game.discards.action.push(action);
   game.actionPlayedThisTurn = true;
   game.selectedCards.action = "";
+  game.pendingFateAction = null;
   checkEndGame();
   renderGame();
 }
 
 async function resolveActionCard(player, action) {
   const game = state.game;
-  addGameLog(`${player.name} played Action: ${action.name}.`);
+  const effectText = action.effectText ?? action.rulesText ?? "";
+  addGameLog(`${player.name} played ${action.name}: ${effectText || "Action effect."}`);
 
   if (action.category === "fate" && action.diceOutcomes) {
     const roll = await rollFateDie(action);
     const outcome = action.diceOutcomes[String(roll)];
-    addGameLog(`Fate roll ${roll}: ${outcome}`);
+    addGameLog(`${player.name} rolled ${roll} for ${action.name}: ${outcome}`);
     applySimpleEffect(player, outcome);
     return;
   }
 
-  applySimpleEffect(player, action.effectText ?? action.rulesText ?? "");
+  applySimpleEffect(player, effectText);
+}
+
+async function rollSelectedFateAction() {
+  const game = state.game;
+  const player = activePlayer(game);
+  if (!game || !player?.isHuman || game.actionPlayedThisTurn || game.diceRoll?.isRolling) return;
+  const action = selectedHandCards(player).action;
+  if (!action?.diceOutcomes) {
+    addGameLog("Select a Fate Dice Action before rolling.");
+    renderGame();
+    return;
+  }
+  addGameLog(`${player.name} played ${action.name}: ${action.effectText ?? "Roll Fate Dice."}`);
+  const roll = await rollFateDie(action);
+  const outcome = action.diceOutcomes[String(roll)] ?? "";
+  game.pendingFateAction = { instanceId: action.instanceId, actionId: action.id, roll, outcome };
+  addGameLog(`${player.name} rolled ${roll} for ${action.name}: ${outcome}`);
+  applySimpleEffect(player, outcome);
+  renderGame();
+}
+
+function resolvePendingFateAction() {
+  const game = state.game;
+  const player = activePlayer(game);
+  if (!game || !player?.isHuman || game.diceRoll?.isRolling) return;
+  const action = selectedHandCards(player).action;
+  if (!action || game.pendingFateAction?.instanceId !== action.instanceId) {
+    addGameLog("Roll a Fate Dice Action before resolving it.");
+    renderGame();
+    return;
+  }
+  removeByInstance(player.hand.actions, action.instanceId);
+  game.discards.action.push(action);
+  game.actionPlayedThisTurn = true;
+  game.pendingFateAction = null;
+  game.selectedCards.action = "";
+  addGameLog(`${action.name} resolved and moved to the Action discard pile.`);
+  checkEndGame();
+  renderGame();
+}
+
+function discardSelectedAction() {
+  const game = state.game;
+  const player = activePlayer(game);
+  if (!game || !player?.isHuman || game.diceRoll?.isRolling) return;
+  const action = selectedHandCards(player).action;
+  if (!action) {
+    addGameLog("Select an Action card before discarding.");
+    renderGame();
+    return;
+  }
+  removeByInstance(player.hand.actions, action.instanceId);
+  game.discards.action.push(action);
+  if (game.pendingFateAction?.instanceId === action.instanceId) game.pendingFateAction = null;
+  game.selectedCards.action = "";
+  game.inspectedCard = null;
+  addGameLog(`${player.name} discarded ${action.name} to the Action discard pile.`);
+  checkEndGame();
+  renderGame();
+}
+
+function cancelSelection() {
+  if (!state.game) return;
+  state.game.selectedCards = { epoch: "", artist: "", action: "" };
+  state.game.inspectedCard = null;
+  state.game.pendingFateAction = null;
+  renderGame();
+}
+
+function playSelectedCard() {
+  const game = state.game;
+  const player = activePlayer(game);
+  if (!game || !player?.isHuman) return;
+  const selected = selectedHandCards(player);
+  if (selected.action) {
+    void playSelectedAction();
+    return;
+  }
+  playSelectedTableauCards();
 }
 
 function diceAnimationDuration() {
@@ -2291,27 +2586,106 @@ function applySimpleEffect(player, effectText) {
   const artistDraw = text.match(/Draw (\d+) Artist/i);
   const epochDraw = text.match(/Draw (\d+) Epoch/i);
   const actionDraw = text.match(/Draw (\d+) Action/i);
+  const genericDraw = !artistDraw && !epochDraw && !actionDraw ? text.match(/Draw (\d+) card/i) : null;
+  let handled = false;
 
   if (artistDraw) {
     const cards = draw(state.game.decks.artist, Number(artistDraw[1]));
     player.hand.artists.push(...cards);
     addGameLog(`${player.name} drew ${cards.length} Artist card${cards.length === 1 ? "" : "s"}.`);
+    handled = true;
   }
   if (epochDraw) {
     const cards = draw(state.game.decks.epoch, Number(epochDraw[1]));
     player.hand.epochs.push(...cards);
     addGameLog(`${player.name} drew ${cards.length} Epoch card${cards.length === 1 ? "" : "s"}.`);
+    handled = true;
   }
   if (actionDraw) {
     const cards = draw(state.game.decks.action, Number(actionDraw[1]));
     player.hand.actions.push(...cards);
     addGameLog(`${player.name} drew ${cards.length} Action card${cards.length === 1 ? "" : "s"}.`);
+    handled = true;
   }
-  if (/Play 2 Artist/i.test(text)) {
+  if (genericDraw) {
+    const count = Number(genericDraw[1]);
+    const drawn = [];
+    for (const type of ["artist", "epoch", "action"]) {
+      if (drawn.length >= count) break;
+      const card = draw(state.game.decks[type], 1)[0];
+      if (card) {
+        player.hand[`${type}s`].push(card);
+        drawn.push(`${type}: ${card.name}`);
+      }
+    }
+    addGameLog(
+      drawn.length
+        ? `${player.name} drew ${drawn.length} mixed card${drawn.length === 1 ? "" : "s"} (${drawn.join(", ")}).`
+        : "No cards were available to draw."
+    );
+    handled = true;
+  }
+  if (/Recover 1 Artist|Take 1 Artist/i.test(text)) {
+    const recovered = state.game.discards.artist.pop();
+    if (recovered) {
+      player.hand.artists.push(recovered);
+      addGameLog(`${player.name} recovered ${recovered.name} from the Artist discard.`);
+    } else {
+      addGameLog("No Artist card is available in discard to recover.");
+    }
+    handled = true;
+  }
+  if (/Recover 1 Epoch|Take 1 Epoch/i.test(text)) {
+    const recovered = state.game.discards.epoch.pop();
+    if (recovered) {
+      player.hand.epochs.push(recovered);
+      addGameLog(`${player.name} recovered ${recovered.name} from the Epoch discard.`);
+    } else {
+      addGameLog("No Epoch card is available in discard to recover.");
+    }
+    handled = true;
+  }
+  if (/Recover 1 card|Take 1 card/i.test(text)) {
+    const recovered =
+      state.game.discards.artist.pop() ??
+      state.game.discards.epoch.pop() ??
+      state.game.discards.action.pop();
+    if (recovered) {
+      if (recovered.effectText || recovered.category) {
+        player.hand.actions.push(recovered);
+      } else if (recovered.scores) {
+        player.hand.artists.push(recovered);
+      } else {
+        player.hand.epochs.push(recovered);
+      }
+      addGameLog(`${player.name} recovered ${recovered.name} from discard.`);
+    } else {
+      addGameLog("No card is available in discard to recover.");
+    }
+    handled = true;
+  }
+  if (/Discard 1(?!\s*(Artist|Epoch|Action))/i.test(text) || /Lose random card/i.test(text)) {
+    const allCards = handCardsForPlayer(player);
+    if (allCards.length > 0) {
+      const selected = allCards[Math.floor(Math.random() * allCards.length)];
+      const piles = { Artist: player.hand.artists, Epoch: player.hand.epochs, Action: player.hand.actions };
+      const discards = { Artist: state.game.discards.artist, Epoch: state.game.discards.epoch, Action: state.game.discards.action };
+      const discarded = removeByInstance(piles[selected.type], selected.card.instanceId);
+      if (discarded) {
+        discards[selected.type].push(discarded);
+        addGameLog(`${player.name} discarded ${discarded.name}.`);
+      }
+    } else {
+      addGameLog(`${player.name} has no cards to discard.`);
+    }
+    handled = true;
+  }
+  if (/Play 2 Artist|Play 1 extra Artist|Play extra Artist/i.test(text)) {
     state.game.extraArtistPlays = Math.max(state.game.extraArtistPlays ?? 0, 1);
     addGameLog(`${player.name} may play one extra Artist this turn.`);
+    handled = true;
   }
-  if (!artistDraw && !epochDraw && !actionDraw && !/Play 2 Artist/i.test(text)) {
+  if (!handled) {
     addGameLog(`Manual resolution required: ${text}`);
   }
 }
@@ -2405,6 +2779,20 @@ function playCardFromHandElement(cardElement) {
   playSelectedTableauCards();
 }
 
+function runGameCommand(command) {
+  if (!command) return;
+  if (command === "draw-action") void drawActionForCurrentPlayer();
+  if (command === "play-selected-card") playSelectedCard();
+  if (command === "play-action") void playSelectedAction();
+  if (command === "discard-action") discardSelectedAction();
+  if (command === "cancel-selection") cancelSelection();
+  if (command === "roll-selected-fate") void rollSelectedFateAction();
+  if (command === "resolve-fate-action") resolvePendingFateAction();
+  if (command === "play-tableau-card") playSelectedTableauCards();
+  if (command === "auto-tableau-play") autoPlayTableauCards();
+  if (command === "end-turn") endTurn();
+}
+
 function dropHandCardOntoTableau(cardElement) {
   const game = state.game;
   const player = activePlayer(game);
@@ -2455,6 +2843,7 @@ function endTurn() {
   game.selectedCards = { epoch: "", artist: "", action: "" };
   game.inspectedCard = null;
   game.draggedCard = null;
+  game.pendingFateAction = null;
   game.diceRoll = { ...(game.diceRoll ?? {}), isRolling: false, value: null, actionName: "", outcome: "" };
   addGameLog(`${activePlayer(game).name} starts turn ${game.turnNumber}.`);
   renderGame();
@@ -2712,15 +3101,34 @@ function bindEvents() {
     player.name = input.value.trim() || defaultGamePlayerName(Number(row.dataset.gamePlayerIndex));
     renderGame();
   });
-  newGameButton.addEventListener("click", startNewGame);
+  document.querySelectorAll("[data-open-new-game]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      openSetupModal();
+    });
+  });
+  newGameButton.addEventListener("click", openSetupModal);
+  setupStartGameButton?.addEventListener("click", startNewGame);
+  setupEnterPlayButton?.addEventListener("click", closeSetupModal);
+  closeSetupModalButton?.addEventListener("click", closeSetupModal);
+  setupModal?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-close-setup]")) {
+      closeSetupModal();
+      return;
+    }
+    const button = event.target.closest("[data-muse-id]");
+    if (!button) return;
+    chooseHumanMuse(button.dataset.museId);
+  });
   gameControls.addEventListener("click", (event) => {
     const button = event.target.closest("button");
     if (!button) return;
-    if (button.id === "draw-action") void drawActionForCurrentPlayer();
-    if (button.id === "play-action") void playSelectedAction();
-    if (button.id === "play-tableau-card") playSelectedTableauCards();
-    if (button.id === "auto-tableau-play") autoPlayTableauCards();
-    if (button.id === "end-turn") endTurn();
+    runGameCommand(button.id);
+  });
+  selectedCardPanel.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-panel-command]");
+    if (!button) return;
+    runGameCommand(button.dataset.panelCommand);
   });
   playerHand.addEventListener("click", (event) => {
     const card = event.target.closest("[data-card-type][data-instance-id]");
@@ -2777,13 +3185,8 @@ function bindEvents() {
   });
   museChoice.addEventListener("click", (event) => {
     const button = event.target.closest("[data-muse-id]");
-    if (!button || !state.game) return;
-    const picker = currentMusePicker(state.game);
-    if (!picker?.isHuman) return;
-    picker.museId = button.dataset.museId;
-    state.game.log.unshift(`You chose ${museById.get(picker.museId)?.name ?? "a Muse"}.`);
-    resolveNpcMuseChoices();
-    renderGame();
+    if (!button) return;
+    chooseHumanMuse(button.dataset.museId);
   });
 }
 
