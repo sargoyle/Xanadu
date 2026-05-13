@@ -41,6 +41,7 @@ Keep entries concise. One line per decision when possible.
 - Keep browser-facing static app files in `public`.
 - Keep local tooling scripts in `scripts`.
 - Keep tests in `tests`.
+- The local workspace folder is named `Xanadu`.
 - Use port `4184` for the Xanadu local preview; port `4173` is reserved for Meal Tracker.
 
 ## Naming Conventions

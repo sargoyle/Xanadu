@@ -50,6 +50,7 @@ All notable changes to this project will be documented in this file.
 - 2026-05-12: Changed Play into a constrained one-screen tabletop layout with a compact HUD, always-visible smaller hand, non-overlapping player zones, internal log scrolling, and selected Action controls for play, discard, cancel, Fate roll, and resolve/discard. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-13: Refined Play layout proportions to prevent hand-card clipping, expanded the central table area, added selected-card metadata and panel actions, hid unavailable turn buttons, and routed Action commands through shared handlers. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-13: Rebuilt the Play page into a stable 3-row game app with grid-defined player seats, a larger central playmat, fixed bottom hand dock, and functional Action-card command execution. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-13: Renamed the local project workspace folder from `New project 3` to `Xanadu`. Files affected: `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`, workspace folder path.
 
 ### Fixed
 

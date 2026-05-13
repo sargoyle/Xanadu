@@ -60,6 +60,7 @@
 - [x] Tighten Play into a one-screen game table and make selected Action cards playable with discard, Fate dice, and simple effect resolution.
 - [x] Fix Play hand card clipping, rebalance table space, redesign selected-card controls, and harden Action execution commands.
 - [x] Rebuild the Play page as a stable 3-row game app with a central grid playmat and working Action-card command layer.
+- [x] Rename the local project workspace folder from `New project 3` to `Xanadu`.
 
 ## Backlog
 
