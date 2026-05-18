@@ -61,6 +61,7 @@
 - [x] Fix Play hand card clipping, rebalance table space, redesign selected-card controls, and harden Action execution commands.
 - [x] Rebuild the Play page as a stable 3-row game app with a central grid playmat and working Action-card command layer.
 - [x] Rename the local project workspace folder from `New project 3` to `Xanadu`.
+<<<<<<< HEAD
 - [x] Configure Vercel static output so cards, dice UI, assets, and seed data load in deployment.
 - [x] Hard-reset the Play page into a strict 3-row game shell with a larger central playmat and functional Action discard flow.
 - [x] Fix Artist and Action card scaling in the current-player hand so final physical card faces remain visible at hand size.
@@ -75,6 +76,8 @@
 - [x] Convert New Game Step 1 player setup to compact rows and move the player-count selector into the Step 1 header.
 - [x] Add New Game Back/Next navigation and remove irrelevant Step 1 player fields.
 - [x] Tighten New Game Step 1 into a lean setup list with compact header spacing and no repeated player-seat data.
+=======
+>>>>>>> ec7ce1539c0e444f2da1d1106a7815a4ebcb184d
 
 ## Backlog
 

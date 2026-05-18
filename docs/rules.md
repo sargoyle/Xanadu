@@ -42,7 +42,10 @@ Keep entries concise. One line per decision when possible.
 - Keep local tooling scripts in `scripts`.
 - Keep tests in `tests`.
 - The local workspace folder is named `Xanadu`.
+<<<<<<< HEAD
 - Vercel deploys `public` as the static output directory and runs `npm run build` to copy canonical `data/seed.json` into `public/data/seed.json`.
+=======
+>>>>>>> ec7ce1539c0e444f2da1d1106a7815a4ebcb184d
 - Use port `4184` for the Xanadu local preview; port `4173` is reserved for Meal Tracker.
 
 ## Naming Conventions

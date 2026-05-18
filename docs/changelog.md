@@ -51,8 +51,11 @@ All notable changes to this project will be documented in this file.
 - 2026-05-13: Refined Play layout proportions to prevent hand-card clipping, expanded the central table area, added selected-card metadata and panel actions, hid unavailable turn buttons, and routed Action commands through shared handlers. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-13: Rebuilt the Play page into a stable 3-row game app with grid-defined player seats, a larger central playmat, fixed bottom hand dock, and functional Action-card command execution. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-13: Renamed the local project workspace folder from `New project 3` to `Xanadu`. Files affected: `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`, workspace folder path.
+<<<<<<< HEAD
 - 2026-05-13: Configured Vercel static deployment to run a build step, serve `public` as the output directory, and generate `public/data/seed.json` from canonical seed data so deployed card and dice UI can initialize. Files affected: `package.json`, `scripts/prepare-static.mjs`, `vercel.json`, `.gitignore`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-13: Hard-reset Play layout rules into a strict HUD/table/hand shell, removed the extra player summary from layout flow, enlarged shared deck/discard zones, and tightened Action discard state cleanup. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
+=======
+>>>>>>> ec7ce1539c0e444f2da1d1106a7815a4ebcb184d
 
 ### Fixed
 
