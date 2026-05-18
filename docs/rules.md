@@ -41,6 +41,8 @@ Keep entries concise. One line per decision when possible.
 - Keep browser-facing static app files in `public`.
 - Keep local tooling scripts in `scripts`.
 - Keep tests in `tests`.
+- The local workspace folder is named `Xanadu`.
+- Vercel deploys `public` as the static output directory and runs `npm run build` to copy canonical `data/seed.json` into `public/data/seed.json`.
 - Use port `4184` for the Xanadu local preview; port `4173` is reserved for Meal Tracker.
 
 ## Naming Conventions
@@ -56,6 +58,7 @@ Keep entries concise. One line per decision when possible.
 - The first screen and first navigation item must be the top-level `PLAY` Game Mode, not the companion dashboard.
 - The Play page uses a compact Game HUD, central tabletop playmat, shared deck/discard zones, player tableau areas, bottom hand dock, and side turn/action/log panel.
 - The Play page uses a stable 3-row game-app layout: compact HUD, contained central table/action panel, and fixed always-visible current-player hand.
+- Play Mode must not include extra visible grid rows between the main table and hand; secondary player summaries stay out of the shell flow.
 - The Play page should be desktop-first and poker-table-inspired: players sit around a central shared table, opponents show face-down hand backs, and the current player hand stays face up at the bottom.
 - Play page player seats must occupy defined grid zones around the central playmat; avoid absolute floating seats that overlap the shared table.
 - The Play page should fit within one desktop viewport where practical; the hand remains visible and only compact subpanels such as logs may scroll internally.
@@ -68,6 +71,7 @@ Keep entries concise. One line per decision when possible.
 - Muse card previews use the supplied front artwork and shared back asset at the normal playing-card proportion of 63.5 x 88.9 mm.
 - Game Mode cards must render as fixed-ratio physical tabletop cards, not dashboard tiles, records, articles, or detail-page previews.
 - Card faces must use the same final physical designs everywhere they appear; hand, tableau, selected preview, deck viewer, and Studio/Admin may differ only by scale.
+- Small Play hand cards may proportionally scale generated Artist and Action face interiors, but must preserve the same final physical card design rather than substituting simplified previews.
 - Face-down cards and piles must use the correct type-specific deck back for Muse, Epoch, Artist, and Action cards.
 - Game Mode card zones should use tactile tabletop behavior: fanned hands, overlapping tableau stacks, visible card backs, hover lift, inspect scaling, and animated movement between zones where practical.
 - Card typography, frames, artwork, score hints, and rules text belong inside the card face; external labels should only identify zones or pile counts.

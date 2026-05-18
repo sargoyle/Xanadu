@@ -2184,19 +2184,31 @@ function renderSetupFlow() {
   const step = setupStepForGame(game);
   state.setupFlow.step = step;
   setupModal.dataset.setupStep = String(step);
+  const stepLabels = ["Players", "Roll", "Muses", "Deal"];
   setupStepIndicator.innerHTML = [1, 2, 3, 4]
-    .map((number) => `<span class="${number === step ? "active" : number < step ? "complete" : ""}">Step ${number}</span>`)
+    .map(
+      (number) =>
+        `<span class="${number === step ? "active" : number < step ? "complete" : ""}"><strong>${number}</strong>${stepLabels[number - 1]}</span>`
+    )
     .join("");
   setupStartGameButton.hidden = step !== 1;
   setupEnterPlayButton.hidden = step !== 4;
 
   if (step === 1) {
     setupStepContent.innerHTML = `
-      <section>
-        <h3>Step 1: Player setup</h3>
-        <p class="muted">Choose player count, edit names, and confirm which seat is human. Other seats are NPCs for now.</p>
+      <section class="setup-step-intro">
+        <div class="setup-step-header-row">
+          <div>
+            <h3>Step 1: Player setup</h3>
+            <p class="muted">Choose player count, edit names, and confirm which seat is human. Other seats are NPCs for now.</p>
+          </div>
+          <div id="setup-player-count-slot" class="setup-player-count-slot"></div>
+        </div>
       </section>
     `;
+    const playerCountLabel = gamePlayerCountSelect?.closest("label");
+    const playerCountSlot = setupStepContent.querySelector("#setup-player-count-slot");
+    if (playerCountLabel && playerCountSlot) playerCountSlot.append(playerCountLabel);
     return;
   }
 
@@ -2310,11 +2322,6 @@ function renderGame() {
     ${renderCardPile("Artist Discard", game.discards.artist.length, "discard")}
     ${renderCardPile("Epoch Discard", game.discards.epoch.length, "discard")}
     ${renderCardPile("Action Discard", game.discards.action.length, "discard")}
-    <article class="card-pile target">
-      <div class="mini-card-stack target-marker">${endEpochTarget(game)}</div>
-      <strong>End Target</strong>
-      <span>${endEpochTarget(game)} Epochs</span>
-    </article>
   `;
 
   museChoice.innerHTML = "";
@@ -2449,6 +2456,7 @@ async function playSelectedAction() {
   game.discards.action.push(action);
   game.actionPlayedThisTurn = true;
   game.selectedCards.action = "";
+  game.inspectedCard = null;
   game.pendingFateAction = null;
   checkEndGame();
   renderGame();
@@ -2504,6 +2512,7 @@ function resolvePendingFateAction() {
   game.actionPlayedThisTurn = true;
   game.pendingFateAction = null;
   game.selectedCards.action = "";
+  game.inspectedCard = null;
   addGameLog(`${action.name} resolved and moved to the Action discard pile.`);
   checkEndGame();
   renderGame();
@@ -2524,7 +2533,7 @@ function discardSelectedAction() {
   if (game.pendingFateAction?.instanceId === action.instanceId) game.pendingFateAction = null;
   game.selectedCards.action = "";
   game.inspectedCard = null;
-  addGameLog(`${player.name} discarded ${action.name} to the Action discard pile.`);
+  addGameLog(`${player.name} discarded ${action.name}.`);
   checkEndGame();
   renderGame();
 }

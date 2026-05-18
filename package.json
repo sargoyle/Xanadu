@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Local-first development and companion foundation for Xanadu: Muses of Inspiration.",
   "scripts": {
+    "build": "node scripts/prepare-static.mjs",
     "dev": "node scripts/dev-server.mjs",
     "test": "node tests/run-tests.mjs",
     "validate": "node scripts/validate-data.mjs",

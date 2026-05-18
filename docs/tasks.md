@@ -60,6 +60,19 @@
 - [x] Tighten Play into a one-screen game table and make selected Action cards playable with discard, Fate dice, and simple effect resolution.
 - [x] Fix Play hand card clipping, rebalance table space, redesign selected-card controls, and harden Action execution commands.
 - [x] Rebuild the Play page as a stable 3-row game app with a central grid playmat and working Action-card command layer.
+- [x] Rename the local project workspace folder from `New project 3` to `Xanadu`.
+- [x] Configure Vercel static output so cards, dice UI, assets, and seed data load in deployment.
+- [x] Hard-reset the Play page into a strict 3-row game shell with a larger central playmat and functional Action discard flow.
+- [x] Fix Artist and Action card scaling in the current-player hand so final physical card faces remain visible at hand size.
+- [x] Retune Artist and Action hand-card face scaling so generated text-heavy card fronts fit more naturally at small hand size.
+- [x] Enlarge Play hand cards and add clearer hover inspection scaling for Artist and Action readability.
+- [x] Condense Play hand card piles and add hover/focus scroll trays for browsing each card type independently.
+- [x] Increase expanded hand tray and hover card size for clearer card reading during pile browsing.
+- [x] Allow expanded Play hand card trays to overflow beyond the hand section without clipping highlighted cards.
+- [x] Restyle New Game setup as a wide game-style modal with a step rail, dark player seat cards, and better space use.
+- [x] Remove New Game left step rail, add compact top steps, darken setup panels, and improve player setup seat cards.
+- [x] Fix New Game player setup cards so they space and wrap cleanly instead of overlapping.
+- [x] Convert New Game Step 1 player setup to compact rows and move the player-count selector into the Step 1 header.
 
 ## Backlog
 
