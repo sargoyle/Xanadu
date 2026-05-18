@@ -41,7 +41,9 @@ const playtestList = document.querySelector("#playtest-list");
 const newGameButton = document.querySelector("#new-game");
 const setupModal = document.querySelector("#new-game-panel");
 const closeSetupModalButton = document.querySelector("#close-setup-modal");
+const setupBackButton = document.querySelector("#setup-back");
 const setupStartGameButton = document.querySelector("#setup-start-game");
+const setupNextButton = document.querySelector("#setup-next");
 const setupEnterPlayButton = document.querySelector("#setup-enter-play");
 const setupStepIndicator = document.querySelector("#setup-step-indicator");
 const setupStepContent = document.querySelector("#setup-step-content");
@@ -1394,6 +1396,7 @@ function gameSetupNames() {
 function renderGameSetup() {
   const count = Number(gamePlayerCountSelect.value);
   const names = gameSetupNames();
+  const setupStep = state.setupFlow.step ?? setupStepForGame();
   const players =
     state.game?.players ??
     Array.from({ length: count }, (_, index) => ({
@@ -1411,6 +1414,17 @@ function renderGameSetup() {
 
   gameSetup.innerHTML = players
     .map((player, index) => {
+      if (setupStep === 1) {
+        return `
+          <div class="game-setup-row setup-player-row" data-game-player-index="${index}">
+            <label>
+              <span>${player.isHuman ? "Human" : "NPC"}</span>
+              <input class="game-setup-name" value="${escapeHtml(player.name)}" aria-label="Player ${index + 1} name">
+            </label>
+            <strong class="setup-seat-number">Seat ${index + 1}</strong>
+          </div>
+        `;
+      }
       const muse = museById.get(player.museId);
       const handCount = player.hand.artists.length + player.hand.epochs.length + player.hand.actions.length;
       return `
@@ -1521,6 +1535,7 @@ function startNewGame() {
   };
 
   state.setupFlow.open = true;
+  state.setupFlow.step = 2;
   resolveNpcMuseChoices();
   renderGame();
 }
@@ -2181,7 +2196,8 @@ function renderSetupFlow() {
   if (!state.setupFlow.open) return;
 
   const game = state.game;
-  const step = setupStepForGame(game);
+  const maxStep = setupStepForGame(game);
+  const step = Math.min(Math.max(state.setupFlow.step || maxStep, 1), maxStep);
   state.setupFlow.step = step;
   setupModal.dataset.setupStep = String(step);
   const stepLabels = ["Players", "Roll", "Muses", "Deal"];
@@ -2191,8 +2207,11 @@ function renderSetupFlow() {
         `<span class="${number === step ? "active" : number < step ? "complete" : ""}"><strong>${number}</strong>${stepLabels[number - 1]}</span>`
     )
     .join("");
+  setupBackButton.hidden = step <= 1;
   setupStartGameButton.hidden = step !== 1;
+  setupNextButton.hidden = step >= maxStep || step === 1;
   setupEnterPlayButton.hidden = step !== 4;
+  renderGameSetup();
 
   if (step === 1) {
     setupStepContent.innerHTML = `
@@ -2200,7 +2219,7 @@ function renderSetupFlow() {
         <div class="setup-step-header-row">
           <div>
             <h3>Step 1: Player setup</h3>
-            <p class="muted">Choose player count, edit names, and confirm which seat is human. Other seats are NPCs for now.</p>
+            <p class="muted">Choose player count and edit names. Seat 1 is human; the rest are NPCs for now.</p>
           </div>
           <div id="setup-player-count-slot" class="setup-player-count-slot"></div>
         </div>
@@ -2212,13 +2231,19 @@ function renderSetupFlow() {
     return;
   }
 
-  if (step === 3) {
+  if (step === 2) {
     setupStepContent.innerHTML = `
       <section>
         <h3>Step 2: Muse order</h3>
         <p class="muted">Dice have been rolled. Muses are selected from highest roll to lowest.</p>
         ${renderSetupOrder(game)}
       </section>
+    `;
+    return;
+  }
+
+  if (step === 3) {
+    setupStepContent.innerHTML = `
       <section>
         <h3>Step 3: Muse selection</h3>
         ${renderSetupMuseChoices(game)}
@@ -3101,6 +3126,14 @@ function bindEvents() {
   gamePlayerCountSelect.addEventListener("input", () => {
     if (!state.game) renderGameSetup();
   });
+  gameSetup.addEventListener("input", (event) => {
+    const input = event.target.closest(".game-setup-name");
+    const row = event.target.closest("[data-game-player-index]");
+    if (!input || !row || !state.game) return;
+    const player = state.game.players[Number(row.dataset.gamePlayerIndex)];
+    if (!player) return;
+    player.name = input.value.trim() || defaultGamePlayerName(Number(row.dataset.gamePlayerIndex));
+  });
   gameSetup.addEventListener("change", (event) => {
     const input = event.target.closest(".game-setup-name");
     const row = event.target.closest("[data-game-player-index]");
@@ -3117,6 +3150,14 @@ function bindEvents() {
     });
   });
   newGameButton.addEventListener("click", openSetupModal);
+  setupBackButton?.addEventListener("click", () => {
+    state.setupFlow.step = Math.max(1, (state.setupFlow.step || setupStepForGame()) - 1);
+    renderSetupFlow();
+  });
+  setupNextButton?.addEventListener("click", () => {
+    state.setupFlow.step = Math.min(setupStepForGame(), (state.setupFlow.step || 1) + 1);
+    renderSetupFlow();
+  });
   setupStartGameButton?.addEventListener("click", startNewGame);
   setupEnterPlayButton?.addEventListener("click", closeSetupModal);
   closeSetupModalButton?.addEventListener("click", closeSetupModal);

@@ -73,6 +73,8 @@
 - [x] Remove New Game left step rail, add compact top steps, darken setup panels, and improve player setup seat cards.
 - [x] Fix New Game player setup cards so they space and wrap cleanly instead of overlapping.
 - [x] Convert New Game Step 1 player setup to compact rows and move the player-count selector into the Step 1 header.
+- [x] Add New Game Back/Next navigation and remove irrelevant Step 1 player fields.
+- [x] Tighten New Game Step 1 into a lean setup list with compact header spacing and no repeated player-seat data.
 
 ## Backlog
 

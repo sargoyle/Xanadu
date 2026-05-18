@@ -504,6 +504,7 @@ section {
 
 .setup-flow-actions {
   grid-area: actions;
+  justify-content: start;
   padding-top: 12px;
   border-top: 1px solid rgba(184, 138, 59, 0.28);
 }
@@ -517,8 +518,8 @@ section {
 .setup-step-header-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
-  align-items: start;
-  gap: 18px;
+  align-items: center;
+  gap: 16px;
 }
 
 .setup-player-count-slot > label {
@@ -530,6 +531,24 @@ section {
   width: 100%;
 }
 
+.game-setup-modal[data-setup-step="1"] .setup-step-content {
+  padding: 12px 16px;
+}
+
+.game-setup-modal[data-setup-step="1"] .setup-step-content h3 {
+  margin-bottom: 4px;
+}
+
+.game-setup-modal[data-setup-step="1"] .setup-step-content .muted {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.game-setup-modal[data-setup-step="1"] .setup-player-fields {
+  padding: 12px;
+}
+
 .setup-player-fields span {
   color: rgba(255, 249, 234, 0.66);
   font-size: 12px;
@@ -537,11 +556,13 @@ section {
   text-transform: uppercase;
 }
 
+.game-setup-modal[data-setup-step="2"] .setup-player-fields,
 .game-setup-modal[data-setup-step="3"] .setup-player-fields,
 .game-setup-modal[data-setup-step="4"] .setup-player-fields {
   display: none;
 }
 
+.game-setup-modal[data-setup-step="2"] .setup-step-content,
 .game-setup-modal[data-setup-step="3"] .setup-step-content,
 .game-setup-modal[data-setup-step="4"] .setup-step-content {
   grid-row: content / players;
@@ -1918,6 +1939,35 @@ section {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 15px;
   line-height: 1.1;
+}
+
+.setup-player-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 10px 14px 10px 18px;
+}
+
+.setup-player-row label {
+  grid-template-columns: 78px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.setup-player-row input {
+  min-height: 48px;
+}
+
+.setup-seat-number {
+  justify-self: end;
+  padding: 9px 13px;
+  border: 1px solid rgba(184, 138, 59, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 249, 234, 0.045);
+  color: rgba(255, 249, 234, 0.78);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
 }
 
 .eyebrow {

@@ -68,6 +68,8 @@ All notable changes to this project will be documented in this file.
 - 2026-05-13: Revised New Game setup to remove the left step rail, use compact top steps, replace pale inherited panels with dark playmat panels, and upgrade player setup boxes with stronger tabletop seat styling. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-13: Fixed New Game player setup card spacing by giving each player card a proper minimum width, full-width name row, and wrapped stat layout to prevent overlap. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-13: Converted New Game Step 1 player setup from card blocks to compact rows matching the Muse order step, and moved the player-count selector into the Step 1 header area. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-18: Added New Game Back/Next navigation and simplified Step 1 rows to only game-creation fields while keeping player names editable when returning to earlier setup pages. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-18: Tightened New Game Step 1 into a leaner setup list with shorter header spacing, compact player rows, and no repeated seat/type fields. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 
 ### Removed
 
