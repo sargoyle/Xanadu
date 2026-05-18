@@ -1484,7 +1484,12 @@ function resolveNpcMuseChoices() {
     picker = currentMusePicker(game);
   }
 
+  if (picker?.isHuman) {
+    state.setupFlow.step = 3;
+  }
+
   if (!picker) {
+    state.setupFlow.step = 4;
     game.log.unshift("All Muses selected. The first digital turn is ready.");
     startFirstTurn(game);
     void runNpcTurnIfNeeded();
@@ -2223,11 +2228,14 @@ function renderSetupFlow() {
           </div>
           <div id="setup-player-count-slot" class="setup-player-count-slot"></div>
         </div>
+        <div id="setup-player-list-slot" class="setup-player-list-slot"></div>
       </section>
     `;
     const playerCountLabel = gamePlayerCountSelect?.closest("label");
     const playerCountSlot = setupStepContent.querySelector("#setup-player-count-slot");
     if (playerCountLabel && playerCountSlot) playerCountSlot.append(playerCountLabel);
+    const playerListSlot = setupStepContent.querySelector("#setup-player-list-slot");
+    if (gameSetup && playerListSlot) playerListSlot.append(gameSetup);
     return;
   }
 
@@ -2291,6 +2299,7 @@ function chooseHumanMuse(museId) {
   picker.museId = museId;
   state.game.log.unshift(`You chose ${museById.get(picker.museId)?.name ?? "a Muse"}.`);
   resolveNpcMuseChoices();
+  state.setupFlow.step = setupStepForGame(state.game);
   renderGame();
 }
 

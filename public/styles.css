@@ -535,6 +535,14 @@ section {
   padding: 12px 16px;
 }
 
+.game-setup-modal[data-setup-step="1"] .setup-step-content {
+  grid-row: content / players;
+}
+
+.game-setup-modal[data-setup-step="1"] .setup-player-fields {
+  display: none;
+}
+
 .game-setup-modal[data-setup-step="1"] .setup-step-content h3 {
   margin-bottom: 4px;
 }
@@ -545,8 +553,10 @@ section {
   line-height: 1.25;
 }
 
-.game-setup-modal[data-setup-step="1"] .setup-player-fields {
-  padding: 12px;
+.setup-step-intro,
+.setup-player-list-slot {
+  display: grid;
+  gap: 8px;
 }
 
 .setup-player-fields span {
@@ -1942,32 +1952,36 @@ section {
 }
 
 .setup-player-row {
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  padding: 10px 14px 10px 18px;
+  grid-template-columns: minmax(120px, 1fr) minmax(120px, 0.9fr);
+  gap: 10px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, rgba(255, 249, 234, 0.08), rgba(47, 27, 42, 0.24));
 }
 
 .setup-player-row label {
-  grid-template-columns: 78px minmax(0, 1fr);
+  grid-template-columns: 72px minmax(0, 1fr);
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .setup-player-row input {
-  min-height: 48px;
+  min-height: 40px;
+  padding: 8px 10px;
+  font-size: 15px;
 }
 
 .setup-seat-number {
   justify-self: end;
-  padding: 9px 13px;
-  border: 1px solid rgba(184, 138, 59, 0.24);
-  border-radius: 999px;
-  background: rgba(255, 249, 234, 0.045);
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: rgba(255, 249, 234, 0.78);
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 950;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .eyebrow {
@@ -3873,7 +3887,7 @@ select {
 /* Clean Play rebuild: one app shell, one table system, no floating summary row. */
 #play.game-shell {
   display: grid;
-  grid-template-rows: 72px minmax(0, 1fr) 286px;
+  grid-template-rows: 72px minmax(0, 1fr);
   gap: 10px;
   height: calc(100vh - 92px);
   min-height: 0;
@@ -3915,17 +3929,16 @@ select {
 
 #play .game-tabletop-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 276px;
+  grid-template-columns: minmax(0, 1fr) 360px;
   gap: 10px;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   z-index: 1;
 }
 
 #play .game-playmat,
-#play .turn-panel,
-#play .game-hand-dock {
+#play .turn-panel {
   min-height: 0;
   overflow: hidden;
 }
@@ -4003,8 +4016,9 @@ select {
 }
 
 #play .turn-panel {
-  grid-template-rows: minmax(0, auto) minmax(96px, auto) minmax(0, 1fr);
+  grid-template-rows: minmax(0, auto) minmax(88px, auto) minmax(86px, 0.7fr) minmax(250px, 1fr);
   gap: 8px;
+  overflow: visible;
 }
 
 #play .selected-card-summary-card .physical-card {
@@ -4025,7 +4039,8 @@ select {
 
 #play .game-hand-dock {
   display: grid;
-  grid-template-rows: 28px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
   padding: 8px;
   position: relative;
   z-index: 60;
@@ -4039,24 +4054,25 @@ select {
 #play .player-hand-zones {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: 1fr;
+  gap: 6px;
   min-height: 0;
-  padding: 6px;
+  padding: 4px;
   overflow: visible;
 }
 
 #play .hand-lane {
-  min-height: 0;
+  min-height: 78px;
   overflow: visible;
+  padding: 6px;
 }
 
 #play .hand-lane-cards {
-  --hand-card-overlap: -86px;
+  --hand-card-overlap: -54px;
   align-items: end;
   min-height: 0;
   overflow: hidden;
-  padding: 6px 8px 16px;
+  padding: 4px 6px 10px;
 }
 
 #play .hand-lane-cards .physical-card {
@@ -4069,16 +4085,15 @@ select {
 
 #play .hand-lane:hover .hand-lane-cards,
 #play .hand-lane:focus-within .hand-lane-cards {
-  --hand-card-overlap: -22px;
+  --hand-card-overlap: -18px;
   position: absolute;
-  left: 10px;
   right: 10px;
-  bottom: 8px;
+  width: min(520px, calc(100vw - 40px));
   z-index: 120;
-  height: 318px;
-  padding: 36px 24px 22px;
+  min-height: 230px;
+  padding: 26px 20px 18px;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: visible;
   border: 1px solid rgba(198, 161, 91, 0.44);
   border-radius: 12px;
   background:
@@ -4092,11 +4107,11 @@ select {
 
 #play .hand-lane:hover .physical-card,
 #play .hand-lane:focus-within .physical-card {
-  --game-card-width: clamp(150px, 9.4vw, 184px);
+  --game-card-width: clamp(128px, 8.2vw, 164px);
 }
 
 #play .game-hand-dock .physical-card {
-  --game-card-width: clamp(126px, 7.8vw, 152px);
+  --game-card-width: clamp(82px, 5.1vw, 98px);
 }
 
 #play .game-hand-dock .hand-lane-artist .physical-card-face,
@@ -4124,7 +4139,7 @@ select {
 
 #play .hand-lane-cards .physical-card:hover,
 #play .hand-lane-cards .physical-card:focus-visible {
-  transform: translateY(-32px) scale(1.24) rotate(0deg);
+  transform: translateY(-24px) scale(1.22) rotate(0deg);
   z-index: 80;
   filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.52));
 }
