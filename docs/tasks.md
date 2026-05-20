@@ -79,6 +79,7 @@
 - [x] Move the current-player hand into the right gameplay panel with smaller compact card lanes and preserved hover/select browsing.
 - [x] Stabilize the expanded current-hand overlay so hover browsing no longer shifts lanes and cards remain selectable.
 - [x] Fix Current Hand Play Set so selecting one legal Epoch or Artist can complete the matching tableau play from hand.
+- [x] Add Available Actions to the Current Hand overlay, remove the visible hand title, and improve simple Action draw parsing.
 
 ## Backlog
 

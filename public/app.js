@@ -1947,7 +1947,7 @@ function renderHandOverlay(game, player) {
     return;
   }
 
-  handOverlayTitle.textContent = `${player.name}'s Hand`;
+  handOverlayTitle.textContent = "Current Hand";
   const selectedEntry = selectedEntryForPlayer(player);
   handOverlayContent.innerHTML = `
     <div class="hand-overlay-grid">
@@ -1957,9 +1957,30 @@ function renderHandOverlay(game, player) {
       <aside class="hand-overlay-actions">
         <h3>Selected Card</h3>
         ${selectedEntry ? selectedCardSummary(game, player).replaceAll("data-panel-command", "data-overlay-command") : `<p class="muted">Select a card from your hand.</p>`}
+        <h3>Available Actions</h3>
+        <div class="turn-controls">
+          ${overlayCommandMarkup(renderTurnControls(game, player))}
+        </div>
       </aside>
     </div>
   `;
+}
+
+function overlayCommandMarkup(markup) {
+  return [
+    "draw-action",
+    "play-selected-card",
+    "auto-tableau-play",
+    "end-turn",
+    "play-action",
+    "discard-action",
+    "cancel-selection",
+    "roll-selected-fate",
+    "resolve-fate-action"
+  ].reduce(
+    (html, command) => html.replaceAll(`id="${command}"`, `data-overlay-command="${command}"`),
+    markup
+  );
 }
 
 function renderTableauOverlay(game) {
@@ -2750,9 +2771,9 @@ function rollFateDie(action) {
 
 function applySimpleEffect(player, effectText) {
   const text = String(effectText);
-  const artistDraw = text.match(/Draw (\d+) Artist/i);
-  const epochDraw = text.match(/Draw (\d+) Epoch/i);
-  const actionDraw = text.match(/Draw (\d+) Action/i);
+  const artistDraw = text.match(/Draw (\d+) Artist/i) ?? text.match(/(?:and|\+)\s*(\d+) Artist/i);
+  const epochDraw = text.match(/Draw (\d+) Epoch/i) ?? text.match(/(?:and|\+)\s*(\d+) Epoch/i);
+  const actionDraw = text.match(/Draw (\d+) Action/i) ?? text.match(/(?:and|\+)\s*(\d+) Action/i);
   const genericDraw = !artistDraw && !epochDraw && !actionDraw ? text.match(/Draw (\d+) card/i) : null;
   let handled = false;
 
