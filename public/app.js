@@ -2031,9 +2031,19 @@ function selectedTableauPlayStatus(game, player, entry) {
       ? { canPlay: true, reason: "Play this Epoch + Artist set." }
       : { canPlay: false, reason: "Artist must match the selected Epoch." };
   }
+  if (selected.epoch) {
+    const matchingArtist = player.hand.artists.find((artist) => artist.epochId === selected.epoch.id);
+    return matchingArtist
+      ? { canPlay: true, reason: `Play ${selected.epoch.name} with ${matchingArtist.name}.` }
+      : { canPlay: false, reason: "Select a matching Artist, or draw one later." };
+  }
   if (selected.artist) {
-    return matchingTableauSet(player, selected.artist)
-      ? { canPlay: true, reason: "Attach this Artist to an existing matching Epoch." }
+    if (matchingTableauSet(player, selected.artist)) {
+      return { canPlay: true, reason: "Attach this Artist to an existing matching Epoch." };
+    }
+    const matchingEpoch = player.hand.epochs.find((epoch) => epoch.id === selected.artist.epochId);
+    return matchingEpoch
+      ? { canPlay: true, reason: `Play ${matchingEpoch.name} with ${selected.artist.name}.` }
       : { canPlay: false, reason: "Select the matching Epoch, or play that Epoch first." };
   }
   return { canPlay: false, reason: "Select an Artist with this Epoch to play a set." };
@@ -2851,11 +2861,18 @@ function playSelectedTableauCards() {
   const game = state.game;
   const player = activePlayer(game);
   if (!game || !player || !player.isHuman || game.phase === "Draw Action") return;
-  const { epoch, artist } = selectedHandCards(player);
+  let { epoch, artist } = selectedHandCards(player);
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
 
+  if (epoch && !artist) {
+    artist = player.hand.artists.find((card) => card.epochId === epoch.id);
+  }
+  if (artist && !epoch && !matchingTableauSet(player, artist)) {
+    epoch = player.hand.epochs.find((card) => card.id === artist.epochId);
+  }
+
   if (!artist) {
-    addGameLog("Select an Artist card before building your tableau, or use Auto Play Legal Set.");
+    addGameLog("Select an Artist card, or choose an Epoch that has a matching Artist in your hand.");
     renderGame();
     return;
   }
