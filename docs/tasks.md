@@ -77,6 +77,7 @@
 - [x] Tighten New Game Step 1 into a lean setup list with compact header spacing and no repeated player-seat data.
 - [x] Align New Game Step 1 and Step 2 list styling, auto-open human Muse selection at Step 3, and advance to Step 4 after choosing.
 - [x] Move the current-player hand into the right gameplay panel with smaller compact card lanes and preserved hover/select browsing.
+- [x] Stabilize the expanded current-hand overlay so hover browsing no longer shifts lanes and cards remain selectable.
 
 ## Backlog
 

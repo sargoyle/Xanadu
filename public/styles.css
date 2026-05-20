@@ -4310,6 +4310,7 @@ select {
 
 .hand-overlay-cards .hand-lane {
   min-height: 244px;
+  overflow: hidden;
 }
 
 .hand-overlay-cards .hand-lane-cards {
@@ -4318,18 +4319,38 @@ select {
   gap: 12px;
   align-items: start;
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
   padding: 14px 12px 22px;
+}
+
+#play .hand-overlay-cards .hand-lane:hover .hand-lane-cards,
+#play .hand-overlay-cards .hand-lane:focus-within .hand-lane-cards {
+  --hand-card-overlap: 0px;
+  position: static;
+  right: auto;
+  width: auto;
+  max-width: none;
+  padding: 14px 12px 22px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .hand-overlay-cards .hand-lane-cards .physical-card {
   --game-card-width: clamp(150px, 10.5vw, 196px);
+  flex: 0 0 auto;
   margin-left: 0;
 }
 
 .hand-overlay-cards .hand-lane-cards .physical-card:hover,
 .hand-overlay-cards .hand-lane-cards .physical-card:focus-visible {
-  transform: translateY(-12px) scale(1.08) rotate(0deg);
+  --card-lift: -8px;
+  --card-scale: 1.06;
+  --fan-rotate: 0deg;
+  z-index: 80;
 }
 
 .hand-overlay-actions {
