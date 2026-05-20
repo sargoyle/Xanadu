@@ -14,10 +14,28 @@
           <p class="eyebrow">Xanadu</p>
           <h1>Muses of Inspiration</h1>
         </a>
+        <div class="game-header-status top-game-status" aria-live="polite">
+          <div class="game-status-chip">
+            <span>Current player</span>
+            <strong id="game-turn-title">No game in progress</strong>
+          </div>
+          <div class="game-status-chip">
+            <span>Phase</span>
+            <strong id="game-phase">Start a new game</strong>
+          </div>
+          <div class="game-status-chip">
+            <span>Turn</span>
+            <strong id="game-turn-number">0</strong>
+          </div>
+          <div class="game-status-chip">
+            <span>Scores</span>
+            <strong id="game-score-summary">No scores yet</strong>
+          </div>
+        </div>
         <nav>
           <div class="nav-section game-nav-section" aria-label="Game navigation">
             <a href="#play">PLAY</a>
-            <a href="#play" data-open-new-game>New Game</a>
+            <button id="new-game" type="button" data-open-new-game>New Game</button>
             <a href="#rules">Rules</a>
           </div>
           <details class="studio-menu">
@@ -104,34 +122,6 @@
         </section>
 
         <section id="play" class="game-mode game-shell">
-          <div class="game-hud">
-            <div class="game-title-lockup">
-              <p class="eyebrow">GAME</p>
-              <h2>Xanadu: Muses of Inspiration</h2>
-            </div>
-            <div class="game-header-status" aria-live="polite">
-              <div class="game-status-chip">
-                <span>Current player</span>
-                <strong id="game-turn-title">No game in progress</strong>
-              </div>
-              <div class="game-status-chip">
-                <span>Phase</span>
-                <strong id="game-phase">Start a new game</strong>
-              </div>
-              <div class="game-status-chip">
-                <span>Turn</span>
-                <strong id="game-turn-number">0</strong>
-              </div>
-              <div class="game-status-chip">
-                <span>Scores</span>
-                <strong id="game-score-summary">No scores yet</strong>
-              </div>
-            </div>
-            <div class="game-start-controls">
-              <button id="new-game" type="button" class="command-button">New Game</button>
-              <a class="command-button secondary rules-link-button" href="#rules">Rules</a>
-            </div>
-          </div>
           <div id="new-game-panel" class="game-setup-modal" hidden>
             <div class="game-setup-backdrop" data-close-setup></div>
             <section class="game-setup-dialog" role="dialog" aria-modal="true" aria-labelledby="setup-title">
@@ -216,6 +206,32 @@
             </aside>
           </div>
           <div id="game-players" class="game-player-grid table-player-summary" aria-label="Player status summary"></div>
+          <div id="hand-overlay" class="game-overlay hand-overlay" hidden>
+            <div class="game-overlay-backdrop" data-close-overlay></div>
+            <section class="game-overlay-dialog hand-overlay-dialog" role="dialog" aria-modal="true" aria-labelledby="hand-overlay-title">
+              <div class="overlay-header">
+                <div>
+                  <p class="eyebrow">Current Hand</p>
+                  <h2 id="hand-overlay-title">Your Hand</h2>
+                </div>
+                <button type="button" class="icon-button" data-close-overlay>Close</button>
+              </div>
+              <div id="hand-overlay-content" class="hand-overlay-content"></div>
+            </section>
+          </div>
+          <div id="tableau-overlay" class="game-overlay tableau-overlay" hidden>
+            <div class="game-overlay-backdrop" data-close-overlay></div>
+            <section class="game-overlay-dialog tableau-overlay-dialog" role="dialog" aria-modal="true" aria-labelledby="tableau-overlay-title">
+              <div class="overlay-header">
+                <div>
+                  <p class="eyebrow">Tableau</p>
+                  <h2 id="tableau-overlay-title">Player Tableau</h2>
+                </div>
+                <button type="button" class="icon-button" data-close-overlay>Close</button>
+              </div>
+              <div id="tableau-overlay-content" class="tableau-overlay-content"></div>
+            </section>
+          </div>
         </section>
 
         <section id="dashboard" class="hero-band">

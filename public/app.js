@@ -63,6 +63,12 @@ const playerHandTitle = document.querySelector("#player-hand-title");
 const playerHand = document.querySelector("#player-hand");
 const selectedCardPanel = document.querySelector("#selected-card-panel");
 const gameLog = document.querySelector("#game-log");
+const handOverlay = document.querySelector("#hand-overlay");
+const handOverlayTitle = document.querySelector("#hand-overlay-title");
+const handOverlayContent = document.querySelector("#hand-overlay-content");
+const tableauOverlay = document.querySelector("#tableau-overlay");
+const tableauOverlayTitle = document.querySelector("#tableau-overlay-title");
+const tableauOverlayContent = document.querySelector("#tableau-overlay-content");
 const museDeckPile = document.querySelector("#muse-deck-pile");
 const museDealNextButton = document.querySelector("#muse-deal-next");
 const museRestartDeckButton = document.querySelector("#muse-restart-deck");
@@ -129,6 +135,13 @@ const state = {
   setupFlow: {
     open: false,
     step: 1
+  },
+  handOverlay: {
+    open: false
+  },
+  tableauOverlay: {
+    open: false,
+    playerId: ""
   },
   players: [],
   scoreRows: [],
@@ -1900,6 +1913,102 @@ function renderPlayerHandZones(cards) {
     .join("");
 }
 
+function renderPlayerHandSummary(player) {
+  if (!player) return `<p class="muted">Start a game to see your hand.</p>`;
+  const groups = [
+    { type: "Epoch", label: "Epoch Cards", count: player.hand.epochs.length },
+    { type: "Artist", label: "Artist Cards", count: player.hand.artists.length },
+    { type: "Action", label: "Action Cards", count: player.hand.actions.length }
+  ];
+  return `
+    <div class="hand-summary-list">
+      ${groups
+        .map(
+          (group) => `
+            <button type="button" class="hand-summary-button" data-open-hand="${escapeHtml(group.type.toLowerCase())}">
+              <span>${escapeHtml(group.label)}</span>
+              <strong>${group.count}</strong>
+              <em>Open</em>
+            </button>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function renderHandOverlay(game, player) {
+  if (!handOverlay || !handOverlayContent || !handOverlayTitle) return;
+  handOverlay.hidden = !state.handOverlay.open;
+  handOverlay.classList.toggle("is-open", state.handOverlay.open);
+  if (!state.handOverlay.open) return;
+  if (!game || !player) {
+    handOverlayContent.innerHTML = `<p class="muted">Start a game to inspect a hand.</p>`;
+    return;
+  }
+
+  handOverlayTitle.textContent = `${player.name}'s Hand`;
+  const selectedEntry = selectedEntryForPlayer(player);
+  handOverlayContent.innerHTML = `
+    <div class="hand-overlay-grid">
+      <div class="hand-overlay-cards">
+        ${renderPlayerHandZones(handCardsForPlayer(player))}
+      </div>
+      <aside class="hand-overlay-actions">
+        <h3>Selected Card</h3>
+        ${selectedEntry ? selectedCardSummary(game, player).replaceAll("data-panel-command", "data-overlay-command") : `<p class="muted">Select a card from your hand.</p>`}
+      </aside>
+    </div>
+  `;
+}
+
+function renderTableauOverlay(game) {
+  if (!tableauOverlay || !tableauOverlayContent || !tableauOverlayTitle) return;
+  tableauOverlay.hidden = !state.tableauOverlay.open;
+  tableauOverlay.classList.toggle("is-open", state.tableauOverlay.open);
+  if (!state.tableauOverlay.open) return;
+  const player = game?.players.find((player) => player.id === state.tableauOverlay.playerId);
+  if (!game || !player) {
+    tableauOverlayContent.innerHTML = `<p class="muted">No tableau selected.</p>`;
+    return;
+  }
+  const muse = museById.get(player.museId);
+  tableauOverlayTitle.textContent = `${player.name}'s Tableau`;
+  tableauOverlayContent.innerHTML = `
+    <div class="tableau-overlay-summary">
+      <strong>${escapeHtml(muse?.name ?? "No Muse selected")}</strong>
+      <span>${player.score} points</span>
+      <span>${player.tableau.length} Epoch${player.tableau.length === 1 ? "" : "s"}</span>
+    </div>
+    <div class="tableau-overlay-sets">
+      ${
+        player.tableau.length
+          ? player.tableau
+              .map(
+                (set) => `
+                  <article class="tableau-overlay-set">
+                    ${renderPhysicalCard(set.epoch, "Epoch", { interactive: false, extraClass: "overlay-card" })}
+                    <div class="tableau-overlay-artists">
+                      ${set.artists
+                        .map((artist) =>
+                          renderPhysicalCard(artist, "Artist", {
+                            interactive: false,
+                            extraClass: "overlay-card",
+                            scoreMuseId: player.museId
+                          })
+                        )
+                        .join("")}
+                    </div>
+                  </article>
+                `
+              )
+              .join("")
+          : `<p class="muted">No tableau cards played yet.</p>`
+      }
+    </div>
+  `;
+}
+
 function selectedEntryForPlayer(player) {
   if (!state.game || !player) return null;
   const selected = selectedHandCards(player);
@@ -2329,6 +2438,8 @@ function renderGame() {
     playerHand.innerHTML = `<div class="empty-state">Your hand will appear after a game starts.</div>`;
     selectedCardPanel.innerHTML = `<p class="muted">Select a card from your hand.</p>`;
     gameLog.innerHTML = `<p class="muted">No game actions yet.</p>`;
+    renderHandOverlay(null, null);
+    renderTableauOverlay(null);
     return;
   }
 
@@ -2395,7 +2506,7 @@ function renderGame() {
               <strong>${player.score} pts</strong>
               <span>${player.tableau.length} Epochs</span>
             </div>
-            ${player.isHuman && player.id === game.currentPlayerId ? `<p class="active-hand-note">Your hand is below</p>` : renderFaceDownHand(handCount, hiddenBackPathsForPlayer(player))}
+            ${player.isHuman && player.id === game.currentPlayerId ? `<p class="active-hand-note">Your hand is in the side panel</p>` : renderFaceDownHand(handCount, hiddenBackPathsForPlayer(player))}
             ${
               player.tableau.length === 0
                 ? `<div class="empty-tableau-slots">
@@ -2428,6 +2539,7 @@ function renderGame() {
                     )
                     .join("")
             }
+            <button type="button" class="tableau-view-button" data-view-tableau="${escapeHtml(player.id)}">View Tableau</button>
           </article>
         `;
         }
@@ -2440,13 +2552,15 @@ function renderGame() {
   const showVisibleHand = game.phase === "Muse Selection" || currentPlayer?.isHuman;
   const visibleHandCards = handCardsForPlayer(visiblePlayer);
   playerHand.innerHTML = showVisibleHand
-    ? renderPlayerHandZones(visibleHandCards)
+    ? renderPlayerHandSummary(visiblePlayer)
     : `<div class="empty-state">${escapeHtml(currentPlayer?.name ?? "NPC")} is taking an automated turn. Your hand returns when it is your turn.</div>`;
   selectedCardPanel.innerHTML = showVisibleHand
     ? selectedCardSummary(game, visiblePlayer)
     : `<p class="muted">NPC turn in progress. Your selected card will return on your turn.</p>`;
 
   gameLog.innerHTML = game.log.map((entry) => `<p>${escapeHtml(entry)}</p>`).join("");
+  renderHandOverlay(game, visiblePlayer);
+  renderTableauOverlay(game);
 }
 
 async function drawActionForCurrentPlayer() {
@@ -2836,6 +2950,54 @@ function runGameCommand(command) {
   if (command === "end-turn") endTurn();
 }
 
+function currentRouteSectionId() {
+  const routeMap = new Map([
+    ["", "play"],
+    ["play", "play"],
+    ["rules", "rules"],
+    ["dashboard", "dashboard"],
+    ["dice-tester", "dashboard"],
+    ["muse-deck", "muse-deck"],
+    ["epoch-deck", "epoch-deck"],
+    ["artist-deck", "artist-deck"],
+    ["action-deck", "action-deck"],
+    ["playtests", "playtests"],
+    ["scoring", "scoring"]
+  ]);
+  const hash = location.hash.replace("#", "");
+  return routeMap.get(hash) ?? "play";
+}
+
+function renderRoute() {
+  const activeId = currentRouteSectionId();
+  document.querySelectorAll("main > section[id]").forEach((section) => {
+    section.classList.toggle("active-view", section.id === activeId);
+    section.hidden = section.id !== activeId;
+  });
+  document.querySelectorAll(".top-nav a[href^='#']").forEach((link) => {
+    link.classList.toggle("active", link.getAttribute("href") === `#${activeId}` || link.getAttribute("href") === location.hash);
+  });
+}
+
+function closeGameOverlays() {
+  state.handOverlay.open = false;
+  state.tableauOverlay.open = false;
+  renderHandOverlay(state.game, humanPlayer());
+  renderTableauOverlay(state.game);
+}
+
+function openHandOverlay() {
+  if (!state.game) return;
+  state.handOverlay.open = true;
+  renderGame();
+}
+
+function openTableauOverlay(playerId) {
+  if (!state.game) return;
+  state.tableauOverlay = { open: true, playerId };
+  renderTableauOverlay(state.game);
+}
+
 function dropHandCardOntoTableau(cardElement) {
   const game = state.game;
   const player = activePlayer(game);
@@ -3104,6 +3266,11 @@ function bindEvents() {
   });
   diceTesterRollButton?.addEventListener("click", rollStudioDice);
   document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && (state.handOverlay.open || state.tableauOverlay.open)) {
+      event.preventDefault();
+      closeGameOverlays();
+      return;
+    }
     const activeDeckKey =
       location.hash === "#muse-deck" || Boolean(event.target.closest?.("#muse-deck"))
         ? "muse"
@@ -3155,9 +3322,11 @@ function bindEvents() {
   document.querySelectorAll("[data-open-new-game]").forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
+      location.hash = "play";
       openSetupModal();
     });
   });
+  window.addEventListener("hashchange", renderRoute);
   newGameButton.addEventListener("click", openSetupModal);
   setupBackButton?.addEventListener("click", () => {
     state.setupFlow.step = Math.max(1, (state.setupFlow.step || setupStepForGame()) - 1);
@@ -3190,6 +3359,11 @@ function bindEvents() {
     runGameCommand(button.dataset.panelCommand);
   });
   playerHand.addEventListener("click", (event) => {
+    const openButton = event.target.closest("[data-open-hand]");
+    if (openButton) {
+      openHandOverlay();
+      return;
+    }
     const card = event.target.closest("[data-card-type][data-instance-id]");
     if (!card || !state.game) return;
     if (event.detail > 1) return;
@@ -3242,6 +3416,34 @@ function bindEvents() {
     dropHandCardOntoTableau(card);
     if (state.game) state.game.draggedCard = null;
   });
+  gameTableau.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-view-tableau]");
+    if (!button) return;
+    openTableauOverlay(button.dataset.viewTableau);
+  });
+  handOverlay?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-close-overlay]")) {
+      closeGameOverlays();
+      return;
+    }
+    const command = event.target.closest("[data-overlay-command]");
+    if (command) {
+      runGameCommand(command.dataset.overlayCommand);
+      return;
+    }
+    const card = event.target.closest("[data-card-type][data-instance-id]");
+    if (!card || !state.game || event.detail > 1) return;
+    selectHandCard(card);
+    renderGame();
+  });
+  handOverlay?.addEventListener("dblclick", (event) => {
+    const card = event.target.closest("[data-card-type][data-instance-id]");
+    if (!card || !state.game) return;
+    playCardFromHandElement(card);
+  });
+  tableauOverlay?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-close-overlay]")) closeGameOverlays();
+  });
   museChoice.addEventListener("click", (event) => {
     const button = event.target.closest("[data-muse-id]");
     if (!button) return;
@@ -3260,6 +3462,7 @@ function init() {
   renderDiceTester();
   populateFilters();
   bindEvents();
+  renderRoute();
   renderCards();
   renderRules();
   renderManifest();
