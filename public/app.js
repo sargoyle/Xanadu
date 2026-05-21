@@ -2546,8 +2546,24 @@ function renderGame() {
                   </div>`
                 : player.tableau
                     .map(
-                      (set) => `
-                        <div class="tableau-set">
+                      (set) => {
+                        const setPoints = set.artists.reduce((total, artist) => total + (artist.scores[player.museId] ?? 0), 0);
+                        const inspectCards = `
+                          ${renderPhysicalCard(set.epoch, "Epoch", { interactive: false, extraClass: "tableau-inspect-card" })}
+                          ${set.artists
+                            .map((artist, index) =>
+                              renderPhysicalCard(artist, "Artist", {
+                                interactive: false,
+                                index,
+                                total: set.artists.length,
+                                extraClass: "tableau-inspect-card",
+                                scoreMuseId: player.museId
+                              })
+                            )
+                            .join("")}
+                        `;
+                        return `
+                        <div class="tableau-set" tabindex="0" aria-label="${escapeHtml(`${player.name} tableau: ${set.epoch.name} with ${set.artists.length} Artists`)}">
                           <div class="tableau-card-row">
                             ${renderPhysicalCard(set.epoch, "Epoch", { interactive: false, extraClass: "tableau-epoch" })}
                             <div class="tableau-artist-stack" aria-label="${escapeHtml(`${set.artists.length} Artists on ${set.epoch.name}`)}">
@@ -2564,9 +2580,14 @@ function renderGame() {
                                 .join("")}
                             </div>
                           </div>
-                          <span class="tableau-set-summary">${set.artists.length} Artist${set.artists.length === 1 ? "" : "s"} | ${set.artists.reduce((total, artist) => total + (artist.scores[player.museId] ?? 0), 0)} points</span>
+                          <span class="tableau-set-summary">${set.artists.length} Artist${set.artists.length === 1 ? "" : "s"} | ${setPoints} points</span>
+                          <div class="tableau-inspect-popover" aria-hidden="true">
+                            <strong>${escapeHtml(set.epoch.name)}</strong>
+                            <div class="tableau-inspect-cards">${inspectCards}</div>
+                          </div>
                         </div>
-                      `
+                      `;
+                      }
                     )
                     .join("")
             }

@@ -3976,6 +3976,10 @@ select {
   overflow: hidden;
 }
 
+#play .game-playmat {
+  overflow: visible;
+}
+
 #play .poker-table {
   display: grid;
   grid-template-columns: 132px minmax(0, 1fr) 132px;
@@ -3983,7 +3987,7 @@ select {
   gap: 8px;
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 #play .player-table-zones {
@@ -4056,6 +4060,7 @@ select {
 }
 
 #play .player-table-zones .tableau-set {
+  position: relative;
   padding: 8px;
   border-radius: 10px;
 }
@@ -4089,6 +4094,98 @@ select {
 #play .player-table-zones .tableau-set-summary {
   font-size: 11px;
   color: rgba(255, 249, 234, 0.86);
+}
+
+#play .tableau-inspect-popover {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  width: min(380px, 62vw);
+  padding: 12px;
+  border: 1px solid rgba(202, 160, 86, 0.78);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at top, rgba(198, 161, 91, 0.16), transparent 48%),
+    rgba(14, 13, 24, 0.98);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.68);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px) scale(0.98);
+  transition: opacity 160ms ease, transform 160ms ease;
+  z-index: 120;
+}
+
+#play .tableau-inspect-popover strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ivory);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+#play .tableau-inspect-cards {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 4px 2px 8px;
+}
+
+#play .tableau-inspect-cards .physical-card {
+  --game-card-width: 118px;
+  flex: 0 0 auto;
+}
+
+#play .tableau-set:hover .tableau-inspect-popover,
+#play .tableau-set:focus-within .tableau-inspect-popover,
+#play .tableau-set:focus .tableau-inspect-popover {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+#play .seat-2 .tableau-inspect-popover,
+#play .seat-4 .tableau-inspect-popover,
+#play .seat-7 .tableau-inspect-popover {
+  left: 0;
+  transform: translate(0, 8px) scale(0.98);
+}
+
+#play .seat-2 .tableau-set:hover .tableau-inspect-popover,
+#play .seat-2 .tableau-set:focus-within .tableau-inspect-popover,
+#play .seat-2 .tableau-set:focus .tableau-inspect-popover,
+#play .seat-4 .tableau-set:hover .tableau-inspect-popover,
+#play .seat-4 .tableau-set:focus-within .tableau-inspect-popover,
+#play .seat-4 .tableau-set:focus .tableau-inspect-popover,
+#play .seat-7 .tableau-set:hover .tableau-inspect-popover,
+#play .seat-7 .tableau-set:focus-within .tableau-inspect-popover,
+#play .seat-7 .tableau-set:focus .tableau-inspect-popover {
+  transform: translate(0, 0) scale(1);
+}
+
+#play .seat-3 .tableau-inspect-popover,
+#play .seat-5 .tableau-inspect-popover,
+#play .seat-8 .tableau-inspect-popover,
+#play .seat-9 .tableau-inspect-popover {
+  left: auto;
+  right: 0;
+  transform: translate(0, 8px) scale(0.98);
+}
+
+#play .seat-3 .tableau-set:hover .tableau-inspect-popover,
+#play .seat-3 .tableau-set:focus-within .tableau-inspect-popover,
+#play .seat-3 .tableau-set:focus .tableau-inspect-popover,
+#play .seat-5 .tableau-set:hover .tableau-inspect-popover,
+#play .seat-5 .tableau-set:focus-within .tableau-inspect-popover,
+#play .seat-5 .tableau-set:focus .tableau-inspect-popover,
+#play .seat-8 .tableau-set:hover .tableau-inspect-popover,
+#play .seat-8 .tableau-set:focus-within .tableau-inspect-popover,
+#play .seat-8 .tableau-set:focus .tableau-inspect-popover,
+#play .seat-9 .tableau-set:hover .tableau-inspect-popover,
+#play .seat-9 .tableau-set:focus-within .tableau-inspect-popover,
+#play .seat-9 .tableau-set:focus .tableau-inspect-popover {
+  transform: translate(0, 0) scale(1);
 }
 
 #play .table-player-summary {
