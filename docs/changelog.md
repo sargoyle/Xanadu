@@ -56,6 +56,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- 2026-05-21: Enlarged on-board tableau card previews and added hover inspection so played Epoch/Artist cards are easier to read directly from the playmat. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-21: Added Available Actions controls to the Current Hand overlay, removed the visible `You's Hand` title, and improved simple Action parsing for combined draw effects such as Artist plus Epoch or Action. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-21: Fixed the Current Hand `Play Set` action so selecting a legal Epoch or Artist can auto-pair with its matching card from hand, or attach an Artist to an existing matching Epoch. Files affected: `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-21: Stabilized the expanded current-hand overlay by disabling the compact hand tray hover expansion inside the overlay, keeping rows stationary, and preserving card selection. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.

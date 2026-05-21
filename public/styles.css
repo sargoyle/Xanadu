@@ -4044,6 +4044,53 @@ select {
 #play .player-table-zones .seat-8 { grid-column: 3; grid-row: 1; align-self: start; }
 #play .player-table-zones .seat-9 { grid-column: 3; grid-row: 1; align-self: end; }
 
+/* Board tableau readability: played cards need to be inspectable on the playmat. */
+#play .player-table-zones .tableau-player {
+  overflow: visible;
+  z-index: 5;
+}
+
+#play .player-table-zones .tableau-player:hover,
+#play .player-table-zones .tableau-player:focus-within {
+  z-index: 40;
+}
+
+#play .player-table-zones .tableau-set {
+  padding: 8px;
+  border-radius: 10px;
+}
+
+#play .player-table-zones .tableau-card-row {
+  min-height: 88px;
+  overflow: visible;
+}
+
+#play .player-table-zones .tableau-card-row .physical-card {
+  --game-card-width: clamp(58px, 4.8vw, 82px);
+}
+
+#play .player-table-zones .tableau-artist-stack {
+  margin-left: 8px;
+}
+
+#play .player-table-zones .tableau-artist-stack .physical-card {
+  margin-left: -24px;
+}
+
+#play .player-table-zones .tableau-card-row .physical-card:hover,
+#play .player-table-zones .tableau-card-row .physical-card:focus-visible {
+  --card-lift: -18px;
+  --card-scale: 1.75;
+  --fan-rotate: 0deg;
+  z-index: 90;
+  filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.62));
+}
+
+#play .player-table-zones .tableau-set-summary {
+  font-size: 11px;
+  color: rgba(255, 249, 234, 0.86);
+}
+
 #play .table-player-summary {
   display: none;
 }
