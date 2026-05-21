@@ -1596,13 +1596,17 @@ function removeByInstance(cards, instanceId) {
 }
 
 function matchingTableauSet(player, artist) {
-  return player.tableau.find((set) => set.epoch.id === artist.epochId);
+  return player.tableau.find((set) => isLegalEpochArtistPair(set.epoch, artist));
+}
+
+function isLegalEpochArtistPair(epoch, artist) {
+  return Boolean(epoch && artist && epoch.id === artist.epochId);
 }
 
 function findPlayableTableauMove(player) {
   const playablePair = player.hand.artists
-    .map((artist) => ({ artist, epoch: player.hand.epochs.find((epoch) => epoch.id === artist.epochId) }))
-    .find((pair) => pair.epoch);
+    .map((artist) => ({ artist, epoch: player.hand.epochs.find((epoch) => isLegalEpochArtistPair(epoch, artist)) }))
+    .find((pair) => isLegalEpochArtistPair(pair.epoch, pair.artist));
   if (playablePair) return { type: "new-set", ...playablePair };
 
   const attachArtist = player.hand.artists.find((artist) => matchingTableauSet(player, artist));
@@ -1619,16 +1623,33 @@ function findPlayableTableauMove(player) {
 
 function playTableauMove(player, move) {
   if (move.type === "new-set") {
+    if (!isLegalEpochArtistPair(move.epoch, move.artist)) {
+      addGameLog(`${move.artist?.name ?? "That Artist"} cannot be played with ${move.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
+      return false;
+    }
     const playedEpoch = removeByInstance(player.hand.epochs, move.epoch.instanceId);
     const playedArtist = removeByInstance(player.hand.artists, move.artist.instanceId);
+    if (!playedEpoch || !playedArtist) {
+      addGameLog("That set could not be played because one of the cards is no longer in your hand.");
+      return false;
+    }
     player.tableau.push({ epoch: playedEpoch, artists: [playedArtist] });
     addGameLog(`${player.name} played ${playedEpoch.name} with ${playedArtist.name}.`);
-    return;
+    return true;
   }
 
+  if (!isLegalEpochArtistPair(move.targetSet?.epoch, move.artist)) {
+    addGameLog(`${move.artist?.name ?? "That Artist"} cannot attach to ${move.targetSet?.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
+    return false;
+  }
   const playedArtist = removeByInstance(player.hand.artists, move.artist.instanceId);
+  if (!playedArtist) {
+    addGameLog("That Artist could not be played because it is no longer in your hand.");
+    return false;
+  }
   move.targetSet.artists.push(playedArtist);
   addGameLog(`${player.name} attached ${playedArtist.name} to ${move.targetSet.epoch.name}.`);
+  return true;
 }
 
 function selectedHandCards(player) {
@@ -2048,12 +2069,12 @@ function selectedTableauPlayStatus(game, player, entry) {
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
   if (game.artistsPlayedThisTurn >= maxArtists) return { canPlay: false, reason: "Artist play limit reached this turn." };
   if (selected.epoch && selected.artist) {
-    return selected.epoch.id === selected.artist.epochId
+    return isLegalEpochArtistPair(selected.epoch, selected.artist)
       ? { canPlay: true, reason: "Play this Epoch + Artist set." }
       : { canPlay: false, reason: "Artist must match the selected Epoch." };
   }
   if (selected.epoch) {
-    const matchingArtist = player.hand.artists.find((artist) => artist.epochId === selected.epoch.id);
+    const matchingArtist = player.hand.artists.find((artist) => isLegalEpochArtistPair(selected.epoch, artist));
     return matchingArtist
       ? { canPlay: true, reason: `Play ${selected.epoch.name} with ${matchingArtist.name}.` }
       : { canPlay: false, reason: "Select a matching Artist, or draw one later." };
@@ -2925,12 +2946,15 @@ function playSelectedTableauCards(playerOverride = null) {
   }
 
   if (epoch) {
-    if (epoch.id !== artist.epochId) {
+    if (!isLegalEpochArtistPair(epoch, artist)) {
       addGameLog(`${artist.name} cannot be played with ${epoch.name}; the Epoch must match.`);
       renderGame();
       return;
     }
-    playTableauMove(player, { type: "new-set", epoch, artist });
+    if (!playTableauMove(player, { type: "new-set", epoch, artist })) {
+      renderGame();
+      return;
+    }
     game.artistsPlayedThisTurn += 1;
     game.selectedCards = { ...game.selectedCards, epoch: "", artist: "" };
   } else {
@@ -2940,7 +2964,10 @@ function playSelectedTableauCards(playerOverride = null) {
       renderGame();
       return;
     }
-    playTableauMove(player, { type: "attach", artist, targetSet });
+    if (!playTableauMove(player, { type: "attach", artist, targetSet })) {
+      renderGame();
+      return;
+    }
     game.artistsPlayedThisTurn += 1;
     game.selectedCards.artist = "";
   }
@@ -2968,7 +2995,10 @@ function autoPlayTableauCards(playerOverride = null) {
     return;
   }
 
-  playTableauMove(player, move);
+  if (!playTableauMove(player, move)) {
+    renderGame();
+    return;
+  }
   game.artistsPlayedThisTurn += 1;
   game.selectedCards = { epoch: "", artist: "", action: game.selectedCards.action };
   refreshScores(game);

@@ -83,6 +83,7 @@
 - [x] Enlarge on-board tableau card previews and add hover inspection so played cards are readable from the playmat.
 - [x] Add a dedicated hover/focus tableau inspection popover so played cards can be read directly from the board.
 - [x] Fix Current Hand Play Set and Play Selected Card commands so they execute against the visible human hand context.
+- [x] Harden Auto Play Legal Set so Epoch and Artist cards must match before any tableau move is executed.
 
 ## Backlog
 
