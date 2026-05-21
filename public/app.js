@@ -2157,7 +2157,7 @@ function renderTurnControls(game, player) {
     return `<p class="muted">Resolve Muse selection before the first turn begins.</p>`;
   }
 
-  const isHumanTurn = player?.isHuman;
+  const isHumanTurn = Boolean(player?.isHuman && player.id === game.currentPlayerId);
   const isRolling = Boolean(game.diceRoll?.isRolling);
   const selected = player ? selectedHandCards(player) : {};
   const selectedAction = selected.action;
@@ -2637,10 +2637,10 @@ async function drawActionForCurrentPlayer() {
   renderGame();
 }
 
-async function playSelectedAction() {
+async function playSelectedAction(playerOverride = null) {
   const game = state.game;
-  const player = activePlayer(game);
-  if (!game || !player || !player.isHuman || game.actionPlayedThisTurn || game.diceRoll?.isRolling) return;
+  const player = playerOverride ?? activePlayer(game);
+  if (!game || !player || !player.isHuman || player.id !== game.currentPlayerId || game.actionPlayedThisTurn || game.diceRoll?.isRolling) return;
   const action = selectedHandCards(player).action;
   if (!action) {
     addGameLog("Select an Action card before playing an Action.");
@@ -2648,7 +2648,7 @@ async function playSelectedAction() {
     return;
   }
   if (action.diceOutcomes) {
-    await rollSelectedFateAction();
+    await rollSelectedFateAction(player);
     return;
   }
   await resolveActionCard(player, action);
@@ -2678,10 +2678,10 @@ async function resolveActionCard(player, action) {
   applySimpleEffect(player, effectText);
 }
 
-async function rollSelectedFateAction() {
+async function rollSelectedFateAction(playerOverride = null) {
   const game = state.game;
-  const player = activePlayer(game);
-  if (!game || !player?.isHuman || game.actionPlayedThisTurn || game.diceRoll?.isRolling) return;
+  const player = playerOverride ?? activePlayer(game);
+  if (!game || !player?.isHuman || player.id !== game.currentPlayerId || game.actionPlayedThisTurn || game.diceRoll?.isRolling) return;
   const action = selectedHandCards(player).action;
   if (!action?.diceOutcomes) {
     addGameLog("Select a Fate Dice Action before rolling.");
@@ -2697,10 +2697,10 @@ async function rollSelectedFateAction() {
   renderGame();
 }
 
-function resolvePendingFateAction() {
+function resolvePendingFateAction(playerOverride = null) {
   const game = state.game;
-  const player = activePlayer(game);
-  if (!game || !player?.isHuman || game.diceRoll?.isRolling) return;
+  const player = playerOverride ?? activePlayer(game);
+  if (!game || !player?.isHuman || player.id !== game.currentPlayerId || game.diceRoll?.isRolling) return;
   const action = selectedHandCards(player).action;
   if (!action || game.pendingFateAction?.instanceId !== action.instanceId) {
     addGameLog("Roll a Fate Dice Action before resolving it.");
@@ -2718,10 +2718,10 @@ function resolvePendingFateAction() {
   renderGame();
 }
 
-function discardSelectedAction() {
+function discardSelectedAction(playerOverride = null) {
   const game = state.game;
-  const player = activePlayer(game);
-  if (!game || !player?.isHuman || game.diceRoll?.isRolling) return;
+  const player = playerOverride ?? activePlayer(game);
+  if (!game || !player?.isHuman || player.id !== game.currentPlayerId || game.diceRoll?.isRolling) return;
   const action = selectedHandCards(player).action;
   if (!action) {
     addGameLog("Select an Action card before discarding.");
@@ -2746,16 +2746,16 @@ function cancelSelection() {
   renderGame();
 }
 
-function playSelectedCard() {
+function playSelectedCard(playerOverride = null) {
   const game = state.game;
-  const player = activePlayer(game);
-  if (!game || !player?.isHuman) return;
+  const player = playerOverride ?? activePlayer(game);
+  if (!game || !player?.isHuman || player.id !== game.currentPlayerId) return;
   const selected = selectedHandCards(player);
   if (selected.action) {
-    void playSelectedAction();
+    void playSelectedAction(player);
     return;
   }
-  playSelectedTableauCards();
+  playSelectedTableauCards(player);
 }
 
 function diceAnimationDuration() {
@@ -2899,10 +2899,10 @@ function applySimpleEffect(player, effectText) {
   }
 }
 
-function playSelectedTableauCards() {
+function playSelectedTableauCards(playerOverride = null) {
   const game = state.game;
-  const player = activePlayer(game);
-  if (!game || !player || !player.isHuman || game.phase === "Draw Action") return;
+  const player = playerOverride ?? activePlayer(game);
+  if (!game || !player || !player.isHuman || player.id !== game.currentPlayerId || game.phase === "Draw Action") return;
   let { epoch, artist } = selectedHandCards(player);
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
 
@@ -2950,10 +2950,10 @@ function playSelectedTableauCards() {
   renderGame();
 }
 
-function autoPlayTableauCards() {
+function autoPlayTableauCards(playerOverride = null) {
   const game = state.game;
-  const player = activePlayer(game);
-  if (!game || !player || !player.isHuman || game.phase === "Draw Action") return;
+  const player = playerOverride ?? activePlayer(game);
+  if (!game || !player || !player.isHuman || player.id !== game.currentPlayerId || game.phase === "Draw Action") return;
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
   if (game.artistsPlayedThisTurn >= maxArtists) {
     addGameLog("You have already played the maximum number of Artists this turn.");
@@ -2995,17 +2995,17 @@ function playCardFromHandElement(cardElement) {
   playSelectedTableauCards();
 }
 
-function runGameCommand(command) {
+function runGameCommand(command, playerOverride = null) {
   if (!command) return;
   if (command === "draw-action") void drawActionForCurrentPlayer();
-  if (command === "play-selected-card") playSelectedCard();
-  if (command === "play-action") void playSelectedAction();
-  if (command === "discard-action") discardSelectedAction();
+  if (command === "play-selected-card") playSelectedCard(playerOverride);
+  if (command === "play-action") void playSelectedAction(playerOverride);
+  if (command === "discard-action") discardSelectedAction(playerOverride);
   if (command === "cancel-selection") cancelSelection();
-  if (command === "roll-selected-fate") void rollSelectedFateAction();
-  if (command === "resolve-fate-action") resolvePendingFateAction();
-  if (command === "play-tableau-card") playSelectedTableauCards();
-  if (command === "auto-tableau-play") autoPlayTableauCards();
+  if (command === "roll-selected-fate") void rollSelectedFateAction(playerOverride);
+  if (command === "resolve-fate-action") resolvePendingFateAction(playerOverride);
+  if (command === "play-tableau-card") playSelectedTableauCards(playerOverride);
+  if (command === "auto-tableau-play") autoPlayTableauCards(playerOverride);
   if (command === "end-turn") endTurn();
 }
 
@@ -3487,7 +3487,7 @@ function bindEvents() {
     }
     const command = event.target.closest("[data-overlay-command]");
     if (command) {
-      runGameCommand(command.dataset.overlayCommand);
+      runGameCommand(command.dataset.overlayCommand, humanPlayer(state.game));
       return;
     }
     const card = event.target.closest("[data-card-type][data-instance-id]");

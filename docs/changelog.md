@@ -56,6 +56,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- 2026-05-21: Fixed Current Hand `Play Set` and `Play Selected Card` commands by passing the visible human hand context into shared command handlers instead of relying only on the active board lookup. Files affected: `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-21: Added a dedicated hover/focus tableau inspection popover with larger played Epoch and Artist cards so board tableaus can be read without opening the full tableau modal. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-21: Enlarged on-board tableau card previews and added hover inspection so played Epoch/Artist cards are easier to read directly from the playmat. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-21: Added Available Actions controls to the Current Hand overlay, removed the visible `You's Hand` title, and improved simple Action parsing for combined draw effects such as Artist plus Epoch or Action. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.

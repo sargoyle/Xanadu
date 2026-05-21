@@ -82,6 +82,7 @@
 - [x] Add Available Actions to the Current Hand overlay, remove the visible hand title, and improve simple Action draw parsing.
 - [x] Enlarge on-board tableau card previews and add hover inspection so played cards are readable from the playmat.
 - [x] Add a dedicated hover/focus tableau inspection popover so played cards can be read directly from the board.
+- [x] Fix Current Hand Play Set and Play Selected Card commands so they execute against the visible human hand context.
 
 ## Backlog
 
