@@ -41,7 +41,7 @@ a {
   top: 0;
   z-index: 200;
   display: grid;
-  grid-template-columns: minmax(190px, 280px) minmax(320px, 1fr) auto;
+  grid-template-columns: minmax(190px, 260px) minmax(430px, 1fr) auto;
   align-items: center;
   gap: 12px;
   min-height: 72px;
@@ -132,9 +132,21 @@ a {
 
 .top-game-status {
   display: grid;
-  grid-template-columns: repeat(4, minmax(86px, 1fr));
+  grid-template-columns: minmax(140px, 1fr) minmax(76px, 0.5fr) minmax(52px, 0.34fr) minmax(260px, 1.85fr);
   gap: 6px;
   min-width: 0;
+}
+
+.top-game-status .game-status-chip:nth-child(2) {
+  max-width: 120px;
+}
+
+.top-game-status .game-status-chip:nth-child(3) {
+  max-width: 78px;
+}
+
+#game-score-summary {
+  font-size: 12px;
 }
 
 .studio-menu {
@@ -335,8 +347,11 @@ section {
 .game-status-chip strong {
   color: var(--ivory);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.05;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .rules-link-button {
@@ -3225,22 +3240,24 @@ textarea:focus-visible {
 
 .opponent-hand-backs {
   position: relative;
-  height: 38px;
+  height: 34px;
   margin: 2px auto 0;
-  width: min(112px, 100%);
+  width: min(92px, 100%);
+  overflow: hidden;
 }
 
 .opponent-card-back {
   position: absolute;
   left: 50%;
   top: 0;
-  width: 26px;
+  width: 22px;
   aspect-ratio: 63.5 / 88.9;
   border: 1px solid rgba(255, 249, 234, 0.42);
   border-radius: 7%;
   overflow: hidden;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.24);
-  transform: translateX(calc(-50% + (var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 14px)) rotate(calc((var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 4deg));
+  pointer-events: none;
+  transform: translateX(calc(-50% + (var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 10px)) rotate(calc((var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 3deg));
 }
 
 .opponent-card-back img {
@@ -3263,6 +3280,33 @@ textarea:focus-visible {
   background: rgba(21, 23, 36, 0.92);
   color: var(--ivory);
   font-size: 11px;
+}
+
+.opponent-hand-hints {
+  position: absolute;
+  left: 3px;
+  bottom: 1px;
+  display: flex;
+  gap: 2px;
+}
+
+.opponent-hand-hints i {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(255, 249, 234, 0.18);
+}
+
+.opponent-hand-hints .hint-epoch {
+  background: var(--epoch-blue);
+}
+
+.opponent-hand-hints .hint-artist {
+  background: var(--success);
+}
+
+.opponent-hand-hints .hint-action {
+  background: var(--action-red);
 }
 
 .empty-tableau-slots {
@@ -3983,8 +4027,8 @@ select {
 #play .poker-table {
   display: grid;
   grid-template-columns: 132px minmax(0, 1fr) 132px;
-  grid-template-rows: 88px minmax(0, 1fr) 88px;
-  gap: 8px;
+  grid-template-rows: 112px minmax(0, 1fr) 96px;
+  gap: 10px;
   height: 100%;
   min-height: 0;
   overflow: visible;
@@ -3999,10 +4043,10 @@ select {
   grid-row: 2;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 9px;
+  gap: 7px;
   min-width: 0;
   min-height: 0;
-  padding: 12px;
+  padding: 14px 12px 12px;
   border-radius: 20px;
 }
 
@@ -4027,7 +4071,7 @@ select {
   width: 100%;
   min-height: 0;
   max-height: 100%;
-  padding: 7px;
+  padding: 6px;
   overflow: hidden;
 }
 
@@ -4048,9 +4092,8 @@ select {
 #play .player-table-zones .seat-8 { grid-column: 3; grid-row: 1; align-self: start; }
 #play .player-table-zones .seat-9 { grid-column: 3; grid-row: 1; align-self: end; }
 
-/* Board tableau readability: played cards need to be inspectable on the playmat. */
 #play .player-table-zones .tableau-player {
-  overflow: visible;
+  overflow: hidden;
   z-index: 5;
 }
 
@@ -4212,6 +4255,72 @@ select {
 
 #play .turn-panel .game-log {
   overflow: auto;
+}
+
+.legal-set-dialog {
+  width: min(760px, calc(100vw - 48px));
+}
+
+.legal-set-content {
+  display: grid;
+  gap: 14px;
+}
+
+.legal-set-list {
+  display: grid;
+  gap: 10px;
+  max-height: min(56vh, 520px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.legal-set-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(198, 161, 91, 0.42);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(255, 249, 234, 0.1), rgba(198, 161, 91, 0.08)),
+    rgba(12, 16, 26, 0.82);
+  color: var(--ivory);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.legal-set-option:hover,
+.legal-set-option:focus-visible {
+  outline: 2px solid var(--gold);
+  background:
+    linear-gradient(135deg, rgba(255, 249, 234, 0.16), rgba(198, 161, 91, 0.14)),
+    rgba(12, 16, 26, 0.9);
+}
+
+.legal-set-option span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.legal-set-option strong {
+  overflow: hidden;
+  color: var(--ivory);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legal-set-option small {
+  color: rgba(255, 249, 234, 0.62);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 #play .game-hand-dock {

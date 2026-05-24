@@ -85,6 +85,7 @@
 - [x] Fix Current Hand Play Set and Play Selected Card commands so they execute against the visible human hand context.
 - [x] Harden Auto Play Legal Set so Epoch and Artist cards must match before any tableau move is executed.
 - [x] Export all generated Artist card fronts as downloadable JPG files and a zip archive.
+- [x] Fix Play page NPC hand containment, HUD score sizing, player panel placement, and legal-set validation/choice flow.
 
 ## Backlog
 

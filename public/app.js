@@ -69,6 +69,8 @@ const handOverlayContent = document.querySelector("#hand-overlay-content");
 const tableauOverlay = document.querySelector("#tableau-overlay");
 const tableauOverlayTitle = document.querySelector("#tableau-overlay-title");
 const tableauOverlayContent = document.querySelector("#tableau-overlay-content");
+const legalSetOverlay = document.querySelector("#legal-set-overlay");
+const legalSetContent = document.querySelector("#legal-set-content");
 const museDeckPile = document.querySelector("#muse-deck-pile");
 const museDealNextButton = document.querySelector("#muse-deal-next");
 const museRestartDeckButton = document.querySelector("#muse-restart-deck");
@@ -142,6 +144,10 @@ const state = {
   tableauOverlay: {
     open: false,
     playerId: ""
+  },
+  legalSetChoice: {
+    open: false,
+    pairs: []
   },
   players: [],
   scoreRows: [],
@@ -1595,18 +1601,51 @@ function removeByInstance(cards, instanceId) {
   return cards.splice(index, 1)[0];
 }
 
+function normaliseEpochValue(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[’‘`]/g, "'")
+    .replace(/[‐‑‒–—―-]/g, " ")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function epochMatchKeys(epoch) {
+  return new Set(
+    [epoch?.id, epoch?.name, epoch?.epochName]
+      .map(normaliseEpochValue)
+      .filter(Boolean)
+  );
+}
+
+function artistEpochKeys(artist) {
+  return [artist?.epochId, artist?.epoch, artist?.epochName]
+    .map(normaliseEpochValue)
+    .filter(Boolean);
+}
+
+function isLegalEpochArtistPair(epoch, artist) {
+  const epochKeys = epochMatchKeys(epoch);
+  return artistEpochKeys(artist).some((key) => epochKeys.has(key));
+}
+
 function matchingTableauSet(player, artist) {
   return player.tableau.find((set) => isLegalEpochArtistPair(set.epoch, artist));
 }
 
-function isLegalEpochArtistPair(epoch, artist) {
-  return Boolean(epoch && artist && epoch.id === artist.epochId);
+function legalEpochArtistPairs(player) {
+  return player.hand.epochs.flatMap((epoch) =>
+    player.hand.artists
+      .filter((artist) => isLegalEpochArtistPair(epoch, artist))
+      .map((artist) => ({ epoch, artist }))
+  );
 }
 
 function findPlayableTableauMove(player) {
-  const playablePair = player.hand.artists
-    .map((artist) => ({ artist, epoch: player.hand.epochs.find((epoch) => isLegalEpochArtistPair(epoch, artist)) }))
-    .find((pair) => isLegalEpochArtistPair(pair.epoch, pair.artist));
+  const playablePair = legalEpochArtistPairs(player)[0];
   if (playablePair) return { type: "new-set", ...playablePair };
 
   const attachArtist = player.hand.artists.find((artist) => matchingTableauSet(player, artist));
@@ -1878,7 +1917,7 @@ function hiddenBackPathsForPlayer(player) {
 }
 
 function renderFaceDownHand(count, backPaths = []) {
-  const visible = Math.max(0, Math.min(7, count));
+  const visible = Math.max(0, Math.min(5, count));
   if (visible === 0) return `<span class="opponent-hand-empty">0 cards</span>`;
   const visibleBacks = backPaths.length > 0
     ? backPaths.slice(0, visible)
@@ -1894,6 +1933,11 @@ function renderFaceDownHand(count, backPaths = []) {
         </span>
       `).join("")}
       <strong>${count}</strong>
+      <span class="opponent-hand-hints" aria-hidden="true">
+        <i class="hint-epoch"></i>
+        <i class="hint-artist"></i>
+        <i class="hint-action"></i>
+      </span>
     </div>
   `;
 }
@@ -2051,6 +2095,48 @@ function renderTableauOverlay(game) {
   `;
 }
 
+function renderLegalSetChoiceOverlay(game) {
+  if (!legalSetOverlay || !legalSetContent) return;
+  legalSetOverlay.hidden = !state.legalSetChoice.open;
+  legalSetOverlay.classList.toggle("is-open", state.legalSetChoice.open);
+  if (!state.legalSetChoice.open) return;
+  const player = activePlayer(game);
+  const pairs = state.legalSetChoice.pairs
+    .map((pair) => ({
+      epoch: player?.hand.epochs.find((card) => card.instanceId === pair.epochInstanceId),
+      artist: player?.hand.artists.find((card) => card.instanceId === pair.artistInstanceId)
+    }))
+    .filter((pair) => isLegalEpochArtistPair(pair.epoch, pair.artist));
+
+  if (!game || !player || pairs.length === 0) {
+    legalSetContent.innerHTML = `<p class="muted">No legal Epoch + Artist set available.</p>`;
+    return;
+  }
+
+  legalSetContent.innerHTML = `
+    <p class="muted">Choose the matching Epoch + Artist set to play. Only legal matches are shown.</p>
+    <div class="legal-set-list">
+      ${pairs
+        .map(
+          ({ epoch, artist }, index) => `
+            <button type="button" class="legal-set-option" data-legal-set-index="${index}">
+              <span>
+                <strong>${escapeHtml(epoch.name)}</strong>
+                <small>Epoch</small>
+              </span>
+              <span aria-hidden="true">+</span>
+              <span>
+                <strong>${escapeHtml(artist.name)}</strong>
+                <small>${escapeHtml(epochById.get(artist.epochId)?.name ?? artist.epochName ?? artist.epochId)}</small>
+              </span>
+            </button>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 function selectedEntryForPlayer(player) {
   if (!state.game || !player) return null;
   const selected = selectedHandCards(player);
@@ -2083,7 +2169,7 @@ function selectedTableauPlayStatus(game, player, entry) {
     if (matchingTableauSet(player, selected.artist)) {
       return { canPlay: true, reason: "Attach this Artist to an existing matching Epoch." };
     }
-    const matchingEpoch = player.hand.epochs.find((epoch) => epoch.id === selected.artist.epochId);
+    const matchingEpoch = player.hand.epochs.find((epoch) => isLegalEpochArtistPair(epoch, selected.artist));
     return matchingEpoch
       ? { canPlay: true, reason: `Play ${matchingEpoch.name} with ${selected.artist.name}.` }
       : { canPlay: false, reason: "Select the matching Epoch, or play that Epoch first." };
@@ -2184,7 +2270,7 @@ function renderTurnControls(game, player) {
   const selectedAction = selected.action;
   const selectedEntry = selectedEntryForPlayer(player);
   const tableauStatus = selectedEntry ? selectedTableauPlayStatus(game, player, selectedEntry) : null;
-  const legalAutoMove = player?.isHuman && game.phase !== "Draw Action" ? findPlayableTableauMove(player) : null;
+  const legalPairCount = player?.isHuman && game.phase !== "Draw Action" ? legalEpochArtistPairs(player).length : 0;
   const pendingFate = selectedAction && game.pendingFateAction?.instanceId === selectedAction.instanceId;
   const canAct = isHumanTurn && game.phase !== "Draw Action" && !isRolling;
   return `
@@ -2195,7 +2281,7 @@ function renderTurnControls(game, player) {
           ? `<button id="play-selected-card" type="button" class="command-button" ${!canAct || !tableauStatus?.canPlay ? "disabled" : ""}>Play Selected Card</button>`
           : ""
       }
-      ${legalAutoMove ? `<button id="auto-tableau-play" type="button" class="command-button secondary" ${!canAct ? "disabled" : ""}>Auto Play Legal Set</button>` : ""}
+      ${game.phase !== "Draw Action" ? `<button id="auto-tableau-play" type="button" class="command-button secondary" ${!canAct ? "disabled" : ""}>${legalPairCount > 1 ? "Choose Legal Set" : "Auto Play Legal Set"}</button>` : ""}
       ${game.phase !== "Draw Action" ? `<button id="end-turn" type="button" class="command-button secondary" ${!isHumanTurn || isRolling ? "disabled" : ""}>End Turn</button>` : ""}
     </div>
     ${
@@ -2492,6 +2578,7 @@ function renderGame() {
     gameLog.innerHTML = `<p class="muted">No game actions yet.</p>`;
     renderHandOverlay(null, null);
     renderTableauOverlay(null);
+    renderLegalSetChoiceOverlay(null);
     return;
   }
 
@@ -2511,7 +2598,7 @@ function renderGame() {
       : `${currentPlayer?.name ?? "Player"}'s turn`;
   gamePhase.textContent = game.phase;
   gameTurnNumber.textContent = String(game.turnNumber ?? 0);
-  gameScoreSummary.textContent = game.players.map((player) => `${player.name}: ${player.score}`).join(" | ");
+  gameScoreSummary.textContent = game.players.map((player) => `${player.name} ${player.score}`).join(" | ");
   gameDecks.innerHTML = `
     ${renderCardPile("Artist Deck", game.decks.artist.length, "deck")}
     ${renderCardPile("Epoch Deck", game.decks.epoch.length, "deck")}
@@ -2634,6 +2721,7 @@ function renderGame() {
   gameLog.innerHTML = game.log.map((entry) => `<p>${escapeHtml(entry)}</p>`).join("");
   renderHandOverlay(game, visiblePlayer);
   renderTableauOverlay(game);
+  renderLegalSetChoiceOverlay(game);
 }
 
 async function drawActionForCurrentPlayer() {
@@ -2928,10 +3016,10 @@ function playSelectedTableauCards(playerOverride = null) {
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
 
   if (epoch && !artist) {
-    artist = player.hand.artists.find((card) => card.epochId === epoch.id);
+    artist = player.hand.artists.find((card) => isLegalEpochArtistPair(epoch, card));
   }
   if (artist && !epoch && !matchingTableauSet(player, artist)) {
-    epoch = player.hand.epochs.find((card) => card.id === artist.epochId);
+    epoch = player.hand.epochs.find((card) => isLegalEpochArtistPair(card, artist));
   }
 
   if (!artist) {
@@ -2988,14 +3076,19 @@ function autoPlayTableauCards(playerOverride = null) {
     return;
   }
 
-  const move = findPlayableTableauMove(player);
-  if (!move) {
-    addGameLog("No legal Epoch + Artist play is available. You may end your turn to pass.");
+  const pairs = legalEpochArtistPairs(player);
+  if (pairs.length === 0) {
+    addGameLog("No legal Epoch + Artist set available.");
     renderGame();
     return;
   }
+  if (pairs.length > 1) {
+    openLegalSetChoice(pairs);
+    return;
+  }
 
-  if (!playTableauMove(player, move)) {
+  const pair = pairs[0];
+  if (!playTableauMove(player, { type: "new-set", epoch: pair.epoch, artist: pair.artist })) {
     renderGame();
     return;
   }
@@ -3071,8 +3164,11 @@ function renderRoute() {
 function closeGameOverlays() {
   state.handOverlay.open = false;
   state.tableauOverlay.open = false;
+  state.legalSetChoice.open = false;
+  state.legalSetChoice.pairs = [];
   renderHandOverlay(state.game, humanPlayer());
   renderTableauOverlay(state.game);
+  renderLegalSetChoiceOverlay(state.game);
 }
 
 function openHandOverlay() {
@@ -3085,6 +3181,40 @@ function openTableauOverlay(playerId) {
   if (!state.game) return;
   state.tableauOverlay = { open: true, playerId };
   renderTableauOverlay(state.game);
+}
+
+function openLegalSetChoice(pairs) {
+  state.legalSetChoice = {
+    open: true,
+    pairs: pairs.map(({ epoch, artist }) => ({
+      epochInstanceId: epoch.instanceId,
+      artistInstanceId: artist.instanceId
+    }))
+  };
+  renderLegalSetChoiceOverlay(state.game);
+}
+
+function playChosenLegalSet(index) {
+  const game = state.game;
+  const player = activePlayer(game);
+  const stored = state.legalSetChoice.pairs[index];
+  if (!game || !player?.isHuman || !stored) return;
+  const epoch = player.hand.epochs.find((card) => card.instanceId === stored.epochInstanceId);
+  const artist = player.hand.artists.find((card) => card.instanceId === stored.artistInstanceId);
+  if (!isLegalEpochArtistPair(epoch, artist)) {
+    addGameLog("No legal Epoch + Artist set available.");
+    closeGameOverlays();
+    renderGame();
+    return;
+  }
+  if (playTableauMove(player, { type: "new-set", epoch, artist })) {
+    game.artistsPlayedThisTurn += 1;
+    game.selectedCards = { epoch: "", artist: "", action: game.selectedCards.action };
+    refreshScores(game);
+    checkEndGame();
+  }
+  closeGameOverlays();
+  renderGame();
 }
 
 function dropHandCardOntoTableau(cardElement) {
@@ -3532,6 +3662,15 @@ function bindEvents() {
   });
   tableauOverlay?.addEventListener("click", (event) => {
     if (event.target.closest("[data-close-overlay]")) closeGameOverlays();
+  });
+  legalSetOverlay?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-close-overlay]")) {
+      closeGameOverlays();
+      return;
+    }
+    const option = event.target.closest("[data-legal-set-index]");
+    if (!option) return;
+    playChosenLegalSet(Number(option.dataset.legalSetIndex));
   });
   museChoice.addEventListener("click", (event) => {
     const button = event.target.closest("[data-muse-id]");
