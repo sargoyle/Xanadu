@@ -41,7 +41,7 @@ a {
   top: 0;
   z-index: 200;
   display: grid;
-  grid-template-columns: minmax(190px, 260px) minmax(430px, 1fr) auto;
+  grid-template-columns: minmax(180px, 240px) minmax(620px, 1fr) auto;
   align-items: center;
   gap: 12px;
   min-height: 72px;
@@ -132,21 +132,21 @@ a {
 
 .top-game-status {
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) minmax(76px, 0.5fr) minmax(52px, 0.34fr) minmax(260px, 1.85fr);
+  grid-template-columns: minmax(138px, 0.8fr) 86px 58px minmax(420px, 2.8fr);
   gap: 6px;
   min-width: 0;
 }
 
 .top-game-status .game-status-chip:nth-child(2) {
-  max-width: 120px;
+  max-width: none;
 }
 
 .top-game-status .game-status-chip:nth-child(3) {
-  max-width: 78px;
+  max-width: none;
 }
 
 #game-score-summary {
-  font-size: 12px;
+  font-size: 11.5px;
 }
 
 .studio-menu {
@@ -4634,6 +4634,48 @@ select {
   margin: 0;
   color: var(--ivory);
   font-family: Georgia, "Times New Roman", serif;
+}
+
+.tagged-set-builder {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(198, 161, 91, 0.32);
+  border-radius: 10px;
+  background: rgba(255, 249, 234, 0.06);
+}
+
+.tagged-set-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+}
+
+.tagged-set-row span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid rgba(255, 249, 234, 0.12);
+  border-radius: 8px;
+  background: rgba(5, 6, 12, 0.32);
+}
+
+.tagged-set-row small {
+  color: rgba(255, 249, 234, 0.54);
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.tagged-set-row strong {
+  overflow: hidden;
+  color: var(--ivory);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tableau-overlay-summary {

@@ -86,6 +86,7 @@
 - [x] Harden Auto Play Legal Set so Epoch and Artist cards must match before any tableau move is executed.
 - [x] Export all generated Artist card fronts as downloadable JPG files and a zip archive.
 - [x] Fix Play page NPC hand containment, HUD score sizing, player panel placement, and legal-set validation/choice flow.
+- [x] Fix Current Hand legal-set controls with visible Epoch/Artist tags, reliable chooser display, and wider 9-player score header.
 
 ## Backlog
 

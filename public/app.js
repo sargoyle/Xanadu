@@ -2022,11 +2022,46 @@ function renderHandOverlay(game, player) {
       <aside class="hand-overlay-actions">
         <h3>Selected Card</h3>
         ${selectedEntry ? selectedCardSummary(game, player).replaceAll("data-panel-command", "data-overlay-command") : `<p class="muted">Select a card from your hand.</p>`}
+        <h3>Tagged Set</h3>
+        ${renderTaggedSetBuilder(game, player)}
         <h3>Available Actions</h3>
         <div class="turn-controls">
           ${overlayCommandMarkup(renderTurnControls(game, player))}
         </div>
       </aside>
+    </div>
+  `;
+}
+
+function renderTaggedSetBuilder(game, player) {
+  if (!game || !player) return `<p class="muted">Open a game to tag cards.</p>`;
+  const selected = selectedHandCards(player);
+  const hasEpoch = Boolean(selected.epoch);
+  const hasArtist = Boolean(selected.artist);
+  const canPlay = hasEpoch && hasArtist && isLegalEpochArtistPair(selected.epoch, selected.artist);
+  const canAct = player.id === game.currentPlayerId && player.isHuman && game.phase !== "Draw Action" && !game.diceRoll?.isRolling;
+  const reason = !hasEpoch || !hasArtist
+    ? "Click one Epoch card and one matching Artist card to tag them."
+    : canPlay
+      ? "Tagged cards match and can be played."
+      : "Tagged cards do not match. Choose an Artist from the same Epoch.";
+  return `
+    <div class="tagged-set-builder">
+      <div class="tagged-set-row">
+        <span>
+          <small>Epoch</small>
+          <strong>${escapeHtml(selected.epoch?.name ?? "None tagged")}</strong>
+        </span>
+        <span>
+          <small>Artist</small>
+          <strong>${escapeHtml(selected.artist?.name ?? "None tagged")}</strong>
+        </span>
+      </div>
+      <p class="selected-card-reason">${escapeHtml(reason)}</p>
+      <div class="button-row">
+        <button type="button" class="command-button" data-overlay-command="play-selected-card" ${!canAct || !canPlay ? "disabled" : ""}>Play Tagged Set</button>
+        <button type="button" class="command-button secondary" data-overlay-command="cancel-selection">Clear Tags</button>
+      </div>
     </div>
   `;
 }
@@ -3016,10 +3051,20 @@ function playSelectedTableauCards(playerOverride = null) {
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
 
   if (epoch && !artist) {
-    artist = player.hand.artists.find((card) => isLegalEpochArtistPair(epoch, card));
+    const matchingArtists = player.hand.artists.filter((card) => isLegalEpochArtistPair(epoch, card));
+    if (matchingArtists.length > 1) {
+      openLegalSetChoice(matchingArtists.map((match) => ({ epoch, artist: match })));
+      return;
+    }
+    artist = matchingArtists[0];
   }
   if (artist && !epoch && !matchingTableauSet(player, artist)) {
-    epoch = player.hand.epochs.find((card) => isLegalEpochArtistPair(card, artist));
+    const matchingEpochs = player.hand.epochs.filter((card) => isLegalEpochArtistPair(card, artist));
+    if (matchingEpochs.length > 1) {
+      openLegalSetChoice(matchingEpochs.map((match) => ({ epoch: match, artist })));
+      return;
+    }
+    epoch = matchingEpochs[0];
   }
 
   if (!artist) {
@@ -3184,6 +3229,7 @@ function openTableauOverlay(playerId) {
 }
 
 function openLegalSetChoice(pairs) {
+  state.handOverlay.open = false;
   state.legalSetChoice = {
     open: true,
     pairs: pairs.map(({ epoch, artist }) => ({
@@ -3191,6 +3237,7 @@ function openLegalSetChoice(pairs) {
       artistInstanceId: artist.instanceId
     }))
   };
+  renderHandOverlay(state.game, humanPlayer());
   renderLegalSetChoiceOverlay(state.game);
 }
 
