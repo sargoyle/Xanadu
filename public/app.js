@@ -1638,6 +1638,10 @@ function isLegalEpochArtistPair(epoch, artist) {
   return artistEpochKeys(artist).some((key) => epochKeys.has(key));
 }
 
+function artistMuseScore(player, artist) {
+  return artist?.scores?.[player?.museId] ?? 0;
+}
+
 function matchingTableauSet(player, artist) {
   return player.tableau.find((set) => isLegalEpochArtistPair(set.epoch, artist));
 }
@@ -1666,10 +1670,29 @@ function findPlayableTableauMove(player) {
   return null;
 }
 
+function findBestNpcTableauMove(player) {
+  const newSetMoves = legalEpochArtistPairs(player)
+    .map((pair) => ({ type: "new-set", ...pair, score: artistMuseScore(player, pair.artist) }))
+    .filter((move) => move.score > 0);
+
+  const attachMoves = player.hand.artists
+    .map((artist) => {
+      const targetSet = matchingTableauSet(player, artist);
+      return targetSet ? { type: "attach", artist, targetSet, score: artistMuseScore(player, artist) } : null;
+    })
+    .filter((move) => move && move.score > 0);
+
+  return [...newSetMoves, ...attachMoves].sort((a, b) => b.score - a.score)[0] ?? null;
+}
+
 function playTableauMove(player, move) {
   if (move.type === "new-set") {
     if (!isLegalEpochArtistPair(move.epoch, move.artist)) {
       addGameLog(`${move.artist?.name ?? "That Artist"} cannot be played with ${move.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
+      return false;
+    }
+    if (!player.isHuman && artistMuseScore(player, move.artist) <= 0) {
+      addGameLog(`${player.name} skipped ${move.artist?.name ?? "that Artist"} because it scores 0 for their Muse.`);
       return false;
     }
     const playedEpoch = removeByInstance(player.hand.epochs, move.epoch.instanceId);
@@ -1685,6 +1708,10 @@ function playTableauMove(player, move) {
 
   if (!isLegalEpochArtistPair(move.targetSet?.epoch, move.artist)) {
     addGameLog(`${move.artist?.name ?? "That Artist"} cannot attach to ${move.targetSet?.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
+    return false;
+  }
+  if (!player.isHuman && artistMuseScore(player, move.artist) <= 0) {
+    addGameLog(`${player.name} skipped ${move.artist?.name ?? "that Artist"} because it scores 0 for their Muse.`);
     return false;
   }
   const playedArtist = removeByInstance(player.hand.artists, move.artist.instanceId);
@@ -3371,7 +3398,7 @@ async function runNpcTurnIfNeeded() {
   if (game.phase === "Game Over") return;
   if (activePlayer(game)?.id !== player.id) return;
 
-  const move = findPlayableTableauMove(player);
+  const move = findBestNpcTableauMove(player);
 
   if (move) {
     playTableauMove(player, move);

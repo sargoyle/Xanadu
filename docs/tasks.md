@@ -89,6 +89,7 @@
 - [x] Fix Current Hand legal-set controls with visible Epoch/Artist tags, reliable chooser display, and wider 9-player score header.
 - [x] Compact the Play board HUD and player seats so the score summary has more room and the table is less cluttered.
 - [x] Tighten the Play board shared table by removing the old current-card slot, enlarging deck piles, and improving player hand previews.
+- [x] Fix NPC tableau choices so they only play exact Epoch matches that score above zero, choosing the highest-scoring option.
 
 ## Backlog
 

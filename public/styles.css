@@ -4026,8 +4026,8 @@ select {
 
 #play .poker-table {
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr) 150px;
-  grid-template-rows: 122px minmax(0, 1fr) 104px;
+  grid-template-columns: 170px minmax(0, 1fr) 170px;
+  grid-template-rows: 136px minmax(0, 1fr) 116px;
   gap: 10px;
   height: 100%;
   min-height: 0;
@@ -4042,30 +4042,32 @@ select {
   grid-column: 2;
   grid-row: 2;
   display: grid;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   align-content: start;
-  gap: 8px;
+  align-self: start;
+  gap: 6px;
   min-width: 0;
   min-height: 0;
-  padding: 10px;
-  border-radius: 20px;
+  height: auto;
+  padding: 8px;
+  border-radius: 16px;
 }
 
 #play .tabletop-decks {
   display: grid;
-  grid-template-columns: repeat(3, minmax(102px, 1fr));
-  gap: 7px;
+  grid-template-columns: repeat(3, minmax(108px, 1fr));
+  gap: 6px;
   align-content: start;
 }
 
 #play .card-pile {
-  min-height: 104px;
-  gap: 4px;
-  padding: 6px 5px;
+  min-height: 108px;
+  gap: 3px;
+  padding: 5px 4px;
 }
 
 #play .mini-card-stack {
-  width: 58px;
+  width: 70px;
 }
 
 #play .table-auxiliary-row {
@@ -4086,14 +4088,14 @@ select {
   width: 100%;
   min-height: 0;
   max-height: 100%;
-  padding: 6px;
+  padding: 7px;
   overflow: hidden;
 }
 
 #play .player-table-zones .seat-1,
 #play .player-table-zones .seat-6 {
   grid-column: 2;
-  max-width: 230px;
+  max-width: 260px;
   justify-self: center;
 }
 
@@ -4294,26 +4296,26 @@ select {
 }
 
 #play .opponent-hand-backs {
-  height: 44px;
-  width: min(122px, 100%);
+  height: 50px;
+  width: min(144px, 100%);
 }
 
 #play .opponent-card-back {
-  width: 30px;
-  transform: translateX(calc(-50% + (var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 12px)) rotate(calc((var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 3deg));
+  width: 34px;
+  transform: translateX(calc(-50% + (var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 14px)) rotate(calc((var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 3deg));
 }
 
 #play .opponent-hand-backs strong {
-  min-width: 23px;
-  min-height: 23px;
-  font-size: 11px;
+  min-width: 25px;
+  min-height: 25px;
+  font-size: 12px;
 }
 
 #play .compact-tableau-summary {
   display: grid;
   gap: 2px;
-  min-height: 28px;
-  padding: 5px 7px;
+  min-height: 34px;
+  padding: 6px 8px;
   border: 1px solid rgba(184, 138, 59, 0.28);
   border-radius: 8px;
   background: rgba(255, 249, 234, 0.08);
@@ -4322,7 +4324,7 @@ select {
 #play .compact-tableau-summary span {
   overflow: hidden;
   color: rgba(255, 249, 234, 0.76);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 900;
   line-height: 1.05;
   text-overflow: ellipsis;
@@ -4333,7 +4335,7 @@ select {
 #play .compact-tableau-summary strong,
 #play .player-table-zones .tableau-set-summary {
   color: var(--ivory);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1;
 }
 
@@ -4346,12 +4348,12 @@ select {
 }
 
 #play .empty-tableau-slots {
-  min-height: 22px;
+  min-height: 30px;
 }
 
 #play .empty-tableau-slots span {
-  padding: 3px;
-  font-size: 8.5px;
+  padding: 4px;
+  font-size: 9.5px;
 }
 
 #play .selected-card-summary-card .physical-card {
