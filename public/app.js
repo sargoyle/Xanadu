@@ -155,6 +155,20 @@ const state = {
   game: null
 };
 
+function decorateCanonicalCardData() {
+  const epochNamesById = new Map(seed.epochs.map((epoch) => [epoch.id, epoch.name]));
+  for (const epoch of seed.epochs) {
+    epoch.epochId = epoch.id;
+    epoch.epochName = epoch.name;
+  }
+  for (const artist of seed.artists) {
+    artist.requiredEpochId = artist.epochId ?? "";
+    artist.requiredEpochName = epochNamesById.get(artist.requiredEpochId) ?? artist.epochName ?? "";
+  }
+}
+
+decorateCanonicalCardData();
+
 const museById = new Map(seed.muses.map((muse) => [muse.id, muse]));
 const epochById = new Map(seed.epochs.map((epoch) => [epoch.id, epoch]));
 const epochIndexById = new Map(seed.epochs.map((epoch, index) => [epoch.id, index]));
@@ -211,6 +225,8 @@ function epochDeckCards() {
   return seed.epochs.flatMap((epoch, epochIndex) =>
     Array.from({ length: 3 }, (_, copyIndex) => ({
       id: `${epoch.id}-copy-${copyIndex + 1}`,
+      epochId: epoch.epochId,
+      epochName: epoch.epochName,
       name: epoch.name,
       imagePath: `/assets/epochs/epoch-front-${String(epochIndex + 1).padStart(2, "0")}.png`,
       backImagePath: "/assets/epochs/epoch-back.png"
@@ -237,6 +253,8 @@ function artistDeckCards() {
       ...artist,
       cardKind: "artist",
       epochName: epoch?.name ?? artist.epochId,
+      requiredEpochId: artist.requiredEpochId,
+      requiredEpochName: artist.requiredEpochName,
       artworkPath: artist.artworkPath ?? "",
       artworkPrompt: artist.artworkPrompt ?? generateArtistArtworkPrompt(artist),
       backImagePath: "/assets/artists/artist-back.png"
@@ -676,6 +694,8 @@ function expandedEpochDeck() {
   return seed.epochs.flatMap((epoch) =>
     Array.from({ length: epoch.copyCount ?? 1 }, (_, index) => ({
       ...epoch,
+      epochId: epoch.epochId,
+      epochName: epoch.epochName,
       deckCopyId: `${epoch.id}-${index + 1}`
     }))
   );
@@ -1580,7 +1600,11 @@ function scorePlayer(player) {
   return player.tableau.reduce(
     (total, set) =>
       total +
-      set.artists.reduce((artistTotal, artist) => artistTotal + (artist.scores[player.museId] ?? 0), 0),
+      set.artists.reduce(
+        (artistTotal, artist) =>
+          artistTotal + (isValidArtistEpochPair(artist, set.epoch) ? artist.scores[player.museId] ?? 0 : 0),
+        0
+      ),
     0
   );
 }
@@ -1607,74 +1631,75 @@ function removeByInstance(cards, instanceId) {
   return cards.splice(index, 1)[0];
 }
 
-function normaliseEpochValue(value) {
-  return String(value ?? "")
-    .trim()
-    .toLowerCase()
-    .replace(/[’‘`]/g, "'")
-    .replace(/[‐‑‒–—―-]/g, " ")
-    .replace(/&/g, " and ")
-    .replace(/[^a-z0-9]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function epochMatchKeys(epoch) {
-  return new Set(
-    [epoch?.id, epoch?.name, epoch?.epochName]
-      .map(normaliseEpochValue)
-      .filter(Boolean)
+function isValidArtistEpochPair(artist, epoch) {
+  return Boolean(
+    artist?.requiredEpochId &&
+    epoch?.epochId &&
+    artist.requiredEpochId === epoch.epochId
   );
 }
 
-function artistEpochKeys(artist) {
-  return [artist?.epochId, artist?.epoch, artist?.epochName]
-    .map(normaliseEpochValue)
-    .filter(Boolean);
+function logBlockedInvalidPair(artist, epoch) {
+  console.error("Blocked invalid Artist/Epoch pair", {
+    artistName: artist?.name,
+    requiredEpochId: artist?.requiredEpochId,
+    requiredEpochName: artist?.requiredEpochName,
+    epochName: epoch?.name,
+    epochId: epoch?.epochId
+  });
 }
 
-function isLegalEpochArtistPair(epoch, artist) {
-  const epochKeys = epochMatchKeys(epoch);
-  return artistEpochKeys(artist).some((key) => epochKeys.has(key));
+function auditCanonicalEpochData() {
+  const errors = [];
+  const epochIdCounts = new Map();
+  for (const epoch of seed.epochs) {
+    epochIdCounts.set(epoch.epochId, (epochIdCounts.get(epoch.epochId) ?? 0) + 1);
+    if (!epoch.epochId || !epoch.epochName) {
+      errors.push({ type: "Epoch missing canonical fields", id: epoch.id, name: epoch.name, epochId: epoch.epochId, epochName: epoch.epochName });
+    }
+  }
+  for (const [epochId, count] of epochIdCounts) {
+    if (!epochId || count > 1) errors.push({ type: "Duplicate or blank Epoch ID", epochId, count });
+  }
+  const knownEpochIds = new Set(seed.epochs.map((epoch) => epoch.epochId).filter(Boolean));
+  for (const artist of seed.artists) {
+    if (!artist.requiredEpochId || !artist.requiredEpochName) {
+      errors.push({
+        type: "Artist missing canonical required Epoch",
+        id: artist.id,
+        name: artist.name,
+        requiredEpochId: artist.requiredEpochId,
+        requiredEpochName: artist.requiredEpochName
+      });
+      continue;
+    }
+    if (!knownEpochIds.has(artist.requiredEpochId)) {
+      errors.push({
+        type: "Artist requiredEpochId not found in Epoch deck",
+        id: artist.id,
+        name: artist.name,
+        requiredEpochId: artist.requiredEpochId,
+        requiredEpochName: artist.requiredEpochName
+      });
+    }
+  }
+  if (errors.length > 0) {
+    console.error("[Xanadu canonical Epoch audit failed]", errors);
+  }
 }
 
-function epochIdFromName(value) {
-  const key = normaliseEpochValue(value);
-  if (!key) return "";
-  return seed.epochs.find((epoch) => normaliseEpochValue(epoch.name) === key)?.id ?? "";
-}
-
-function epochCanonicalId(epoch) {
-  if (epoch?.id && epochById.has(epoch.id)) return epoch.id;
-  return epochIdFromName(epoch?.name ?? epoch?.epochName);
-}
-
-function artistRequiredEpochId(artist) {
-  if (artist?.epochId && epochById.has(artist.epochId)) return artist.epochId;
-  return epochIdFromName(artist?.epoch ?? artist?.epochName);
-}
-
-function isNpcLegalEpochArtistPair(epoch, artist) {
-  const epochId = epochCanonicalId(epoch);
-  const artistEpochId = artistRequiredEpochId(artist);
-  return Boolean(epochId && artistEpochId && epochId === artistEpochId);
-}
-
-function logNpcTableauDecision(player, { artist, epoch, match, score, played, reason }) {
-  const artistEpochId = artistRequiredEpochId(artist);
-  const epochId = epochCanonicalId(epoch);
-  console.log("[Xanadu NPC tableau decision]", {
+function logNpcTableauDecision(player, { artist, epoch, isValidPair, score, decision }) {
+  console.log("NPC pair check", {
     npc: player?.name ?? "NPC",
     muse: museById.get(player?.museId)?.name ?? player?.museId ?? "No Muse",
     artist: artist?.name ?? "Unknown Artist",
-    artistRequiredEpoch: epochById.get(artistEpochId)?.name ?? artist?.epochName ?? artist?.epoch ?? artist?.epochId ?? "Unknown Epoch",
-    artistRequiredEpochId: artistEpochId,
-    epoch: epoch?.name ?? epoch?.epochName ?? epoch?.id ?? "Unknown Epoch",
-    epochCanonicalId: epochId,
-    match,
+    artistRequiredEpochId: artist?.requiredEpochId ?? "",
+    artistRequiredEpochName: artist?.requiredEpochName ?? "",
+    epoch: epoch?.name ?? epoch?.epochName ?? "Unknown Epoch",
+    epochId: epoch?.epochId ?? "",
+    isValidPair,
     score,
-    played,
-    reason
+    decision
   });
 }
 
@@ -1683,13 +1708,13 @@ function artistMuseScore(player, artist) {
 }
 
 function matchingTableauSet(player, artist) {
-  return player.tableau.find((set) => isLegalEpochArtistPair(set.epoch, artist));
+  return player.tableau.find((set) => isValidArtistEpochPair(artist, set.epoch));
 }
 
 function legalEpochArtistPairs(player) {
   return player.hand.epochs.flatMap((epoch) =>
     player.hand.artists
-      .filter((artist) => isLegalEpochArtistPair(epoch, artist))
+      .filter((artist) => isValidArtistEpochPair(artist, epoch))
       .map((artist) => ({ epoch, artist }))
   );
 }
@@ -1714,24 +1739,24 @@ function findBestNpcTableauMove(player) {
   const newSetMoves = player.hand.epochs.flatMap((epoch) =>
     player.hand.artists
       .map((artist) => {
-        const match = isNpcLegalEpochArtistPair(epoch, artist);
-        const score = match ? artistMuseScore(player, artist) : 0;
-        const reason = !match ? "rejected: epoch mismatch" : score <= 0 ? "rejected: zero-point play" : "candidate";
-        logNpcTableauDecision(player, { artist, epoch, match, score, played: false, reason });
-        return match && score > 0 ? { type: "new-set", epoch, artist, score } : null;
+        const isValidPair = isValidArtistEpochPair(artist, epoch);
+        const score = isValidPair ? artistMuseScore(player, artist) : 0;
+        const decision = !isValidPair ? "rejected: epoch mismatch" : score <= 0 ? "rejected: zero-point play" : "candidate";
+        logNpcTableauDecision(player, { artist, epoch, isValidPair, score, decision });
+        return isValidPair && score > 0 ? { type: "new-set", epoch, artist, score } : null;
       })
       .filter(Boolean)
   );
 
   const attachMoves = player.hand.artists
     .map((artist) => {
-      const targetSet = player.tableau.find((set) => isNpcLegalEpochArtistPair(set.epoch, artist));
+      const targetSet = player.tableau.find((set) => isValidArtistEpochPair(artist, set.epoch));
       if (!targetSet) return null;
-      const match = isNpcLegalEpochArtistPair(targetSet.epoch, artist);
-      const score = match ? artistMuseScore(player, artist) : 0;
-      const reason = !match ? "rejected: epoch mismatch" : score <= 0 ? "rejected: zero-point play" : "candidate";
-      logNpcTableauDecision(player, { artist, epoch: targetSet.epoch, match, score, played: false, reason });
-      return match && score > 0 ? { type: "attach", artist, targetSet, score } : null;
+      const isValidPair = isValidArtistEpochPair(artist, targetSet.epoch);
+      const score = isValidPair ? artistMuseScore(player, artist) : 0;
+      const decision = !isValidPair ? "rejected: epoch mismatch" : score <= 0 ? "rejected: zero-point play" : "candidate";
+      logNpcTableauDecision(player, { artist, epoch: targetSet.epoch, isValidPair, score, decision });
+      return isValidPair && score > 0 ? { type: "attach", artist, targetSet, score } : null;
     })
     .filter(Boolean);
 
@@ -1740,20 +1765,9 @@ function findBestNpcTableauMove(player) {
 
 function playTableauMove(player, move) {
   if (move.type === "new-set") {
-    if (!isLegalEpochArtistPair(move.epoch, move.artist)) {
+    if (!isValidArtistEpochPair(move.artist, move.epoch)) {
+      logBlockedInvalidPair(move.artist, move.epoch);
       addGameLog(`${move.artist?.name ?? "That Artist"} cannot be played with ${move.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
-      return false;
-    }
-    if (!player.isHuman && !isNpcLegalEpochArtistPair(move.epoch, move.artist)) {
-      logNpcTableauDecision(player, {
-        artist: move.artist,
-        epoch: move.epoch,
-        match: false,
-        score: 0,
-        played: false,
-        reason: "rejected at play: canonical epoch mismatch"
-      });
-      addGameLog(`${player.name} had no legal tableau play and passed.`);
       return false;
     }
     if (!player.isHuman && artistMuseScore(player, move.artist) <= 0) {
@@ -1771,30 +1785,18 @@ function playTableauMove(player, move) {
       logNpcTableauDecision(player, {
         artist: playedArtist,
         epoch: playedEpoch,
-        match: true,
+        isValidPair: true,
         score: artistMuseScore(player, playedArtist),
-        played: true,
-        reason: "played: highest-scoring valid pair"
+        decision: "played: highest-scoring valid pair"
       });
     }
     addGameLog(`${player.name} played ${playedEpoch.name} with ${playedArtist.name}.`);
     return true;
   }
 
-  if (!isLegalEpochArtistPair(move.targetSet?.epoch, move.artist)) {
+  if (!isValidArtistEpochPair(move.artist, move.targetSet?.epoch)) {
+    logBlockedInvalidPair(move.artist, move.targetSet?.epoch);
     addGameLog(`${move.artist?.name ?? "That Artist"} cannot attach to ${move.targetSet?.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
-    return false;
-  }
-  if (!player.isHuman && !isNpcLegalEpochArtistPair(move.targetSet?.epoch, move.artist)) {
-    logNpcTableauDecision(player, {
-      artist: move.artist,
-      epoch: move.targetSet?.epoch,
-      match: false,
-      score: 0,
-      played: false,
-      reason: "rejected at attach: canonical epoch mismatch"
-    });
-    addGameLog(`${player.name} had no legal tableau play and passed.`);
     return false;
   }
   if (!player.isHuman && artistMuseScore(player, move.artist) <= 0) {
@@ -1811,10 +1813,9 @@ function playTableauMove(player, move) {
     logNpcTableauDecision(player, {
       artist: playedArtist,
       epoch: move.targetSet.epoch,
-      match: true,
+      isValidPair: true,
       score: artistMuseScore(player, playedArtist),
-      played: true,
-      reason: "played: highest-scoring valid attach"
+      decision: "played: highest-scoring valid attach"
     });
   }
   addGameLog(`${player.name} attached ${playedArtist.name} to ${move.targetSet.epoch.name}.`);
@@ -2168,7 +2169,7 @@ function renderTaggedSetBuilder(game, player) {
   const selected = selectedHandCards(player);
   const hasEpoch = Boolean(selected.epoch);
   const hasArtist = Boolean(selected.artist);
-  const canPlay = hasEpoch && hasArtist && isLegalEpochArtistPair(selected.epoch, selected.artist);
+  const canPlay = hasEpoch && hasArtist && isValidArtistEpochPair(selected.artist, selected.epoch);
   const canAct = player.id === game.currentPlayerId && player.isHuman && game.phase !== "Draw Action" && !game.diceRoll?.isRolling;
   const reason = !hasEpoch || !hasArtist
     ? "Click one Epoch card and one matching Artist card to tag them."
@@ -2271,7 +2272,7 @@ function renderLegalSetChoiceOverlay(game) {
       epoch: player?.hand.epochs.find((card) => card.instanceId === pair.epochInstanceId),
       artist: player?.hand.artists.find((card) => card.instanceId === pair.artistInstanceId)
     }))
-    .filter((pair) => isLegalEpochArtistPair(pair.epoch, pair.artist));
+    .filter((pair) => isValidArtistEpochPair(pair.artist, pair.epoch));
 
   if (!game || !player || pairs.length === 0) {
     legalSetContent.innerHTML = `<p class="muted">No legal Epoch + Artist set available.</p>`;
@@ -2320,12 +2321,12 @@ function selectedTableauPlayStatus(game, player, entry) {
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
   if (game.artistsPlayedThisTurn >= maxArtists) return { canPlay: false, reason: "Artist play limit reached this turn." };
   if (selected.epoch && selected.artist) {
-    return isLegalEpochArtistPair(selected.epoch, selected.artist)
+    return isValidArtistEpochPair(selected.artist, selected.epoch)
       ? { canPlay: true, reason: "Play this Epoch + Artist set." }
       : { canPlay: false, reason: "Artist must match the selected Epoch." };
   }
   if (selected.epoch) {
-    const matchingArtist = player.hand.artists.find((artist) => isLegalEpochArtistPair(selected.epoch, artist));
+    const matchingArtist = player.hand.artists.find((artist) => isValidArtistEpochPair(artist, selected.epoch));
     return matchingArtist
       ? { canPlay: true, reason: `Play ${selected.epoch.name} with ${matchingArtist.name}.` }
       : { canPlay: false, reason: "Select a matching Artist, or draw one later." };
@@ -2334,7 +2335,7 @@ function selectedTableauPlayStatus(game, player, entry) {
     if (matchingTableauSet(player, selected.artist)) {
       return { canPlay: true, reason: "Attach this Artist to an existing matching Epoch." };
     }
-    const matchingEpoch = player.hand.epochs.find((epoch) => isLegalEpochArtistPair(epoch, selected.artist));
+    const matchingEpoch = player.hand.epochs.find((epoch) => isValidArtistEpochPair(selected.artist, epoch));
     return matchingEpoch
       ? { canPlay: true, reason: `Play ${matchingEpoch.name} with ${selected.artist.name}.` }
       : { canPlay: false, reason: "Select the matching Epoch, or play that Epoch first." };
@@ -3169,7 +3170,7 @@ function playSelectedTableauCards(playerOverride = null) {
   const maxArtists = 1 + (game.extraArtistPlays ?? 0);
 
   if (epoch && !artist) {
-    const matchingArtists = player.hand.artists.filter((card) => isLegalEpochArtistPair(epoch, card));
+    const matchingArtists = player.hand.artists.filter((card) => isValidArtistEpochPair(card, epoch));
     if (matchingArtists.length > 1) {
       openLegalSetChoice(matchingArtists.map((match) => ({ epoch, artist: match })));
       return;
@@ -3177,7 +3178,7 @@ function playSelectedTableauCards(playerOverride = null) {
     artist = matchingArtists[0];
   }
   if (artist && !epoch && !matchingTableauSet(player, artist)) {
-    const matchingEpochs = player.hand.epochs.filter((card) => isLegalEpochArtistPair(card, artist));
+    const matchingEpochs = player.hand.epochs.filter((card) => isValidArtistEpochPair(artist, card));
     if (matchingEpochs.length > 1) {
       openLegalSetChoice(matchingEpochs.map((match) => ({ epoch: match, artist })));
       return;
@@ -3197,7 +3198,8 @@ function playSelectedTableauCards(playerOverride = null) {
   }
 
   if (epoch) {
-    if (!isLegalEpochArtistPair(epoch, artist)) {
+    if (!isValidArtistEpochPair(artist, epoch)) {
+      logBlockedInvalidPair(artist, epoch);
       addGameLog(`${artist.name} cannot be played with ${epoch.name}; the Epoch must match.`);
       renderGame();
       return;
@@ -3366,7 +3368,8 @@ function playChosenLegalSet(index) {
   if (!game || !player?.isHuman || !stored) return;
   const epoch = player.hand.epochs.find((card) => card.instanceId === stored.epochInstanceId);
   const artist = player.hand.artists.find((card) => card.instanceId === stored.artistInstanceId);
-  if (!isLegalEpochArtistPair(epoch, artist)) {
+  if (!isValidArtistEpochPair(artist, epoch)) {
+    logBlockedInvalidPair(artist, epoch);
     addGameLog("No legal Epoch + Artist set available.");
     closeGameOverlays();
     renderGame();
@@ -3845,6 +3848,7 @@ function bindEvents() {
 }
 
 function init() {
+  auditCanonicalEpochData();
   playtestDate.value = new Date().toISOString().slice(0, 10);
   loadPlaytests();
   renderSummary();
