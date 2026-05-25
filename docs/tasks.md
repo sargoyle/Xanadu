@@ -88,6 +88,7 @@
 - [x] Fix Play page NPC hand containment, HUD score sizing, player panel placement, and legal-set validation/choice flow.
 - [x] Fix Current Hand legal-set controls with visible Epoch/Artist tags, reliable chooser display, and wider 9-player score header.
 - [x] Compact the Play board HUD and player seats so the score summary has more room and the table is less cluttered.
+- [x] Tighten the Play board shared table by removing the old current-card slot, enlarging deck piles, and improving player hand previews.
 
 ## Backlog
 

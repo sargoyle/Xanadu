@@ -57,6 +57,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- 2026-05-25: Fixed Play board layout by removing the old current-card slot, tightening the Shared Table spacing, enlarging deck/discard card backs, and improving player hand preview readability. Files affected: `public/index.html`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed Play board clutter by compacting player seat summaries, shortening HUD score labels, and forcing the score header to receive more space than Phase and Turn. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-24: Fixed Current Hand legal-set controls by adding visible Epoch/Artist tagging, ensuring the legal-set chooser appears above the hand overlay, and widening the top score header for 9-player score summaries. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-24: Fixed Play page NPC hand preview containment, compacted the top HUD score layout, adjusted player/table spacing, and made Auto Play Legal Set validate matching Epoch + Artist pairs with a chooser when multiple legal sets exist. Files affected: `public/index.html`, `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
