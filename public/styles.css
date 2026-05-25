@@ -3988,7 +3988,7 @@ select {
 }
 
 #play .game-header-status {
-  grid-template-columns: repeat(4, minmax(90px, 1fr));
+  grid-template-columns: minmax(130px, 1fr) 92px 56px minmax(460px, 3.5fr);
   gap: 6px;
   min-width: 0;
 }
@@ -4006,7 +4006,7 @@ select {
 
 #play .game-tabletop-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: 10px;
   min-height: 0;
   overflow: visible;
@@ -4026,8 +4026,8 @@ select {
 
 #play .poker-table {
   display: grid;
-  grid-template-columns: 132px minmax(0, 1fr) 132px;
-  grid-template-rows: 112px minmax(0, 1fr) 96px;
+  grid-template-columns: 118px minmax(0, 1fr) 118px;
+  grid-template-rows: 94px minmax(0, 1fr) 82px;
   gap: 10px;
   height: 100%;
   min-height: 0;
@@ -4071,14 +4071,14 @@ select {
   width: 100%;
   min-height: 0;
   max-height: 100%;
-  padding: 6px;
+  padding: 5px;
   overflow: hidden;
 }
 
 #play .player-table-zones .seat-1,
 #play .player-table-zones .seat-6 {
   grid-column: 2;
-  max-width: 230px;
+  max-width: 200px;
   justify-self: center;
 }
 
@@ -4239,6 +4239,104 @@ select {
   grid-template-rows: minmax(0, auto) minmax(88px, auto) minmax(86px, 0.7fr) minmax(250px, 1fr);
   gap: 8px;
   overflow: visible;
+}
+
+#play .game-status-chip:nth-child(2) {
+  max-width: 92px;
+}
+
+#play .game-status-chip:nth-child(3) {
+  max-width: 56px;
+}
+
+.top-nav .top-game-status {
+  grid-template-columns: minmax(128px, 0.9fr) 92px 56px minmax(520px, 4fr);
+}
+
+.top-nav #game-score-summary {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 10.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#play .tableau-player-header {
+  gap: 5px;
+}
+
+#play .player-table-zones .tableau-player h4 {
+  font-size: 12px;
+}
+
+#play .player-table-zones .tableau-player-header span {
+  max-width: 58px;
+  padding: 3px 5px;
+}
+
+#play .seat-stats {
+  font-size: 10px;
+}
+
+#play .opponent-hand-backs {
+  height: 28px;
+  width: min(78px, 100%);
+}
+
+#play .opponent-card-back {
+  width: 18px;
+  transform: translateX(calc(-50% + (var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 8px)) rotate(calc((var(--hidden-index) - (var(--hidden-total) - 1) / 2) * 3deg));
+}
+
+#play .opponent-hand-backs strong {
+  min-width: 19px;
+  min-height: 19px;
+  font-size: 10px;
+}
+
+#play .compact-tableau-summary {
+  display: grid;
+  gap: 2px;
+  min-height: 28px;
+  padding: 5px 7px;
+  border: 1px solid rgba(184, 138, 59, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 249, 234, 0.08);
+}
+
+#play .compact-tableau-summary span {
+  overflow: hidden;
+  color: rgba(255, 249, 234, 0.76);
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#play .compact-tableau-summary strong,
+#play .player-table-zones .tableau-set-summary {
+  color: var(--ivory);
+  font-size: 10px;
+  line-height: 1;
+}
+
+#play .player-table-zones .tableau-set {
+  padding: 4px;
+}
+
+#play .player-table-zones .tableau-card-row {
+  display: none;
+}
+
+#play .empty-tableau-slots {
+  min-height: 22px;
+}
+
+#play .empty-tableau-slots span {
+  padding: 3px;
+  font-size: 8.5px;
 }
 
 #play .selected-card-summary-card .physical-card {

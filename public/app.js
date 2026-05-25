@@ -1591,6 +1591,12 @@ function refreshScores(game = state.game) {
   }
 }
 
+function scoreHeaderName(player) {
+  if (player.name === "You") return "You";
+  const npcNumber = player.name.match(/^NPC\s*(\d+)$/i)?.[1];
+  return npcNumber ? `N${npcNumber}` : player.name;
+}
+
 function addGameLog(message) {
   state.game?.log.unshift(message);
 }
@@ -2633,7 +2639,7 @@ function renderGame() {
       : `${currentPlayer?.name ?? "Player"}'s turn`;
   gamePhase.textContent = game.phase;
   gameTurnNumber.textContent = String(game.turnNumber ?? 0);
-  gameScoreSummary.textContent = game.players.map((player) => `${player.name} ${player.score}`).join(" | ");
+  gameScoreSummary.textContent = game.players.map((player) => `${scoreHeaderName(player)} ${player.score}`).join(" | ");
   gameDecks.innerHTML = `
     ${renderCardPile("Artist Deck", game.decks.artist.length, "deck")}
     ${renderCardPile("Epoch Deck", game.decks.epoch.length, "deck")}
@@ -2707,21 +2713,9 @@ function renderGame() {
                         `;
                         return `
                         <div class="tableau-set" tabindex="0" aria-label="${escapeHtml(`${player.name} tableau: ${set.epoch.name} with ${set.artists.length} Artists`)}">
-                          <div class="tableau-card-row">
-                            ${renderPhysicalCard(set.epoch, "Epoch", { interactive: false, extraClass: "tableau-epoch" })}
-                            <div class="tableau-artist-stack" aria-label="${escapeHtml(`${set.artists.length} Artists on ${set.epoch.name}`)}">
-                              ${set.artists
-                                .map((artist, index) =>
-                                  renderPhysicalCard(artist, "Artist", {
-                                    interactive: false,
-                                    index,
-                                    total: set.artists.length,
-                                    extraClass: "tableau-artist",
-                                    scoreMuseId: player.museId
-                                  })
-                                )
-                                .join("")}
-                            </div>
+                          <div class="compact-tableau-summary">
+                            <span>${escapeHtml(set.epoch.name)}</span>
+                            <strong>${set.artists.length} Artist${set.artists.length === 1 ? "" : "s"}</strong>
                           </div>
                           <span class="tableau-set-summary">${set.artists.length} Artist${set.artists.length === 1 ? "" : "s"} | ${setPoints} points</span>
                           <div class="tableau-inspect-popover" aria-hidden="true">
