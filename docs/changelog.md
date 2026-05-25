@@ -57,6 +57,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- 2026-05-25: Fixed Play board layout spacing by giving player rows full height, compacting the Shared Table deck grid, and removing the heavy active-player glow that made one NPC panel look inconsistent. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-25: Fixed NPC autoplay validation with NPC-only canonical Epoch ID matching, positive-score filtering, highest-score selection, and temporary console logging for NPC tableau decisions. Files affected: `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed NPC tableau play selection so NPCs only play exact matching Epoch/Artist combinations that score above zero for their Muse, and choose the highest-scoring available play; also tightened the shared table and enlarged board hand/tableau previews. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed Play board layout by removing the old current-card slot, tightening the Shared Table spacing, enlarging deck/discard card backs, and improving player hand preview readability. Files affected: `public/index.html`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed Play board clutter by compacting player seat summaries, shortening HUD score labels, and forcing the score header to receive more space than Phase and Turn. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.

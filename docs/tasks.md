@@ -90,6 +90,8 @@
 - [x] Compact the Play board HUD and player seats so the score summary has more room and the table is less cluttered.
 - [x] Tighten the Play board shared table by removing the old current-card slot, enlarging deck piles, and improving player hand previews.
 - [x] Fix NPC tableau choices so they only play exact Epoch matches that score above zero, choosing the highest-scoring option.
+- [x] Add NPC-only canonical Epoch validation and temporary console logging for tableau autoplay decisions.
+- [x] Rebuild Play board spacing so all player panels have full visible rows and the Shared Table uses only compact deck space.
 
 ## Backlog
 

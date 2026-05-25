@@ -1638,6 +1638,46 @@ function isLegalEpochArtistPair(epoch, artist) {
   return artistEpochKeys(artist).some((key) => epochKeys.has(key));
 }
 
+function epochIdFromName(value) {
+  const key = normaliseEpochValue(value);
+  if (!key) return "";
+  return seed.epochs.find((epoch) => normaliseEpochValue(epoch.name) === key)?.id ?? "";
+}
+
+function epochCanonicalId(epoch) {
+  if (epoch?.id && epochById.has(epoch.id)) return epoch.id;
+  return epochIdFromName(epoch?.name ?? epoch?.epochName);
+}
+
+function artistRequiredEpochId(artist) {
+  if (artist?.epochId && epochById.has(artist.epochId)) return artist.epochId;
+  return epochIdFromName(artist?.epoch ?? artist?.epochName);
+}
+
+function isNpcLegalEpochArtistPair(epoch, artist) {
+  const epochId = epochCanonicalId(epoch);
+  const artistEpochId = artistRequiredEpochId(artist);
+  return Boolean(epochId && artistEpochId && epochId === artistEpochId);
+}
+
+function logNpcTableauDecision(player, { artist, epoch, match, score, played, reason }) {
+  const artistEpochId = artistRequiredEpochId(artist);
+  const epochId = epochCanonicalId(epoch);
+  console.log("[Xanadu NPC tableau decision]", {
+    npc: player?.name ?? "NPC",
+    muse: museById.get(player?.museId)?.name ?? player?.museId ?? "No Muse",
+    artist: artist?.name ?? "Unknown Artist",
+    artistRequiredEpoch: epochById.get(artistEpochId)?.name ?? artist?.epochName ?? artist?.epoch ?? artist?.epochId ?? "Unknown Epoch",
+    artistRequiredEpochId: artistEpochId,
+    epoch: epoch?.name ?? epoch?.epochName ?? epoch?.id ?? "Unknown Epoch",
+    epochCanonicalId: epochId,
+    match,
+    score,
+    played,
+    reason
+  });
+}
+
 function artistMuseScore(player, artist) {
   return artist?.scores?.[player?.museId] ?? 0;
 }
@@ -1671,16 +1711,29 @@ function findPlayableTableauMove(player) {
 }
 
 function findBestNpcTableauMove(player) {
-  const newSetMoves = legalEpochArtistPairs(player)
-    .map((pair) => ({ type: "new-set", ...pair, score: artistMuseScore(player, pair.artist) }))
-    .filter((move) => move.score > 0);
+  const newSetMoves = player.hand.epochs.flatMap((epoch) =>
+    player.hand.artists
+      .map((artist) => {
+        const match = isNpcLegalEpochArtistPair(epoch, artist);
+        const score = match ? artistMuseScore(player, artist) : 0;
+        const reason = !match ? "rejected: epoch mismatch" : score <= 0 ? "rejected: zero-point play" : "candidate";
+        logNpcTableauDecision(player, { artist, epoch, match, score, played: false, reason });
+        return match && score > 0 ? { type: "new-set", epoch, artist, score } : null;
+      })
+      .filter(Boolean)
+  );
 
   const attachMoves = player.hand.artists
     .map((artist) => {
-      const targetSet = matchingTableauSet(player, artist);
-      return targetSet ? { type: "attach", artist, targetSet, score: artistMuseScore(player, artist) } : null;
+      const targetSet = player.tableau.find((set) => isNpcLegalEpochArtistPair(set.epoch, artist));
+      if (!targetSet) return null;
+      const match = isNpcLegalEpochArtistPair(targetSet.epoch, artist);
+      const score = match ? artistMuseScore(player, artist) : 0;
+      const reason = !match ? "rejected: epoch mismatch" : score <= 0 ? "rejected: zero-point play" : "candidate";
+      logNpcTableauDecision(player, { artist, epoch: targetSet.epoch, match, score, played: false, reason });
+      return match && score > 0 ? { type: "attach", artist, targetSet, score } : null;
     })
-    .filter((move) => move && move.score > 0);
+    .filter(Boolean);
 
   return [...newSetMoves, ...attachMoves].sort((a, b) => b.score - a.score)[0] ?? null;
 }
@@ -1689,6 +1742,18 @@ function playTableauMove(player, move) {
   if (move.type === "new-set") {
     if (!isLegalEpochArtistPair(move.epoch, move.artist)) {
       addGameLog(`${move.artist?.name ?? "That Artist"} cannot be played with ${move.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
+      return false;
+    }
+    if (!player.isHuman && !isNpcLegalEpochArtistPair(move.epoch, move.artist)) {
+      logNpcTableauDecision(player, {
+        artist: move.artist,
+        epoch: move.epoch,
+        match: false,
+        score: 0,
+        played: false,
+        reason: "rejected at play: canonical epoch mismatch"
+      });
+      addGameLog(`${player.name} had no legal tableau play and passed.`);
       return false;
     }
     if (!player.isHuman && artistMuseScore(player, move.artist) <= 0) {
@@ -1702,12 +1767,34 @@ function playTableauMove(player, move) {
       return false;
     }
     player.tableau.push({ epoch: playedEpoch, artists: [playedArtist] });
+    if (!player.isHuman) {
+      logNpcTableauDecision(player, {
+        artist: playedArtist,
+        epoch: playedEpoch,
+        match: true,
+        score: artistMuseScore(player, playedArtist),
+        played: true,
+        reason: "played: highest-scoring valid pair"
+      });
+    }
     addGameLog(`${player.name} played ${playedEpoch.name} with ${playedArtist.name}.`);
     return true;
   }
 
   if (!isLegalEpochArtistPair(move.targetSet?.epoch, move.artist)) {
     addGameLog(`${move.artist?.name ?? "That Artist"} cannot attach to ${move.targetSet?.epoch?.name ?? "that Epoch"}; the Epoch must match.`);
+    return false;
+  }
+  if (!player.isHuman && !isNpcLegalEpochArtistPair(move.targetSet?.epoch, move.artist)) {
+    logNpcTableauDecision(player, {
+      artist: move.artist,
+      epoch: move.targetSet?.epoch,
+      match: false,
+      score: 0,
+      played: false,
+      reason: "rejected at attach: canonical epoch mismatch"
+    });
+    addGameLog(`${player.name} had no legal tableau play and passed.`);
     return false;
   }
   if (!player.isHuman && artistMuseScore(player, move.artist) <= 0) {
@@ -1720,6 +1807,16 @@ function playTableauMove(player, move) {
     return false;
   }
   move.targetSet.artists.push(playedArtist);
+  if (!player.isHuman) {
+    logNpcTableauDecision(player, {
+      artist: playedArtist,
+      epoch: move.targetSet.epoch,
+      match: true,
+      score: artistMuseScore(player, playedArtist),
+      played: true,
+      reason: "played: highest-scoring valid attach"
+    });
+  }
   addGameLog(`${player.name} attached ${playedArtist.name} to ${move.targetSet.epoch.name}.`);
   return true;
 }
