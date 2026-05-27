@@ -31,6 +31,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- 2026-05-27: Updated active card assets to use the new numbered Muse/Epoch images and backs, retired `Stone Age Visions`, removed its five Artists from active play, and adjusted deck totals to 87 Epoch cards and 145 Artist cards. Files affected: `data/seed.json`, `public/data/seed.json`, `public/app.js`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-06: Reclassified the existing dashboard as secondary Companion Mode and redirected backlog priorities toward playable Game Mode before further dashboard expansion. Files affected: `public/index.html`, `docs/masterplan.md`, `docs/implementation.md`, `docs/app-flow.md`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Changed Game Mode card rendering from UI tiles to fixed-ratio tabletop card components with framed faces, real back artwork, fanned hands, stacked tableaus, tactile hover states, and deck/discard piles. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-11: Changed Play Mode interaction so cards act as direct game objects with click inspection, double-click play, drag/drop tableau placement, drop-zone feedback, and movement animation. Files affected: `public/app.js`, `public/styles.css`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
@@ -57,7 +58,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- 2026-05-25: Fixed Artist/Epoch tableau validation to use canonical `requiredEpochId` to `epochId` matching across NPC autoplay, player legal-set play, manual play, scoring guards, and startup data audit logging. Files affected: `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
+- 2026-05-25: Fixed Artist/Epoch tableau validation to use persisted canonical `requiredEpochId` to `epochId` matching across seed data, NPC autoplay, player legal-set play, manual play, scoring guards, and startup data audit logging. Files affected: `data/seed.json`, `public/data/seed.json`, `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed Play board layout spacing by giving player rows full height, compacting the Shared Table deck grid, and removing the heavy active-player glow that made one NPC panel look inconsistent. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed NPC autoplay validation with NPC-only canonical Epoch ID matching, positive-score filtering, highest-score selection, and temporary console logging for NPC tableau decisions. Files affected: `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed NPC tableau play selection so NPCs only play exact matching Epoch/Artist combinations that score above zero for their Muse, and choose the highest-scoring available play; also tightened the shared table and enlarged board hand/tableau previews. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.

@@ -93,6 +93,7 @@
 - [x] Add NPC-only canonical Epoch validation and temporary console logging for tableau autoplay decisions.
 - [x] Rebuild Play board spacing so all player panels have full visible rows and the Shared Table uses only compact deck space.
 - [x] Hard-fix Artist/Epoch matching so all tableau play paths use canonical `requiredEpochId` to `epochId` validation.
+- [x] Point Muse/Epoch rendering at the new numbered asset files and retire `Stone Age Visions` with its Artists from active play.
 
 ## Backlog
 

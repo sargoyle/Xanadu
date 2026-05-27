@@ -83,7 +83,7 @@ Keep entries concise. One line per decision when possible.
 - Muse Deck viewer cards deal face up by default, remain independently flippable, and must use `object-fit: contain` so full supplied card artwork is visible without cropping.
 - Physical deck viewers should use shared draw-pile/dealt-card behavior for Muse, Epoch, and future Artist/Action decks while keeping each deck visually separate.
 - Every button or action labelled `Shuffle` must use a real random shuffle, reset dealt cards, reset card state, and avoid mutating the original source card array.
-- The Epoch Deck viewer uses extracted card images from the supplied Epoch front/back PDFs, creates three copies of each of the 30 Epoch fronts, and deals a 90-card physical deck.
+- The Epoch Deck viewer uses supplied numbered Epoch front/back images, creates three copies of each of the 29 active Epoch fronts, and deals an 87-card physical deck.
 - The Artist Deck viewer uses the supplied Artist back artwork and renders generated premium physical fronts from canonical Artist data until final artwork files are available.
 - Artist card fronts use fixed internal rows of 14% name, 34% artwork, 24% Epoch/type/flavour, and 24% nine-Muse score grid to prevent overflow inside the physical frame.
 - Artist card names must be centered, clamp to a maximum of two lines, and use smaller type for long names.
@@ -119,7 +119,7 @@ Keep entries concise. One line per decision when possible.
 - Artist score values must be integers from 0 to 3.
 - Player score is the sum of each tableau Artist's value for that player's Muse.
 - If Game Mode ends with tied high scores, tied players automatically draw Artist tiebreaker cards until one highest Muse value remains or the Artist deck cannot continue.
-- The target core deck contains 9 Muse cards, 90 Epoch cards, 150 Artist cards, and 64 Action cards.
+- The target core deck contains 9 Muse cards, 87 Epoch cards, 145 Artist cards, and 64 Action cards; `Stone Age Visions` and its five Artists are retired from active play.
 - The 64-card Action deck distribution is 22 bonus, 10 fate, 10 disruption, 14 swap, and 8 group.
 - Duplicate Artist name and Epoch pairs must be marked intentional or flagged for review.
 - Fate cards must define exactly 6 dice outcomes.

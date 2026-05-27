@@ -12,8 +12,8 @@
       "domain": "Epic Poetry, Eloquence",
       "description": "The eldest and chief of the Muses, Calliope inspires epic poetry, grand storytelling, and eloquent speech. She is often depicted with a writing tablet or scroll, and her beautiful voice is said to stir kings and poets alike to greatness. In myth, she is the mother of Orpheus and the muse most often invoked for heroic tales.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/calliope.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/1.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -23,8 +23,8 @@
       "domain": "History, Creativity",
       "description": "Muse of history and the recorder of great deeds, Clio inspires the chroniclers, historians, and storytellers who preserve the memory of humanity. She is often shown with scrolls or books, and a laurel wreath, symbolizing the triumph of knowledge over time.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/clio.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/2.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -34,8 +34,8 @@
       "domain": "Love & Lyric Poetry",
       "description": "The Muse of lyric and erotic poetry, Erato inspires songs of love, romance, and longing. Her name means \"the lovely one,\" and she is often depicted with a lyre or a cithara and a wreath of roses, guiding poets to create verses that stir the heart.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/erato.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/3.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -45,8 +45,8 @@
       "domain": "Music & Lyric Poetry",
       "description": "The Giver of Pleasure, Euterpe inspires musicians and composers, her divine influence often evoking harmony and delight. She is associated with wind instruments, especially the flute, through which her spirit of joy and melody flows.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/euterpe.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/4.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -56,8 +56,8 @@
       "domain": "Muse of Tragedy",
       "description": "The Muse of tragedy, Melpomene inspires profound and moving works exploring sorrow, fate, and the depths of the human soul. She is depicted with a tragic mask and a cypress wreath, embodying beauty in melancholy and catharsis.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/melpomene.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/5.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -67,8 +67,8 @@
       "domain": "Sacred Poetry, Hymns, Meditation",
       "description": "Muse of sacred hymns, meditation, and geometry, Polyhymnia inspires works of devotion, contemplation, and solemnity. She is portrayed as thoughtful and veiled, sometimes holding a lyre or agricultural symbols, representing the deep roots of faith and wisdom.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/polyhymnia.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/6.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -78,8 +78,8 @@
       "domain": "Dance, Light Verse",
       "description": "The one who delights in dance, Terpsichore inspires dancers, choreographers, and creators of light verse. She is often shown seated with a lyre, embodying rhythm, movement, and the joy of creative expression through the body.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/terpsichore.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/7.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -89,8 +89,8 @@
       "domain": "Muse of Comedy and Festivity",
       "description": "Thalia, Muse of comedy and pastoral poetry, brings laughter, wit, and celebration. She is depicted with a comic mask, an ivy crown, and sometimes a shepherd's crook, encouraging merriment and the lighter side of creativity.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/thalia.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/8.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -100,8 +100,8 @@
       "domain": "Astronomy, Mathematics, Sciences",
       "description": "Urania, Muse of astronomy, mathematics, and sciences, inspires those who seek to unravel the mysteries of the cosmos and the laws that govern it.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/urania.png",
-      "backImagePath": "/assets/muses/muse-back.png",
+      "imagePath": "/assets/muses/9.png",
+      "backImagePath": "/assets/muses/MuseBack.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     }
@@ -115,7 +115,9 @@
       "flavorText": "Roller discos, synth anthems, and neon dreams on the dance floor.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 1
+      "sortOrder": 1,
+      "epochId": "1980s-neon-dreams",
+      "epochName": "1980s Neon Dreams"
     },
     {
       "id": "modern-avant-garde",
@@ -125,7 +127,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 2
+      "sortOrder": 2,
+      "epochId": "modern-avant-garde",
+      "epochName": "Modern Avant-Garde"
     },
     {
       "id": "ancient-rome",
@@ -135,7 +139,9 @@
       "flavorText": "Imperial power and artistic grandeur. Marble, mosaics, and epic tales thrived.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 3
+      "sortOrder": 3,
+      "epochId": "ancient-rome",
+      "epochName": "Ancient Rome"
     },
     {
       "id": "astronomers-guild-age",
@@ -145,7 +151,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 4
+      "sortOrder": 4,
+      "epochId": "astronomers-guild-age",
+      "epochName": "Astronomer's Guild Age"
     },
     {
       "id": "baroque-splendour",
@@ -155,7 +163,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 5
+      "sortOrder": 5,
+      "epochId": "baroque-splendour",
+      "epochName": "Baroque Splendour"
     },
     {
       "id": "byzantine-icons",
@@ -165,7 +175,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 6
+      "sortOrder": 6,
+      "epochId": "byzantine-icons",
+      "epochName": "Byzantine Icons"
     },
     {
       "id": "cave-performance-era",
@@ -175,7 +187,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 7
+      "sortOrder": 7,
+      "epochId": "cave-performance-era",
+      "epochName": "Cave Performance Era"
     },
     {
       "id": "digital-renaissance",
@@ -185,7 +199,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 8
+      "sortOrder": 8,
+      "epochId": "digital-renaissance",
+      "epochName": "Digital Renaissance"
     },
     {
       "id": "dreamtime",
@@ -195,7 +211,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 9
+      "sortOrder": 9,
+      "epochId": "dreamtime",
+      "epochName": "Dreamtime"
     },
     {
       "id": "elegy-renaissance",
@@ -205,7 +223,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 10
+      "sortOrder": 10,
+      "epochId": "elegy-renaissance",
+      "epochName": "Elegy Renaissance"
     },
     {
       "id": "flamenco-fire-period",
@@ -215,7 +235,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 11
+      "sortOrder": 11,
+      "epochId": "flamenco-fire-period",
+      "epochName": "Flamenco Fire Period"
     },
     {
       "id": "future-realms",
@@ -225,7 +247,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 12
+      "sortOrder": 12,
+      "epochId": "future-realms",
+      "epochName": "Future Realms"
     },
     {
       "id": "gothic-cathedral-age",
@@ -235,7 +259,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 13
+      "sortOrder": 13,
+      "epochId": "gothic-cathedral-age",
+      "epochName": "Gothic Cathedral Age"
     },
     {
       "id": "harlem-renaissance",
@@ -245,7 +271,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 14
+      "sortOrder": 14,
+      "epochId": "harlem-renaissance",
+      "epochName": "Harlem Renaissance"
     },
     {
       "id": "hologram-showcase-age",
@@ -255,7 +283,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 15
+      "sortOrder": 15,
+      "epochId": "hologram-showcase-age",
+      "epochName": "Hologram Showcase Age"
     },
     {
       "id": "bohemian-paris",
@@ -265,7 +295,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 16
+      "sortOrder": 16,
+      "epochId": "bohemian-paris",
+      "epochName": "Bohemian Paris"
     },
     {
       "id": "industrial-age",
@@ -275,7 +307,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 17
+      "sortOrder": 17,
+      "epochId": "industrial-age",
+      "epochName": "Industrial Age"
     },
     {
       "id": "islamic-golden-age",
@@ -285,7 +319,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 18
+      "sortOrder": 18,
+      "epochId": "islamic-golden-age",
+      "epochName": "Islamic Golden Age"
     },
     {
       "id": "medieval-europe",
@@ -295,7 +331,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 19
+      "sortOrder": 19,
+      "epochId": "medieval-europe",
+      "epochName": "Medieval Europe"
     },
     {
       "id": "oracle-temples",
@@ -305,7 +343,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 20
+      "sortOrder": 20,
+      "epochId": "oracle-temples",
+      "epochName": "Oracle Temples"
     },
     {
       "id": "1960s-counterculture",
@@ -315,7 +355,9 @@
       "flavorText": "Psychedelic posters, folk ballads and barefoot marches for change.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 21
+      "sortOrder": 21,
+      "epochId": "1960s-counterculture",
+      "epochName": "1960s Counterculture"
     },
     {
       "id": "renaissance",
@@ -325,7 +367,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 22
+      "sortOrder": 22,
+      "epochId": "renaissance",
+      "epochName": "Renaissance"
     },
     {
       "id": "romantic-era",
@@ -335,7 +379,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 23
+      "sortOrder": 23,
+      "epochId": "romantic-era",
+      "epochName": "Romantic Era"
     },
     {
       "id": "shadow-lantern-age",
@@ -345,7 +391,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 24
+      "sortOrder": 24,
+      "epochId": "shadow-lantern-age",
+      "epochName": "Shadow Lantern Age"
     },
     {
       "id": "silk-road-exchange",
@@ -355,7 +403,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 25
+      "sortOrder": 25,
+      "epochId": "silk-road-exchange",
+      "epochName": "Silk Road Exchange"
     },
     {
       "id": "space-age",
@@ -365,7 +415,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 26
+      "sortOrder": 26,
+      "epochId": "space-age",
+      "epochName": "Space Age"
     },
     {
       "id": "cyber-renaissance",
@@ -375,17 +427,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 27
-    },
-    {
-      "id": "stone-age-visions",
-      "name": "Stone Age Visions",
-      "dateRange": "TBD",
-      "description": "Stone Age Visions is a Xanadu Epoch represented by Artist cards in the core deck.",
-      "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
-      "copyCount": 3,
-      "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 28
+      "sortOrder": 27,
+      "epochId": "cyber-renaissance",
+      "epochName": "Cyber Renaissance"
     },
     {
       "id": "victorian-curiosity-age",
@@ -395,7 +439,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 29
+      "sortOrder": 29,
+      "epochId": "victorian-curiosity-age",
+      "epochName": "Victorian Curiosity Age"
     },
     {
       "id": "zen-garden-era",
@@ -405,7 +451,9 @@
       "flavorText": "Imported from Artist card references; final Epoch card text pending review.",
       "copyCount": 3,
       "printStatus": "NEEDS_REVIEW",
-      "sortOrder": 30
+      "sortOrder": 30,
+      "epochId": "zen-garden-era",
+      "epochName": "Zen Garden Era"
     }
   ],
   "artists": [
@@ -429,7 +477,9 @@
         "thalia": 3,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "1980s-neon-dreams",
+      "requiredEpochName": "1980s Neon Dreams"
     },
     {
       "id": "cassette-crooner",
@@ -451,7 +501,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "1980s-neon-dreams",
+      "requiredEpochName": "1980s Neon Dreams"
     },
     {
       "id": "pixel-punk-poet",
@@ -473,7 +525,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "1980s-neon-dreams",
+      "requiredEpochName": "1980s Neon Dreams"
     },
     {
       "id": "synthwave-composer",
@@ -495,7 +549,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "1980s-neon-dreams",
+      "requiredEpochName": "1980s Neon Dreams"
     },
     {
       "id": "neon-noir-novelist",
@@ -517,7 +573,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "1980s-neon-dreams",
+      "requiredEpochName": "1980s Neon Dreams"
     },
     {
       "id": "colour-field-alchemist",
@@ -539,7 +597,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "modern-avant-garde",
+      "requiredEpochName": "Modern Avant-Garde"
     },
     {
       "id": "zen-ink-master",
@@ -561,7 +621,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "modern-avant-garde",
+      "requiredEpochName": "Modern Avant-Garde"
     },
     {
       "id": "gestural-lyricist",
@@ -583,7 +645,9 @@
         "thalia": 0,
         "euterpe": 2,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "modern-avant-garde",
+      "requiredEpochName": "Modern Avant-Garde"
     },
     {
       "id": "chromatic-dancer",
@@ -605,7 +669,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "modern-avant-garde",
+      "requiredEpochName": "Modern Avant-Garde"
     },
     {
       "id": "abstract-alchemist",
@@ -627,7 +693,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "modern-avant-garde",
+      "requiredEpochName": "Modern Avant-Garde"
     },
     {
       "id": "marble-maven",
@@ -649,7 +717,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "ancient-rome",
+      "requiredEpochName": "Ancient Rome"
     },
     {
       "id": "aqueduct-architect",
@@ -671,7 +741,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "ancient-rome",
+      "requiredEpochName": "Ancient Rome"
     },
     {
       "id": "chariot-chantress",
@@ -693,7 +765,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "ancient-rome",
+      "requiredEpochName": "Ancient Rome"
     },
     {
       "id": "mosaic-minstrel",
@@ -715,7 +789,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "ancient-rome",
+      "requiredEpochName": "Ancient Rome"
     },
     {
       "id": "aqueduct-lyricist",
@@ -737,7 +813,9 @@
         "thalia": 1,
         "euterpe": 2,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "ancient-rome",
+      "requiredEpochName": "Ancient Rome"
     },
     {
       "id": "aqueduct-lyricist-2",
@@ -759,7 +837,9 @@
         "thalia": 1,
         "euterpe": 2,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "ancient-rome",
+      "requiredEpochName": "Ancient Rome"
     },
     {
       "id": "star-chart-scribe",
@@ -781,7 +861,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "astronomers-guild-age",
+      "requiredEpochName": "Astronomer's Guild Age"
     },
     {
       "id": "armillary-sculptor",
@@ -803,7 +885,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "astronomers-guild-age",
+      "requiredEpochName": "Astronomer's Guild Age"
     },
     {
       "id": "comet-chaser",
@@ -825,7 +909,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "astronomers-guild-age",
+      "requiredEpochName": "Astronomer's Guild Age"
     },
     {
       "id": "fresco-fantasist",
@@ -847,7 +933,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "baroque-splendour",
+      "requiredEpochName": "Baroque Splendour"
     },
     {
       "id": "oratorio-virtuoso",
@@ -869,7 +957,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "baroque-splendour",
+      "requiredEpochName": "Baroque Splendour"
     },
     {
       "id": "gilded-sculptor",
@@ -891,7 +981,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "baroque-splendour",
+      "requiredEpochName": "Baroque Splendour"
     },
     {
       "id": "harpsichord-harmonist",
@@ -913,7 +1005,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "baroque-splendour",
+      "requiredEpochName": "Baroque Splendour"
     },
     {
       "id": "harpsichord-virtuoso",
@@ -935,7 +1029,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "baroque-splendour",
+      "requiredEpochName": "Baroque Splendour"
     },
     {
       "id": "harpsichord-virtuoso-2",
@@ -957,7 +1053,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "baroque-splendour",
+      "requiredEpochName": "Baroque Splendour"
     },
     {
       "id": "icon-illuminator",
@@ -979,7 +1077,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "byzantine-icons",
+      "requiredEpochName": "Byzantine Icons"
     },
     {
       "id": "chant-scribe",
@@ -1001,7 +1101,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "byzantine-icons",
+      "requiredEpochName": "Byzantine Icons"
     },
     {
       "id": "hymn-weaver",
@@ -1023,7 +1125,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "byzantine-icons",
+      "requiredEpochName": "Byzantine Icons"
     },
     {
       "id": "chanting-sculptor",
@@ -1045,7 +1149,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "byzantine-icons",
+      "requiredEpochName": "Byzantine Icons"
     },
     {
       "id": "byzantine-balladeer",
@@ -1067,7 +1173,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "byzantine-icons",
+      "requiredEpochName": "Byzantine Icons"
     },
     {
       "id": "primal-drummer",
@@ -1089,7 +1197,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "cave-performance-era",
+      "requiredEpochName": "Cave Performance Era"
     },
     {
       "id": "firelight-storyteller",
@@ -1111,7 +1221,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "cave-performance-era",
+      "requiredEpochName": "Cave Performance Era"
     },
     {
       "id": "ochre-handprint",
@@ -1133,7 +1245,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "cave-performance-era",
+      "requiredEpochName": "Cave Performance Era"
     },
     {
       "id": "pixel-poet",
@@ -1155,7 +1269,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "digital-renaissance",
+      "requiredEpochName": "Digital Renaissance"
     },
     {
       "id": "vr-worldsmith",
@@ -1177,7 +1293,9 @@
         "thalia": 2,
         "euterpe": 1,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "digital-renaissance",
+      "requiredEpochName": "Digital Renaissance"
     },
     {
       "id": "glitch-alchemist",
@@ -1199,7 +1317,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "digital-renaissance",
+      "requiredEpochName": "Digital Renaissance"
     },
     {
       "id": "glitch-groove-composer",
@@ -1221,7 +1341,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "digital-renaissance",
+      "requiredEpochName": "Digital Renaissance"
     },
     {
       "id": "algorithmic-bard",
@@ -1243,7 +1365,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "digital-renaissance",
+      "requiredEpochName": "Digital Renaissance"
     },
     {
       "id": "songline-navigator",
@@ -1265,7 +1389,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "dreamtime",
+      "requiredEpochName": "Dreamtime"
     },
     {
       "id": "spirit-dancer",
@@ -1287,7 +1413,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "dreamtime",
+      "requiredEpochName": "Dreamtime"
     },
     {
       "id": "dotwork-visionary",
@@ -1309,7 +1437,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "dreamtime",
+      "requiredEpochName": "Dreamtime"
     },
     {
       "id": "yidaki-songsmith",
@@ -1331,7 +1461,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "dreamtime",
+      "requiredEpochName": "Dreamtime"
     },
     {
       "id": "dreaming-storyteller",
@@ -1353,7 +1485,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "dreamtime",
+      "requiredEpochName": "Dreamtime"
     },
     {
       "id": "dreamtime-epic-weaver",
@@ -1375,7 +1509,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "dreamtime",
+      "requiredEpochName": "Dreamtime"
     },
     {
       "id": "mourning-violinist",
@@ -1397,7 +1533,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "elegy-renaissance",
+      "requiredEpochName": "Elegy Renaissance"
     },
     {
       "id": "epitaph-engraver",
@@ -1419,7 +1557,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "elegy-renaissance",
+      "requiredEpochName": "Elegy Renaissance"
     },
     {
       "id": "requiem-dancer",
@@ -1441,7 +1581,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "elegy-renaissance",
+      "requiredEpochName": "Elegy Renaissance"
     },
     {
       "id": "funeral-dirge-singer",
@@ -1463,7 +1605,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "elegy-renaissance",
+      "requiredEpochName": "Elegy Renaissance"
     },
     {
       "id": "funeral-pyre-poet",
@@ -1485,7 +1629,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "elegy-renaissance",
+      "requiredEpochName": "Elegy Renaissance"
     },
     {
       "id": "staccato-dancer",
@@ -1507,7 +1653,9 @@
         "thalia": 1,
         "euterpe": 2,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "flamenco-fire-period",
+      "requiredEpochName": "Flamenco Fire Period"
     },
     {
       "id": "lament-guitarist",
@@ -1529,7 +1677,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "flamenco-fire-period",
+      "requiredEpochName": "Flamenco Fire Period"
     },
     {
       "id": "shawl-spin-poet",
@@ -1551,7 +1701,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "flamenco-fire-period",
+      "requiredEpochName": "Flamenco Fire Period"
     },
     {
       "id": "palmas-poet",
@@ -1573,7 +1725,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "flamenco-fire-period",
+      "requiredEpochName": "Flamenco Fire Period"
     },
     {
       "id": "flamenco-philosopher",
@@ -1595,7 +1749,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "flamenco-fire-period",
+      "requiredEpochName": "Flamenco Fire Period"
     },
     {
       "id": "holo-canvas-crafter",
@@ -1617,7 +1773,9 @@
         "thalia": 2,
         "euterpe": 2,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "future-realms",
+      "requiredEpochName": "Future Realms"
     },
     {
       "id": "bio-sculptor",
@@ -1639,7 +1797,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "future-realms",
+      "requiredEpochName": "Future Realms"
     },
     {
       "id": "holographic-balladeer",
@@ -1661,7 +1821,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "future-realms",
+      "requiredEpochName": "Future Realms"
     },
     {
       "id": "quantum-verse-crafter",
@@ -1683,7 +1845,9 @@
         "thalia": 0,
         "euterpe": 2,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "future-realms",
+      "requiredEpochName": "Future Realms"
     },
     {
       "id": "holo-sculptor",
@@ -1705,7 +1869,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "future-realms",
+      "requiredEpochName": "Future Realms"
     },
     {
       "id": "holo-sculptor-2",
@@ -1727,7 +1893,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "future-realms",
+      "requiredEpochName": "Future Realms"
     },
     {
       "id": "stained-glass-alchemist",
@@ -1749,7 +1917,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "gothic-cathedral-age",
+      "requiredEpochName": "Gothic Cathedral Age"
     },
     {
       "id": "spire-carver",
@@ -1771,7 +1941,9 @@
         "thalia": 0,
         "euterpe": 2,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "gothic-cathedral-age",
+      "requiredEpochName": "Gothic Cathedral Age"
     },
     {
       "id": "chanting-chronicler",
@@ -1793,7 +1965,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "gothic-cathedral-age",
+      "requiredEpochName": "Gothic Cathedral Age"
     },
     {
       "id": "rose-window-dancer",
@@ -1815,7 +1989,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "gothic-cathedral-age",
+      "requiredEpochName": "Gothic Cathedral Age"
     },
     {
       "id": "stained-glass-painter",
@@ -1837,7 +2013,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "gothic-cathedral-age",
+      "requiredEpochName": "Gothic Cathedral Age"
     },
     {
       "id": "stained-glass-painter-2",
@@ -1859,7 +2037,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "gothic-cathedral-age",
+      "requiredEpochName": "Gothic Cathedral Age"
     },
     {
       "id": "jazz-verse-weaver",
@@ -1881,7 +2061,9 @@
         "thalia": 1,
         "euterpe": 2,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "harlem-renaissance",
+      "requiredEpochName": "Harlem Renaissance"
     },
     {
       "id": "speakeasy-crooner",
@@ -1903,7 +2085,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "harlem-renaissance",
+      "requiredEpochName": "Harlem Renaissance"
     },
     {
       "id": "bronzeville-brush",
@@ -1925,7 +2109,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "harlem-renaissance",
+      "requiredEpochName": "Harlem Renaissance"
     },
     {
       "id": "juke-joint-jazz-poet",
@@ -1947,7 +2133,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "harlem-renaissance",
+      "requiredEpochName": "Harlem Renaissance"
     },
     {
       "id": "lindy-hop-luminary",
@@ -1969,7 +2157,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "harlem-renaissance",
+      "requiredEpochName": "Harlem Renaissance"
     },
     {
       "id": "neon-motion-choreographer",
@@ -1991,7 +2181,9 @@
         "thalia": 2,
         "euterpe": 2,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "hologram-showcase-age",
+      "requiredEpochName": "Hologram Showcase Age"
     },
     {
       "id": "data-drift-musician",
@@ -2013,7 +2205,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "hologram-showcase-age",
+      "requiredEpochName": "Hologram Showcase Age"
     },
     {
       "id": "holographic-calligrapher",
@@ -2035,7 +2229,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "hologram-showcase-age",
+      "requiredEpochName": "Hologram Showcase Age"
     },
     {
       "id": "laser-lyricist",
@@ -2057,7 +2253,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "hologram-showcase-age",
+      "requiredEpochName": "Hologram Showcase Age"
     },
     {
       "id": "photon-dance-pioneer",
@@ -2079,7 +2277,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "hologram-showcase-age",
+      "requiredEpochName": "Hologram Showcase Age"
     },
     {
       "id": "lightcatcher",
@@ -2101,7 +2301,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "bohemian-paris",
+      "requiredEpochName": "Bohemian Paris"
     },
     {
       "id": "garden-harmonist",
@@ -2123,7 +2325,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "bohemian-paris",
+      "requiredEpochName": "Bohemian Paris"
     },
     {
       "id": "riverside-sketcher",
@@ -2145,7 +2349,9 @@
         "thalia": 2,
         "euterpe": 1,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "bohemian-paris",
+      "requiredEpochName": "Bohemian Paris"
     },
     {
       "id": "sunflower-sonneteer",
@@ -2167,7 +2373,9 @@
         "thalia": 2,
         "euterpe": 1,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "bohemian-paris",
+      "requiredEpochName": "Bohemian Paris"
     },
     {
       "id": "water-lily-waltzer",
@@ -2189,7 +2397,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "bohemian-paris",
+      "requiredEpochName": "Bohemian Paris"
     },
     {
       "id": "furnace-songstress",
@@ -2211,7 +2421,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "industrial-age",
+      "requiredEpochName": "Industrial Age"
     },
     {
       "id": "ironwork-architect",
@@ -2233,7 +2445,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "industrial-age",
+      "requiredEpochName": "Industrial Age"
     },
     {
       "id": "steam-whistle-balladeer",
@@ -2255,7 +2469,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "industrial-age",
+      "requiredEpochName": "Industrial Age"
     },
     {
       "id": "steam-organist",
@@ -2277,7 +2493,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "industrial-age",
+      "requiredEpochName": "Industrial Age"
     },
     {
       "id": "steam-epic-poet",
@@ -2299,7 +2517,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "industrial-age",
+      "requiredEpochName": "Industrial Age"
     },
     {
       "id": "geometric-visionary",
@@ -2321,7 +2541,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "islamic-golden-age",
+      "requiredEpochName": "Islamic Golden Age"
     },
     {
       "id": "calligraphy-artisan",
@@ -2343,7 +2565,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "islamic-golden-age",
+      "requiredEpochName": "Islamic Golden Age"
     },
     {
       "id": "oud-storyteller",
@@ -2365,7 +2589,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "islamic-golden-age",
+      "requiredEpochName": "Islamic Golden Age"
     },
     {
       "id": "ode-to-the-oud",
@@ -2387,7 +2613,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "islamic-golden-age",
+      "requiredEpochName": "Islamic Golden Age"
     },
     {
       "id": "oud-composer",
@@ -2409,7 +2637,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "islamic-golden-age",
+      "requiredEpochName": "Islamic Golden Age"
     },
     {
       "id": "illuminated-quill",
@@ -2431,7 +2661,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "medieval-europe",
+      "requiredEpochName": "Medieval Europe"
     },
     {
       "id": "cloistered-cantor",
@@ -2453,7 +2685,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "medieval-europe",
+      "requiredEpochName": "Medieval Europe"
     },
     {
       "id": "jesters-quip",
@@ -2475,7 +2709,9 @@
         "thalia": 3,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "medieval-europe",
+      "requiredEpochName": "Medieval Europe"
     },
     {
       "id": "morris-dance-maestro",
@@ -2497,7 +2733,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "medieval-europe",
+      "requiredEpochName": "Medieval Europe"
     },
     {
       "id": "monastic-hymnist",
@@ -2519,7 +2757,9 @@
         "thalia": 1,
         "euterpe": 2,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "medieval-europe",
+      "requiredEpochName": "Medieval Europe"
     },
     {
       "id": "trance-channeler",
@@ -2541,7 +2781,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "oracle-temples",
+      "requiredEpochName": "Oracle Temples"
     },
     {
       "id": "incense-carver",
@@ -2563,7 +2805,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "oracle-temples",
+      "requiredEpochName": "Oracle Temples"
     },
     {
       "id": "ritual-rhythm-keeper",
@@ -2585,7 +2829,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "oracle-temples",
+      "requiredEpochName": "Oracle Temples"
     },
     {
       "id": "sacred-dancer",
@@ -2607,7 +2853,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "oracle-temples",
+      "requiredEpochName": "Oracle Temples"
     },
     {
       "id": "oracles-lament-singer",
@@ -2629,7 +2877,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "oracle-temples",
+      "requiredEpochName": "Oracle Temples"
     },
     {
       "id": "comic-strip-icon",
@@ -2651,7 +2901,9 @@
         "thalia": 3,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "1960s-counterculture",
+      "requiredEpochName": "1960s Counterculture"
     },
     {
       "id": "soup-can-visionary",
@@ -2673,7 +2925,9 @@
         "thalia": 3,
         "euterpe": 1,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "1960s-counterculture",
+      "requiredEpochName": "1960s Counterculture"
     },
     {
       "id": "neon-sign-sorcerer",
@@ -2695,7 +2949,9 @@
         "thalia": 3,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "1960s-counterculture",
+      "requiredEpochName": "1960s Counterculture"
     },
     {
       "id": "vinyl-verse-virtuoso",
@@ -2717,7 +2973,9 @@
         "thalia": 3,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "1960s-counterculture",
+      "requiredEpochName": "1960s Counterculture"
     },
     {
       "id": "vinyl-dj",
@@ -2739,7 +2997,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "1960s-counterculture",
+      "requiredEpochName": "1960s Counterculture"
     },
     {
       "id": "chiaroscuro-creator",
@@ -2761,7 +3021,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "renaissance",
+      "requiredEpochName": "Renaissance"
     },
     {
       "id": "madrigal-maestro",
@@ -2783,7 +3045,9 @@
         "thalia": 2,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "renaissance",
+      "requiredEpochName": "Renaissance"
     },
     {
       "id": "renaissance-tinkerer",
@@ -2805,7 +3069,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "renaissance",
+      "requiredEpochName": "Renaissance"
     },
     {
       "id": "madrigal-muse",
@@ -2827,7 +3093,9 @@
         "thalia": 1,
         "euterpe": 2,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "renaissance",
+      "requiredEpochName": "Renaissance"
     },
     {
       "id": "fresco-dance-innovator",
@@ -2849,7 +3117,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "renaissance",
+      "requiredEpochName": "Renaissance"
     },
     {
       "id": "melancholy-maestro",
@@ -2871,7 +3141,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "romantic-era",
+      "requiredEpochName": "Romantic Era"
     },
     {
       "id": "sonnet-shadow-dancer",
@@ -2893,7 +3165,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "romantic-era",
+      "requiredEpochName": "Romantic Era"
     },
     {
       "id": "byronic-balladeer",
@@ -2915,7 +3189,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "romantic-era",
+      "requiredEpochName": "Romantic Era"
     },
     {
       "id": "elegy-pianist",
@@ -2937,7 +3213,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "romantic-era",
+      "requiredEpochName": "Romantic Era"
     },
     {
       "id": "romantic-rhetorician",
@@ -2959,7 +3237,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "romantic-era",
+      "requiredEpochName": "Romantic Era"
     },
     {
       "id": "silhouette-puppeteer",
@@ -2981,7 +3261,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "shadow-lantern-age",
+      "requiredEpochName": "Shadow Lantern Age"
     },
     {
       "id": "mournful-minstrel",
@@ -3003,7 +3285,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "shadow-lantern-age",
+      "requiredEpochName": "Shadow Lantern Age"
     },
     {
       "id": "ephemeral-echo-dancer",
@@ -3025,7 +3309,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "shadow-lantern-age",
+      "requiredEpochName": "Shadow Lantern Age"
     },
     {
       "id": "shadow-puppeteer",
@@ -3047,7 +3333,9 @@
         "thalia": 3,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "shadow-lantern-age",
+      "requiredEpochName": "Shadow Lantern Age"
     },
     {
       "id": "caravan-cartographer",
@@ -3069,7 +3357,9 @@
         "thalia": 1,
         "euterpe": 1,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "silk-road-exchange",
+      "requiredEpochName": "Silk Road Exchange"
     },
     {
       "id": "ceramic-storyteller",
@@ -3091,7 +3381,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "silk-road-exchange",
+      "requiredEpochName": "Silk Road Exchange"
     },
     {
       "id": "spice-merchants-muse",
@@ -3113,7 +3405,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "silk-road-exchange",
+      "requiredEpochName": "Silk Road Exchange"
     },
     {
       "id": "caravan-chantress",
@@ -3135,7 +3429,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "silk-road-exchange",
+      "requiredEpochName": "Silk Road Exchange"
     },
     {
       "id": "spice-route-poet",
@@ -3157,7 +3453,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "silk-road-exchange",
+      "requiredEpochName": "Silk Road Exchange"
     },
     {
       "id": "zero-g-painter",
@@ -3179,7 +3477,9 @@
         "thalia": 1,
         "euterpe": 3,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "space-age",
+      "requiredEpochName": "Space Age"
     },
     {
       "id": "satellite-sculptor",
@@ -3201,7 +3501,9 @@
         "thalia": 0,
         "euterpe": 1,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "space-age",
+      "requiredEpochName": "Space Age"
     },
     {
       "id": "astronauts-muse",
@@ -3223,7 +3525,9 @@
         "thalia": 2,
         "euterpe": 2,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "space-age",
+      "requiredEpochName": "Space Age"
     },
     {
       "id": "cosmic-chorus-composer",
@@ -3245,7 +3549,9 @@
         "thalia": 0,
         "euterpe": 3,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "space-age",
+      "requiredEpochName": "Space Age"
     },
     {
       "id": "cosmic-chronicler",
@@ -3267,7 +3573,9 @@
         "thalia": 1,
         "euterpe": 2,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "space-age",
+      "requiredEpochName": "Space Age"
     },
     {
       "id": "ai-muse-collaborator",
@@ -3289,7 +3597,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "cyber-renaissance",
+      "requiredEpochName": "Cyber Renaissance"
     },
     {
       "id": "zero-g-sculptor",
@@ -3311,7 +3621,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "cyber-renaissance",
+      "requiredEpochName": "Cyber Renaissance"
     },
     {
       "id": "nano-canvas-crafter",
@@ -3333,7 +3645,9 @@
         "thalia": 0,
         "euterpe": 1,
         "urania": 3
-      }
+      },
+      "requiredEpochId": "cyber-renaissance",
+      "requiredEpochName": "Cyber Renaissance"
     },
     {
       "id": "ai-lyric-oracle",
@@ -3355,7 +3669,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "cyber-renaissance",
+      "requiredEpochName": "Cyber Renaissance"
     },
     {
       "id": "nano-dance-pioneer",
@@ -3377,117 +3693,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
-    },
-    {
-      "id": "ochre-dreamer",
-      "name": "Ochre Dreamer",
-      "epochId": "stone-age-visions",
-      "artistType": "Cave Painter",
-      "description": "Channels ancestral spirits through mineral pigments and firelight",
-      "copyCount": 1,
-      "printStatus": "NEEDS_REVIEW",
-      "isIntentionalDuplicate": false,
-      "duplicateGroupKey": null,
-      "scores": {
-        "melpomene": 1,
-        "calliope": 2,
-        "polyhymnia": 1,
-        "clio": 3,
-        "terpsichore": 0,
-        "erato": 0,
-        "thalia": 3,
-        "euterpe": 0,
-        "urania": 3
-      }
-    },
-    {
-      "id": "flint-carver",
-      "name": "Flint Carver",
-      "epochId": "stone-age-visions",
-      "artistType": "Sculptor",
-      "description": "Turns rock into spirit guides, sharpened by time and intention",
-      "copyCount": 1,
-      "printStatus": "NEEDS_REVIEW",
-      "isIntentionalDuplicate": false,
-      "duplicateGroupKey": null,
-      "scores": {
-        "melpomene": 3,
-        "calliope": 1,
-        "polyhymnia": 0,
-        "clio": 2,
-        "terpsichore": 1,
-        "erato": 1,
-        "thalia": 2,
-        "euterpe": 0,
-        "urania": 2
-      }
-    },
-    {
-      "id": "bone-flute-bard",
-      "name": "Bone Flute Bard",
-      "epochId": "stone-age-visions",
-      "artistType": "Musician",
-      "description": "Summons echoes of the first songs from hollowed mammoth tusks",
-      "copyCount": 1,
-      "printStatus": "NEEDS_REVIEW",
-      "isIntentionalDuplicate": false,
-      "duplicateGroupKey": null,
-      "scores": {
-        "melpomene": 0,
-        "calliope": 0,
-        "polyhymnia": 2,
-        "clio": 1,
-        "terpsichore": 2,
-        "erato": 2,
-        "thalia": 2,
-        "euterpe": 2,
-        "urania": 1
-      }
-    },
-    {
-      "id": "mammoth-bone-balladeer",
-      "name": "Mammoth Bone Balladeer",
-      "epochId": "stone-age-visions",
-      "artistType": "Musician",
-      "description": "Melodies echo through the ages, deep and resonant",
-      "copyCount": 1,
-      "printStatus": "NEEDS_REVIEW",
-      "isIntentionalDuplicate": false,
-      "duplicateGroupKey": null,
-      "scores": {
-        "melpomene": 1,
-        "calliope": 0,
-        "polyhymnia": 0,
-        "clio": 1,
-        "terpsichore": 1,
-        "erato": 0,
-        "thalia": 1,
-        "euterpe": 2,
-        "urania": 0
-      }
-    },
-    {
-      "id": "flint-knapper-poet",
-      "name": "Flint Knapper Poet",
-      "epochId": "stone-age-visions",
-      "artistType": "Poet",
-      "description": "Each word chips away at the past, revealing hidden stories",
-      "copyCount": 1,
-      "printStatus": "NEEDS_REVIEW",
-      "isIntentionalDuplicate": false,
-      "duplicateGroupKey": null,
-      "scores": {
-        "melpomene": 0,
-        "calliope": 1,
-        "polyhymnia": 2,
-        "clio": 0,
-        "terpsichore": 0,
-        "erato": 3,
-        "thalia": 1,
-        "euterpe": 0,
-        "urania": 0
-      }
+      },
+      "requiredEpochId": "cyber-renaissance",
+      "requiredEpochName": "Cyber Renaissance"
     },
     {
       "id": "steamwork-sketcher",
@@ -3509,7 +3717,9 @@
         "thalia": 2,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "victorian-curiosity-age",
+      "requiredEpochName": "Victorian Curiosity Age"
     },
     {
       "id": "cabinet-curator",
@@ -3531,7 +3741,9 @@
         "thalia": 3,
         "euterpe": 0,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "victorian-curiosity-age",
+      "requiredEpochName": "Victorian Curiosity Age"
     },
     {
       "id": "gaslight-balladeer",
@@ -3553,7 +3765,9 @@
         "thalia": 2,
         "euterpe": 2,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "victorian-curiosity-age",
+      "requiredEpochName": "Victorian Curiosity Age"
     },
     {
       "id": "phono-poet",
@@ -3575,7 +3789,9 @@
         "thalia": 3,
         "euterpe": 1,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "victorian-curiosity-age",
+      "requiredEpochName": "Victorian Curiosity Age"
     },
     {
       "id": "cabinet-of-curios-dancer",
@@ -3597,7 +3813,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "victorian-curiosity-age",
+      "requiredEpochName": "Victorian Curiosity Age"
     },
     {
       "id": "stone-sermon-poet",
@@ -3619,7 +3837,9 @@
         "thalia": 0,
         "euterpe": 2,
         "urania": 2
-      }
+      },
+      "requiredEpochId": "zen-garden-era",
+      "requiredEpochName": "Zen Garden Era"
     },
     {
       "id": "bamboo-flute-philosopher",
@@ -3641,7 +3861,9 @@
         "thalia": 2,
         "euterpe": 2,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "zen-garden-era",
+      "requiredEpochName": "Zen Garden Era"
     },
     {
       "id": "koi-pond-poet",
@@ -3663,7 +3885,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "zen-garden-era",
+      "requiredEpochName": "Zen Garden Era"
     },
     {
       "id": "sand-rake-choreographer",
@@ -3685,7 +3909,9 @@
         "thalia": 0,
         "euterpe": 0,
         "urania": 1
-      }
+      },
+      "requiredEpochId": "zen-garden-era",
+      "requiredEpochName": "Zen Garden Era"
     },
     {
       "id": "zen-stone-chronicler",
@@ -3707,7 +3933,9 @@
         "thalia": 1,
         "euterpe": 0,
         "urania": 0
-      }
+      },
+      "requiredEpochId": "zen-garden-era",
+      "requiredEpochName": "Zen Garden Era"
     }
   ],
   "actions": [

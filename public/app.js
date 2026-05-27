@@ -162,8 +162,8 @@ function decorateCanonicalCardData() {
     epoch.epochName = epoch.name;
   }
   for (const artist of seed.artists) {
-    artist.requiredEpochId = artist.epochId ?? "";
-    artist.requiredEpochName = epochNamesById.get(artist.requiredEpochId) ?? artist.epochName ?? "";
+    artist.requiredEpochId = artist.requiredEpochId ?? "";
+    artist.requiredEpochName = artist.requiredEpochName ?? epochNamesById.get(artist.requiredEpochId) ?? "";
   }
 }
 
@@ -228,17 +228,17 @@ function epochDeckCards() {
       epochId: epoch.epochId,
       epochName: epoch.epochName,
       name: epoch.name,
-      imagePath: `/assets/epochs/epoch-front-${String(epochIndex + 1).padStart(2, "0")}.png`,
-      backImagePath: "/assets/epochs/epoch-back.png"
+      imagePath: `/assets/epochs/${epochIndex + 1}.png`,
+      backImagePath: "/assets/epochs/EpochBack.png"
     }))
   );
 }
 
 function generateArtistArtworkPrompt(artist) {
-  const epoch = epochById.get(artist.epochId);
+  const epoch = epochById.get(artist.requiredEpochId);
   return [
     `Create premium tabletop card artwork for "${artist.name}".`,
-    `Epoch: ${epoch?.name ?? artist.epochId}.`,
+    `Epoch: ${artist.requiredEpochName ?? epoch?.name ?? artist.requiredEpochId}.`,
     `Artist type: ${artist.artistType}.`,
     `Flavour: ${artist.description}.`,
     "Style: illuminated manuscript meets gilded art deco oracle card, painterly, collectible card game quality, elegant composition, textured, rich but readable.",
@@ -248,11 +248,11 @@ function generateArtistArtworkPrompt(artist) {
 
 function artistDeckCards() {
   return seed.artists.map((artist) => {
-    const epoch = epochById.get(artist.epochId);
+    const epoch = epochById.get(artist.requiredEpochId);
     return {
       ...artist,
       cardKind: "artist",
-      epochName: epoch?.name ?? artist.epochId,
+      epochName: artist.requiredEpochName ?? epoch?.name ?? artist.requiredEpochId,
       requiredEpochId: artist.requiredEpochId,
       requiredEpochName: artist.requiredEpochName,
       artworkPath: artist.artworkPath ?? "",
@@ -451,7 +451,7 @@ function renderPhysicalDealtCard(deckKey, dealtCard, index, backPath) {
 
 function artistPlaceholderTone(card) {
   const tones = ["teal", "emerald", "forest", "charcoal", "navy", "burgundy"];
-  const source = `${card.epochId}-${card.artistType}`;
+  const source = `${card.requiredEpochId}-${card.artistType}`;
   const hash = [...source].reduce((total, char) => total + char.charCodeAt(0), 0);
   return tones[hash % tones.length];
 }
@@ -670,7 +670,7 @@ function cardBackImage(card, className) {
   return `<img class="${className}" src="${escapeHtml(card.backImagePath)}" alt="${escapeHtml(`${card.name} card back`)}">`;
 }
 
-const sharedCardBackPath = "/assets/muses/muse-back.png";
+const sharedCardBackPath = "/assets/muses/MuseBack.png";
 
 function cardSizeLabel(card) {
   if (!card.cardWidthMm || !card.cardHeightMm) return "";
@@ -712,7 +712,7 @@ function normalizedCards() {
     ...seed.artists.map((card) => ({
       ...card,
       cardType: "Artist",
-      meta: `${card.artistType} · ${epochById.get(card.epochId)?.name ?? card.epochId}`
+      meta: `${card.artistType} · ${card.requiredEpochName ?? epochById.get(card.requiredEpochId)?.name ?? card.requiredEpochId}`
     })),
     ...seed.actions.map((card) => ({ ...card, cardType: "Action", meta: formatCategory(card.category) }))
   ];
@@ -766,7 +766,7 @@ function matchesFilters(card) {
     card.effectText,
     card.category,
     card.artistType,
-    epochById.get(card.epochId)?.name,
+    card.requiredEpochName ?? epochById.get(card.requiredEpochId)?.name,
     Object.keys(card.scores ?? {})
       .map((museId) => museById.get(museId)?.name)
       .join(" ")
@@ -778,7 +778,7 @@ function matchesFilters(card) {
   if (state.activeType !== "All" && card.cardType !== state.activeType) return false;
   if (query && !haystack.includes(query)) return false;
   if (statusFilter?.value && card.printStatus !== statusFilter.value) return false;
-  if (epochFilter?.value && card.cardType === "Artist" && card.epochId !== epochFilter.value) return false;
+  if (epochFilter?.value && card.cardType === "Artist" && card.requiredEpochId !== epochFilter.value) return false;
   if (epochFilter?.value && card.cardType === "Epoch" && card.id !== epochFilter.value) return false;
   if (epochFilter?.value && card.cardType !== "Artist" && card.cardType !== "Epoch") return false;
   if (museFilter?.value && card.cardType === "Artist" && !Object.hasOwn(card.scores ?? {}, museFilter.value)) return false;
@@ -853,7 +853,7 @@ function scoreRows(artist) {
 function relatedCards(card) {
   if (card.cardType === "Epoch") {
     return seed.artists
-      .filter((artist) => artist.epochId === card.id)
+      .filter((artist) => artist.requiredEpochId === card.id)
       .slice(0, 12)
       .map((artist) => artist.name);
   }
@@ -864,7 +864,7 @@ function relatedCards(card) {
       .map((artist) => artist.name);
   }
   if (card.cardType === "Artist") {
-    return [epochById.get(card.epochId)?.name].filter(Boolean);
+    return [card.requiredEpochName ?? epochById.get(card.requiredEpochId)?.name].filter(Boolean);
   }
   return [];
 }
@@ -884,7 +884,7 @@ function renderDiceOutcomes(action) {
 function renderCardDetail(card) {
   if (!card || !cardDetail) return;
   const related = relatedCards(card);
-  const epoch = card.cardType === "Artist" ? epochById.get(card.epochId) : null;
+  const epoch = card.cardType === "Artist" ? epochById.get(card.requiredEpochId) : null;
   const sizeLabel = cardSizeLabel(card);
   cardDetail.innerHTML = `
     <div class="detail-sticky">
@@ -1113,10 +1113,10 @@ function scoreRowValidation(row) {
   if (!artist) {
     return { valid: false, message: "Artist not found." };
   }
-  if (artist.epochId !== row.epochId) {
+  if (artist.requiredEpochId !== row.epochId) {
     return {
       valid: false,
-      message: `${artist.name} belongs to ${epochById.get(artist.epochId)?.name ?? artist.epochId}.`
+      message: `${artist.name} belongs to ${artist.requiredEpochName ?? epochById.get(artist.requiredEpochId)?.name ?? artist.requiredEpochId}.`
     };
   }
   return { valid: true, message: "Valid set." };
@@ -1610,6 +1610,7 @@ function scorePlayer(player) {
 }
 
 function refreshScores(game = state.game) {
+  enforceTableauValidity(game);
   for (const player of game.players) {
     player.score = scorePlayer(player);
   }
@@ -1647,6 +1648,44 @@ function logBlockedInvalidPair(artist, epoch) {
     epochName: epoch?.name,
     epochId: epoch?.epochId
   });
+}
+
+function enforceTableauValidity(game = state.game) {
+  if (!game) return;
+  for (const player of game.players) {
+    const validSets = [];
+    for (const set of player.tableau) {
+      const validArtists = [];
+      for (const artist of set.artists) {
+        const isValidPair = isValidArtistEpochPair(artist, set.epoch);
+        const score = isValidPair ? artistMuseScore(player, artist) : 0;
+        if (!isValidPair || (!player.isHuman && score <= 0)) {
+          console.error("Removed invalid Artist/Epoch tableau pair", {
+            player: player.name,
+            muse: museById.get(player.museId)?.name ?? player.museId,
+            artistName: artist?.name,
+            requiredEpochId: artist?.requiredEpochId,
+            requiredEpochName: artist?.requiredEpochName,
+            epochName: set.epoch?.name,
+            epochId: set.epoch?.epochId,
+            isValidPair,
+            score,
+            reason: !isValidPair ? "epoch mismatch" : "zero-point NPC pair"
+          });
+          game.discards.artist.push(artist);
+        } else {
+          validArtists.push(artist);
+        }
+      }
+      if (validArtists.length === 0) {
+        game.discards.epoch.push(set.epoch);
+      } else {
+        set.artists = validArtists;
+        validSets.push(set);
+      }
+    }
+    player.tableau = validSets;
+  }
 }
 
 function auditCanonicalEpochData() {
@@ -1845,7 +1884,7 @@ function startFirstTurn(game = state.game) {
 }
 
 function gameCardSubtitle(card, type) {
-  if (type === "Artist") return epochById.get(card.epochId)?.name ?? card.epochId;
+  if (type === "Artist") return card.requiredEpochName ?? epochById.get(card.requiredEpochId)?.name ?? card.requiredEpochId;
   if (type === "Epoch") return card.dateRange ?? "Epoch";
   if (type === "Action") return formatCategory(card.category);
   return card.domain ?? type;
@@ -1879,8 +1918,8 @@ function gameCardScoreLabel(card, type, museId) {
 
 function deckBackPathForType(type) {
   return {
-    Muse: "/assets/muses/muse-back.png",
-    Epoch: "/assets/epochs/epoch-back.png",
+    Muse: "/assets/muses/MuseBack.png",
+    Epoch: "/assets/epochs/EpochBack.png",
     Artist: "/assets/artists/artist-back.png",
     Action: "/assets/actions/action-back.png"
   }[type] ?? sharedCardBackPath;
@@ -1897,7 +1936,7 @@ function cardTypeFromPileLabel(label) {
 function epochImagePath(card) {
   const epochIndex = epochIndexById.get(card.id);
   if (epochIndex === undefined) return card.imagePath ?? "";
-  return `/assets/epochs/epoch-front-${String(epochIndex + 1).padStart(2, "0")}.png`;
+  return `/assets/epochs/${epochIndex + 1}.png`;
 }
 
 function finalDisplayCard(card, type) {
@@ -1918,11 +1957,11 @@ function finalDisplayCard(card, type) {
     };
   }
   if (type === "Artist") {
-    const epoch = epochById.get(card.epochId);
+    const epoch = epochById.get(card.requiredEpochId);
     return {
       ...card,
       cardKind: "artist",
-      epochName: card.epochName ?? epoch?.name ?? card.epochId,
+      epochName: card.requiredEpochName ?? card.epochName ?? epoch?.name ?? card.requiredEpochId,
       artworkPath: card.artworkPath ?? "",
       artworkPrompt: card.artworkPrompt ?? generateArtistArtworkPrompt(card),
       backImagePath: card.backImagePath ?? deckBackPathForType(type)
@@ -2293,7 +2332,7 @@ function renderLegalSetChoiceOverlay(game) {
               <span aria-hidden="true">+</span>
               <span>
                 <strong>${escapeHtml(artist.name)}</strong>
-                <small>${escapeHtml(epochById.get(artist.epochId)?.name ?? artist.epochName ?? artist.epochId)}</small>
+                <small>${escapeHtml(artist.requiredEpochName ?? epochById.get(artist.requiredEpochId)?.name ?? artist.requiredEpochId)}</small>
               </span>
             </button>
           `
@@ -2345,7 +2384,7 @@ function selectedTableauPlayStatus(game, player, entry) {
 
 function selectedCardCategory(card, type) {
   if (type === "Action") return actionCategoryLabel(card.category);
-  if (type === "Artist") return epochById.get(card.epochId)?.name ?? card.epochId;
+  if (type === "Artist") return card.requiredEpochName ?? epochById.get(card.requiredEpochId)?.name ?? card.requiredEpochId;
   if (type === "Epoch") return "Epoch";
   return type;
 }
@@ -3213,7 +3252,7 @@ function playSelectedTableauCards(playerOverride = null) {
   } else {
     const targetSet = matchingTableauSet(player, artist);
     if (!targetSet) {
-      addGameLog(`Select a matching Epoch from your hand, or first create a ${epochById.get(artist.epochId)?.name ?? artist.epochId} tableau set.`);
+      addGameLog(`Select a matching Epoch from your hand, or first create a ${artist.requiredEpochName ?? epochById.get(artist.requiredEpochId)?.name ?? artist.requiredEpochId} tableau set.`);
       renderGame();
       return;
     }
