@@ -2319,11 +2319,14 @@ function renderLegalSetChoiceOverlay(game) {
   }
 
   legalSetContent.innerHTML = `
-    <p class="muted">Choose the matching Epoch + Artist set to play. Only legal matches are shown.</p>
+    <p class="muted">Choose the matching Epoch + Artist set to play. Only legal matches are shown. Scores use your Muse.</p>
     <div class="legal-set-list">
       ${pairs
         .map(
-          ({ epoch, artist }, index) => `
+          ({ epoch, artist }, index) => {
+            const muse = museById.get(player.museId);
+            const score = artistMuseScore(player, artist);
+            return `
             <button type="button" class="legal-set-option" data-legal-set-index="${index}">
               <span>
                 <strong>${escapeHtml(epoch.name)}</strong>
@@ -2334,8 +2337,13 @@ function renderLegalSetChoiceOverlay(game) {
                 <strong>${escapeHtml(artist.name)}</strong>
                 <small>${escapeHtml(artist.requiredEpochName ?? epochById.get(artist.requiredEpochId)?.name ?? artist.requiredEpochId)}</small>
               </span>
+              <span class="legal-set-score" aria-label="${escapeHtml(`Score for ${muse?.name ?? "your Muse"}: ${score}`)}">
+                <strong>${score}</strong>
+                <small>${escapeHtml(muse?.name ?? "Your Muse")} score</small>
+              </span>
             </button>
-          `
+          `;
+          }
         )
         .join("")}
     </div>

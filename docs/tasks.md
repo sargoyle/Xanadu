@@ -98,6 +98,7 @@
 - [x] Replace all old Epoch card image references with the new numbered Epoch front assets and `EpochBack.png`.
 - [x] Rename Muse and Epoch image assets from numbered filenames to canonical card IDs and update app references.
 - [x] Correct mismapped Epoch artwork filenames so visual Epoch cards match their canonical `epochId`.
+- [x] Show current-Muse score values on each Legal Set choice.
 
 ## Backlog
 

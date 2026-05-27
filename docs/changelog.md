@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- 2026-05-27: Added current-Muse score values to each Legal Set choice so players can compare valid Epoch + Artist plays before selecting. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-24: Added an Artist card JPG export script and generated 150 downloadable Artist card JPGs plus a zip archive. Files affected: `scripts/export-artist-jpgs.mjs`, `exports/artist-cards-jpg/`, `exports/xanadu-artist-cards-jpg.zip`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-06: Initial project setup. Files affected: `docs/masterplan.md`, `docs/implementation.md`, `docs/design.md`, `docs/app-flow.md`, `docs/tasks.md`, `docs/rules.md`, `README.md`, `package.json`, `data/seed.json`, `db/schema.sql`, `public/`, `scripts/`, `src/domain/`, `tests/`.
 - 2026-05-06: Created changelog documentation and update rules. Files affected: `docs/changelog.md`, `docs/tasks.md`.
