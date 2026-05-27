@@ -228,8 +228,8 @@ function epochDeckCards() {
       epochId: epoch.epochId,
       epochName: epoch.epochName,
       name: epoch.name,
-      imagePath: `/assets/epochs/${epochIndex + 1}.png`,
-      backImagePath: "/assets/epochs/EpochBack.png"
+      imagePath: `/assets/epochs/${epoch.id}.png`,
+      backImagePath: "/assets/epochs/epoch-back.png"
     }))
   );
 }
@@ -670,7 +670,7 @@ function cardBackImage(card, className) {
   return `<img class="${className}" src="${escapeHtml(card.backImagePath)}" alt="${escapeHtml(`${card.name} card back`)}">`;
 }
 
-const sharedCardBackPath = "/assets/muses/MuseBack.png";
+const sharedCardBackPath = "/assets/muses/muse-back.png";
 
 function cardSizeLabel(card) {
   if (!card.cardWidthMm || !card.cardHeightMm) return "";
@@ -1918,8 +1918,8 @@ function gameCardScoreLabel(card, type, museId) {
 
 function deckBackPathForType(type) {
   return {
-    Muse: "/assets/muses/MuseBack.png",
-    Epoch: "/assets/epochs/EpochBack.png",
+    Muse: "/assets/muses/muse-back.png",
+    Epoch: "/assets/epochs/epoch-back.png",
     Artist: "/assets/artists/artist-back.png",
     Action: "/assets/actions/action-back.png"
   }[type] ?? sharedCardBackPath;
@@ -1936,7 +1936,7 @@ function cardTypeFromPileLabel(label) {
 function epochImagePath(card) {
   const epochIndex = epochIndexById.get(card.id);
   if (epochIndex === undefined) return card.imagePath ?? "";
-  return `/assets/epochs/${epochIndex + 1}.png`;
+  return `/assets/epochs/${card.id}.png`;
 }
 
 function finalDisplayCard(card, type) {

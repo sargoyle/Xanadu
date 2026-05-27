@@ -12,8 +12,8 @@
       "domain": "Epic Poetry, Eloquence",
       "description": "The eldest and chief of the Muses, Calliope inspires epic poetry, grand storytelling, and eloquent speech. She is often depicted with a writing tablet or scroll, and her beautiful voice is said to stir kings and poets alike to greatness. In myth, she is the mother of Orpheus and the muse most often invoked for heroic tales.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/1.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/calliope.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -23,8 +23,8 @@
       "domain": "History, Creativity",
       "description": "Muse of history and the recorder of great deeds, Clio inspires the chroniclers, historians, and storytellers who preserve the memory of humanity. She is often shown with scrolls or books, and a laurel wreath, symbolizing the triumph of knowledge over time.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/2.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/clio.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -34,8 +34,8 @@
       "domain": "Love & Lyric Poetry",
       "description": "The Muse of lyric and erotic poetry, Erato inspires songs of love, romance, and longing. Her name means \"the lovely one,\" and she is often depicted with a lyre or a cithara and a wreath of roses, guiding poets to create verses that stir the heart.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/3.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/erato.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -45,8 +45,8 @@
       "domain": "Music & Lyric Poetry",
       "description": "The Giver of Pleasure, Euterpe inspires musicians and composers, her divine influence often evoking harmony and delight. She is associated with wind instruments, especially the flute, through which her spirit of joy and melody flows.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/4.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/euterpe.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -56,8 +56,8 @@
       "domain": "Muse of Tragedy",
       "description": "The Muse of tragedy, Melpomene inspires profound and moving works exploring sorrow, fate, and the depths of the human soul. She is depicted with a tragic mask and a cypress wreath, embodying beauty in melancholy and catharsis.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/5.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/melpomene.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -67,8 +67,8 @@
       "domain": "Sacred Poetry, Hymns, Meditation",
       "description": "Muse of sacred hymns, meditation, and geometry, Polyhymnia inspires works of devotion, contemplation, and solemnity. She is portrayed as thoughtful and veiled, sometimes holding a lyre or agricultural symbols, representing the deep roots of faith and wisdom.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/6.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/polyhymnia.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -78,8 +78,8 @@
       "domain": "Dance, Light Verse",
       "description": "The one who delights in dance, Terpsichore inspires dancers, choreographers, and creators of light verse. She is often shown seated with a lyre, embodying rhythm, movement, and the joy of creative expression through the body.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/7.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/terpsichore.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -89,8 +89,8 @@
       "domain": "Muse of Comedy and Festivity",
       "description": "Thalia, Muse of comedy and pastoral poetry, brings laughter, wit, and celebration. She is depicted with a comic mask, an ivy crown, and sometimes a shepherd's crook, encouraging merriment and the lighter side of creativity.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/8.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/thalia.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     },
@@ -100,8 +100,8 @@
       "domain": "Astronomy, Mathematics, Sciences",
       "description": "Urania, Muse of astronomy, mathematics, and sciences, inspires those who seek to unravel the mysteries of the cosmos and the laws that govern it.",
       "printStatus": "PRINT_READY",
-      "imagePath": "/assets/muses/9.png",
-      "backImagePath": "/assets/muses/MuseBack.png",
+      "imagePath": "/assets/muses/urania.png",
+      "backImagePath": "/assets/muses/muse-back.png",
       "cardWidthMm": 63.5,
       "cardHeightMm": 88.9
     }

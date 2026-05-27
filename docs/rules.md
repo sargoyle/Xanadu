@@ -42,10 +42,7 @@ Keep entries concise. One line per decision when possible.
 - Keep local tooling scripts in `scripts`.
 - Keep tests in `tests`.
 - The local workspace folder is named `Xanadu`.
-<<<<<<< HEAD
 - Vercel deploys `public` as the static output directory and runs `npm run build` to copy canonical `data/seed.json` into `public/data/seed.json`.
-=======
->>>>>>> ec7ce1539c0e444f2da1d1106a7815a4ebcb184d
 - Use port `4184` for the Xanadu local preview; port `4173` is reserved for Meal Tracker.
 
 ## Naming Conventions
@@ -53,6 +50,7 @@ Keep entries concise. One line per decision when possible.
 - Use `Xanadu: Muses of Inspiration` as the full product name and `Xanadu` as the short name.
 - Use uppercase enum values for card types: `MUSE`, `EPOCH`, `ARTIST`, `ACTION`.
 - Use lowercase kebab-case stable IDs for cards, rules, and glossary terms.
+- Muse and Epoch image filenames must use their canonical card IDs; card backs use `muse-back.png` and `epoch-back.png`.
 - Use camelCase in JSON seed data and snake_case in SQL database columns.
 - Name task and PRD documentation files with lowercase kebab-case or simple lowercase names under `docs`.
 

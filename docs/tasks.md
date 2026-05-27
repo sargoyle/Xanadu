@@ -94,6 +94,10 @@
 - [x] Rebuild Play board spacing so all player panels have full visible rows and the Shared Table uses only compact deck space.
 - [x] Hard-fix Artist/Epoch matching so all tableau play paths use canonical `requiredEpochId` to `epochId` validation.
 - [x] Point Muse/Epoch rendering at the new numbered asset files and retire `Stone Age Visions` with its Artists from active play.
+- [x] Replace all old Muse card image references with the new numbered Muse front assets and `MuseBack.png`.
+- [x] Replace all old Epoch card image references with the new numbered Epoch front assets and `EpochBack.png`.
+- [x] Rename Muse and Epoch image assets from numbered filenames to canonical card IDs and update app references.
+- [x] Correct mismapped Epoch artwork filenames so visual Epoch cards match their canonical `epochId`.
 
 ## Backlog
 
