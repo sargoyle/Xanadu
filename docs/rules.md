@@ -51,6 +51,7 @@ Keep entries concise. One line per decision when possible.
 - Use uppercase enum values for card types: `MUSE`, `EPOCH`, `ARTIST`, `ACTION`.
 - Use lowercase kebab-case stable IDs for cards, rules, and glossary terms.
 - Muse and Epoch image filenames must use their canonical card IDs; card backs use `muse-back.png` and `epoch-back.png`.
+- Active Artist front image filenames must use canonical Artist IDs; intentional duplicate Artist records share their base card image.
 - Use camelCase in JSON seed data and snake_case in SQL database columns.
 - Name task and PRD documentation files with lowercase kebab-case or simple lowercase names under `docs`.
 

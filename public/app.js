@@ -136,7 +136,8 @@ const state = {
   },
   setupFlow: {
     open: false,
-    step: 1
+    step: 1,
+    inspectedMuseId: ""
   },
   handOverlay: {
     open: false
@@ -496,6 +497,9 @@ function artistNameSizeClass(name) {
 }
 
 function renderArtistCardFront(card) {
+  if (card.imagePath) {
+    return `<img class="physical-card-full-art" src="${escapeHtml(card.imagePath)}" alt="${escapeHtml(`${card.name} Artist card front`)}">`;
+  }
   return `
     <span class="artist-card-front">
       <span class="artist-card-name ${artistNameSizeClass(card.name)}">${escapeHtml(card.name)}</span>
@@ -1580,6 +1584,7 @@ function startNewGame() {
 
   state.setupFlow.open = true;
   state.setupFlow.step = 2;
+  state.setupFlow.inspectedMuseId = "";
   resolveNpcMuseChoices();
   renderGame();
 }
@@ -2639,16 +2644,39 @@ function renderSetupMuseChoices(game) {
   const picker = currentMusePicker(game);
   if (!picker) return "";
   if (!picker.isHuman) return `<p class="muted">${escapeHtml(picker.name)} is choosing automatically.</p>`;
+  const availableIds = availableMuseIds(game);
+  const inspectedMuse = availableIds.includes(state.setupFlow.inspectedMuseId)
+    ? museById.get(state.setupFlow.inspectedMuseId)
+    : null;
   return `
     <div class="setup-muse-panel">
       <h3>${escapeHtml(picker.name)}, choose your Muse</h3>
-      <div class="muse-button-grid setup-muse-grid">
-        ${availableMuseIds(game)
-          .map((museId) => {
-            const muse = museById.get(museId);
-            return `<button type="button" class="muse-pick setup-muse-pick" data-muse-id="${escapeHtml(muse.id)}">${escapeHtml(muse.name)}</button>`;
-          })
-          .join("")}
+      <p class="muted">Select a Muse card to inspect it, then choose your Muse from the enlarged preview.</p>
+      <div class="setup-muse-selection">
+        <div class="setup-muse-grid" aria-label="Available Muse cards">
+          ${availableIds
+            .map((museId) => {
+              const muse = museById.get(museId);
+              const isInspected = muse.id === inspectedMuse?.id;
+              return `
+                <button type="button" class="setup-muse-card ${isInspected ? "is-inspected" : ""}" data-inspect-muse-id="${escapeHtml(muse.id)}" aria-pressed="${isInspected}">
+                  <img src="${escapeHtml(muse.imagePath)}" alt="${escapeHtml(`${muse.name} Muse card`)}">
+                  <span>${escapeHtml(muse.name)}</span>
+                </button>
+              `;
+            })
+            .join("")}
+        </div>
+        <aside class="setup-muse-inspector">
+          ${
+            inspectedMuse
+              ? `
+                <img src="${escapeHtml(inspectedMuse.imagePath)}" alt="${escapeHtml(`${inspectedMuse.name} Muse card enlarged preview`)}">
+                <button type="button" class="button primary" data-choose-muse-id="${escapeHtml(inspectedMuse.id)}">Choose ${escapeHtml(inspectedMuse.name)}</button>
+              `
+              : `<p class="muted">Click a Muse card to enlarge it and read the full card before choosing.</p>`
+          }
+        </aside>
       </div>
     </div>
   `;
@@ -2757,6 +2785,7 @@ function chooseHumanMuse(museId) {
   const picker = currentMusePicker(state.game);
   if (!picker?.isHuman) return;
   picker.museId = museId;
+  state.setupFlow.inspectedMuseId = "";
   state.game.log.unshift(`You chose ${museById.get(picker.museId)?.name ?? "a Muse"}.`);
   resolveNpcMuseChoices();
   state.setupFlow.step = setupStepForGame(state.game);
@@ -3778,9 +3807,15 @@ function bindEvents() {
       closeSetupModal();
       return;
     }
-    const button = event.target.closest("[data-muse-id]");
-    if (!button) return;
-    chooseHumanMuse(button.dataset.museId);
+    const inspectButton = event.target.closest("[data-inspect-muse-id]");
+    if (inspectButton) {
+      state.setupFlow.inspectedMuseId = inspectButton.dataset.inspectMuseId;
+      renderSetupFlow();
+      return;
+    }
+    const chooseButton = event.target.closest("[data-choose-muse-id]");
+    if (!chooseButton) return;
+    chooseHumanMuse(chooseButton.dataset.chooseMuseId);
   });
   gameControls.addEventListener("click", (event) => {
     const button = event.target.closest("button");

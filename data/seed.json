@@ -479,7 +479,9 @@
         "urania": 2
       },
       "requiredEpochId": "1980s-neon-dreams",
-      "requiredEpochName": "1980s Neon Dreams"
+      "requiredEpochName": "1980s Neon Dreams",
+      "imagePath": "/assets/artists/graffiti-guru.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "cassette-crooner",
@@ -503,7 +505,9 @@
         "urania": 0
       },
       "requiredEpochId": "1980s-neon-dreams",
-      "requiredEpochName": "1980s Neon Dreams"
+      "requiredEpochName": "1980s Neon Dreams",
+      "imagePath": "/assets/artists/cassette-crooner.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "pixel-punk-poet",
@@ -527,7 +531,9 @@
         "urania": 0
       },
       "requiredEpochId": "1980s-neon-dreams",
-      "requiredEpochName": "1980s Neon Dreams"
+      "requiredEpochName": "1980s Neon Dreams",
+      "imagePath": "/assets/artists/pixel-punk-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "synthwave-composer",
@@ -551,7 +557,9 @@
         "urania": 0
       },
       "requiredEpochId": "1980s-neon-dreams",
-      "requiredEpochName": "1980s Neon Dreams"
+      "requiredEpochName": "1980s Neon Dreams",
+      "imagePath": "/assets/artists/synthwave-composer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "neon-noir-novelist",
@@ -575,7 +583,9 @@
         "urania": 0
       },
       "requiredEpochId": "1980s-neon-dreams",
-      "requiredEpochName": "1980s Neon Dreams"
+      "requiredEpochName": "1980s Neon Dreams",
+      "imagePath": "/assets/artists/neon-noir-novelist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "colour-field-alchemist",
@@ -599,7 +609,9 @@
         "urania": 3
       },
       "requiredEpochId": "modern-avant-garde",
-      "requiredEpochName": "Modern Avant-Garde"
+      "requiredEpochName": "Modern Avant-Garde",
+      "imagePath": "/assets/artists/colour-field-alchemist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "zen-ink-master",
@@ -623,7 +635,9 @@
         "urania": 3
       },
       "requiredEpochId": "modern-avant-garde",
-      "requiredEpochName": "Modern Avant-Garde"
+      "requiredEpochName": "Modern Avant-Garde",
+      "imagePath": "/assets/artists/zen-ink-master.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "gestural-lyricist",
@@ -647,7 +661,9 @@
         "urania": 1
       },
       "requiredEpochId": "modern-avant-garde",
-      "requiredEpochName": "Modern Avant-Garde"
+      "requiredEpochName": "Modern Avant-Garde",
+      "imagePath": "/assets/artists/gestural-lyricist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "chromatic-dancer",
@@ -671,7 +687,9 @@
         "urania": 0
       },
       "requiredEpochId": "modern-avant-garde",
-      "requiredEpochName": "Modern Avant-Garde"
+      "requiredEpochName": "Modern Avant-Garde",
+      "imagePath": "/assets/artists/chromatic-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "abstract-alchemist",
@@ -695,7 +713,9 @@
         "urania": 0
       },
       "requiredEpochId": "modern-avant-garde",
-      "requiredEpochName": "Modern Avant-Garde"
+      "requiredEpochName": "Modern Avant-Garde",
+      "imagePath": "/assets/artists/abstract-alchemist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "marble-maven",
@@ -719,7 +739,9 @@
         "urania": 2
       },
       "requiredEpochId": "ancient-rome",
-      "requiredEpochName": "Ancient Rome"
+      "requiredEpochName": "Ancient Rome",
+      "imagePath": "/assets/artists/marble-maven.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "aqueduct-architect",
@@ -743,7 +765,9 @@
         "urania": 3
       },
       "requiredEpochId": "ancient-rome",
-      "requiredEpochName": "Ancient Rome"
+      "requiredEpochName": "Ancient Rome",
+      "imagePath": "/assets/artists/aqueduct-architect.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "chariot-chantress",
@@ -767,7 +791,9 @@
         "urania": 0
       },
       "requiredEpochId": "ancient-rome",
-      "requiredEpochName": "Ancient Rome"
+      "requiredEpochName": "Ancient Rome",
+      "imagePath": "/assets/artists/chariot-chantress.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "mosaic-minstrel",
@@ -791,7 +817,9 @@
         "urania": 1
       },
       "requiredEpochId": "ancient-rome",
-      "requiredEpochName": "Ancient Rome"
+      "requiredEpochName": "Ancient Rome",
+      "imagePath": "/assets/artists/mosaic-minstrel.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "aqueduct-lyricist",
@@ -815,7 +843,9 @@
         "urania": 0
       },
       "requiredEpochId": "ancient-rome",
-      "requiredEpochName": "Ancient Rome"
+      "requiredEpochName": "Ancient Rome",
+      "imagePath": "/assets/artists/aqueduct-lyricist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "aqueduct-lyricist-2",
@@ -839,7 +869,9 @@
         "urania": 0
       },
       "requiredEpochId": "ancient-rome",
-      "requiredEpochName": "Ancient Rome"
+      "requiredEpochName": "Ancient Rome",
+      "imagePath": "/assets/artists/aqueduct-lyricist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "star-chart-scribe",
@@ -863,7 +895,9 @@
         "urania": 3
       },
       "requiredEpochId": "astronomers-guild-age",
-      "requiredEpochName": "Astronomer's Guild Age"
+      "requiredEpochName": "Astronomer's Guild Age",
+      "imagePath": "/assets/artists/star-chart-scribe.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "armillary-sculptor",
@@ -887,7 +921,9 @@
         "urania": 3
       },
       "requiredEpochId": "astronomers-guild-age",
-      "requiredEpochName": "Astronomer's Guild Age"
+      "requiredEpochName": "Astronomer's Guild Age",
+      "imagePath": "/assets/artists/armillary-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "comet-chaser",
@@ -911,7 +947,9 @@
         "urania": 3
       },
       "requiredEpochId": "astronomers-guild-age",
-      "requiredEpochName": "Astronomer's Guild Age"
+      "requiredEpochName": "Astronomer's Guild Age",
+      "imagePath": "/assets/artists/comet-chaser.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "fresco-fantasist",
@@ -935,7 +973,9 @@
         "urania": 1
       },
       "requiredEpochId": "baroque-splendour",
-      "requiredEpochName": "Baroque Splendour"
+      "requiredEpochName": "Baroque Splendour",
+      "imagePath": "/assets/artists/fresco-fantasist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "oratorio-virtuoso",
@@ -959,7 +999,9 @@
         "urania": 1
       },
       "requiredEpochId": "baroque-splendour",
-      "requiredEpochName": "Baroque Splendour"
+      "requiredEpochName": "Baroque Splendour",
+      "imagePath": "/assets/artists/oratorio-virtuoso.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "gilded-sculptor",
@@ -983,7 +1025,9 @@
         "urania": 2
       },
       "requiredEpochId": "baroque-splendour",
-      "requiredEpochName": "Baroque Splendour"
+      "requiredEpochName": "Baroque Splendour",
+      "imagePath": "/assets/artists/gilded-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "harpsichord-harmonist",
@@ -1007,7 +1051,9 @@
         "urania": 0
       },
       "requiredEpochId": "baroque-splendour",
-      "requiredEpochName": "Baroque Splendour"
+      "requiredEpochName": "Baroque Splendour",
+      "imagePath": "/assets/artists/harpsichord-harmonist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "harpsichord-virtuoso",
@@ -1031,7 +1077,9 @@
         "urania": 0
       },
       "requiredEpochId": "baroque-splendour",
-      "requiredEpochName": "Baroque Splendour"
+      "requiredEpochName": "Baroque Splendour",
+      "imagePath": "/assets/artists/harpsichord-virtuoso.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "harpsichord-virtuoso-2",
@@ -1055,7 +1103,9 @@
         "urania": 0
       },
       "requiredEpochId": "baroque-splendour",
-      "requiredEpochName": "Baroque Splendour"
+      "requiredEpochName": "Baroque Splendour",
+      "imagePath": "/assets/artists/harpsichord-virtuoso.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "icon-illuminator",
@@ -1079,7 +1129,9 @@
         "urania": 2
       },
       "requiredEpochId": "byzantine-icons",
-      "requiredEpochName": "Byzantine Icons"
+      "requiredEpochName": "Byzantine Icons",
+      "imagePath": "/assets/artists/icon-illuminator.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "chant-scribe",
@@ -1103,7 +1155,9 @@
         "urania": 2
       },
       "requiredEpochId": "byzantine-icons",
-      "requiredEpochName": "Byzantine Icons"
+      "requiredEpochName": "Byzantine Icons",
+      "imagePath": "/assets/artists/chant-scribe.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "hymn-weaver",
@@ -1127,7 +1181,9 @@
         "urania": 1
       },
       "requiredEpochId": "byzantine-icons",
-      "requiredEpochName": "Byzantine Icons"
+      "requiredEpochName": "Byzantine Icons",
+      "imagePath": "/assets/artists/hymn-weaver.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "chanting-sculptor",
@@ -1151,7 +1207,9 @@
         "urania": 0
       },
       "requiredEpochId": "byzantine-icons",
-      "requiredEpochName": "Byzantine Icons"
+      "requiredEpochName": "Byzantine Icons",
+      "imagePath": "/assets/artists/chanting-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "byzantine-balladeer",
@@ -1175,7 +1233,9 @@
         "urania": 0
       },
       "requiredEpochId": "byzantine-icons",
-      "requiredEpochName": "Byzantine Icons"
+      "requiredEpochName": "Byzantine Icons",
+      "imagePath": "/assets/artists/byzantine-balladeer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "primal-drummer",
@@ -1199,7 +1259,9 @@
         "urania": 1
       },
       "requiredEpochId": "cave-performance-era",
-      "requiredEpochName": "Cave Performance Era"
+      "requiredEpochName": "Cave Performance Era",
+      "imagePath": "/assets/artists/primal-drummer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "firelight-storyteller",
@@ -1223,7 +1285,9 @@
         "urania": 1
       },
       "requiredEpochId": "cave-performance-era",
-      "requiredEpochName": "Cave Performance Era"
+      "requiredEpochName": "Cave Performance Era",
+      "imagePath": "/assets/artists/firelight-storyteller.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ochre-handprint",
@@ -1247,7 +1311,9 @@
         "urania": 2
       },
       "requiredEpochId": "cave-performance-era",
-      "requiredEpochName": "Cave Performance Era"
+      "requiredEpochName": "Cave Performance Era",
+      "imagePath": "/assets/artists/ochre-handprint.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "pixel-poet",
@@ -1271,7 +1337,9 @@
         "urania": 3
       },
       "requiredEpochId": "digital-renaissance",
-      "requiredEpochName": "Digital Renaissance"
+      "requiredEpochName": "Digital Renaissance",
+      "imagePath": "/assets/artists/pixel-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "vr-worldsmith",
@@ -1295,7 +1363,9 @@
         "urania": 3
       },
       "requiredEpochId": "digital-renaissance",
-      "requiredEpochName": "Digital Renaissance"
+      "requiredEpochName": "Digital Renaissance",
+      "imagePath": "/assets/artists/vr-worldsmith.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "glitch-alchemist",
@@ -1319,7 +1389,9 @@
         "urania": 2
       },
       "requiredEpochId": "digital-renaissance",
-      "requiredEpochName": "Digital Renaissance"
+      "requiredEpochName": "Digital Renaissance",
+      "imagePath": "/assets/artists/glitch-alchemist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "glitch-groove-composer",
@@ -1343,7 +1415,9 @@
         "urania": 0
       },
       "requiredEpochId": "digital-renaissance",
-      "requiredEpochName": "Digital Renaissance"
+      "requiredEpochName": "Digital Renaissance",
+      "imagePath": "/assets/artists/glitch-groove-composer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "algorithmic-bard",
@@ -1367,7 +1441,9 @@
         "urania": 1
       },
       "requiredEpochId": "digital-renaissance",
-      "requiredEpochName": "Digital Renaissance"
+      "requiredEpochName": "Digital Renaissance",
+      "imagePath": "/assets/artists/algorithmic-bard.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "songline-navigator",
@@ -1391,7 +1467,9 @@
         "urania": 1
       },
       "requiredEpochId": "dreamtime",
-      "requiredEpochName": "Dreamtime"
+      "requiredEpochName": "Dreamtime",
+      "imagePath": "/assets/artists/songline-navigator.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "spirit-dancer",
@@ -1415,7 +1493,9 @@
         "urania": 0
       },
       "requiredEpochId": "dreamtime",
-      "requiredEpochName": "Dreamtime"
+      "requiredEpochName": "Dreamtime",
+      "imagePath": "/assets/artists/spirit-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "dotwork-visionary",
@@ -1439,7 +1519,9 @@
         "urania": 0
       },
       "requiredEpochId": "dreamtime",
-      "requiredEpochName": "Dreamtime"
+      "requiredEpochName": "Dreamtime",
+      "imagePath": "/assets/artists/dotwork-visionary.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "yidaki-songsmith",
@@ -1463,7 +1545,9 @@
         "urania": 0
       },
       "requiredEpochId": "dreamtime",
-      "requiredEpochName": "Dreamtime"
+      "requiredEpochName": "Dreamtime",
+      "imagePath": "/assets/artists/yidaki-songsmith.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "dreaming-storyteller",
@@ -1487,7 +1571,9 @@
         "urania": 1
       },
       "requiredEpochId": "dreamtime",
-      "requiredEpochName": "Dreamtime"
+      "requiredEpochName": "Dreamtime",
+      "imagePath": "/assets/artists/dreaming-storyteller.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "dreamtime-epic-weaver",
@@ -1511,7 +1597,9 @@
         "urania": 0
       },
       "requiredEpochId": "dreamtime",
-      "requiredEpochName": "Dreamtime"
+      "requiredEpochName": "Dreamtime",
+      "imagePath": "/assets/artists/dreamtime-epic-weaver.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "mourning-violinist",
@@ -1535,7 +1623,9 @@
         "urania": 0
       },
       "requiredEpochId": "elegy-renaissance",
-      "requiredEpochName": "Elegy Renaissance"
+      "requiredEpochName": "Elegy Renaissance",
+      "imagePath": "/assets/artists/mourning-violinist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "epitaph-engraver",
@@ -1559,7 +1649,9 @@
         "urania": 3
       },
       "requiredEpochId": "elegy-renaissance",
-      "requiredEpochName": "Elegy Renaissance"
+      "requiredEpochName": "Elegy Renaissance",
+      "imagePath": "/assets/artists/epitaph-engraver.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "requiem-dancer",
@@ -1583,7 +1675,9 @@
         "urania": 0
       },
       "requiredEpochId": "elegy-renaissance",
-      "requiredEpochName": "Elegy Renaissance"
+      "requiredEpochName": "Elegy Renaissance",
+      "imagePath": "/assets/artists/requiem-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "funeral-dirge-singer",
@@ -1607,7 +1701,9 @@
         "urania": 0
       },
       "requiredEpochId": "elegy-renaissance",
-      "requiredEpochName": "Elegy Renaissance"
+      "requiredEpochName": "Elegy Renaissance",
+      "imagePath": "/assets/artists/funeral-dirge-singer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "funeral-pyre-poet",
@@ -1631,7 +1727,9 @@
         "urania": 0
       },
       "requiredEpochId": "elegy-renaissance",
-      "requiredEpochName": "Elegy Renaissance"
+      "requiredEpochName": "Elegy Renaissance",
+      "imagePath": "/assets/artists/funeral-pyre-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "staccato-dancer",
@@ -1655,7 +1753,9 @@
         "urania": 0
       },
       "requiredEpochId": "flamenco-fire-period",
-      "requiredEpochName": "Flamenco Fire Period"
+      "requiredEpochName": "Flamenco Fire Period",
+      "imagePath": "/assets/artists/staccato-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "lament-guitarist",
@@ -1679,7 +1779,9 @@
         "urania": 2
       },
       "requiredEpochId": "flamenco-fire-period",
-      "requiredEpochName": "Flamenco Fire Period"
+      "requiredEpochName": "Flamenco Fire Period",
+      "imagePath": "/assets/artists/lament-guitarist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "shawl-spin-poet",
@@ -1703,7 +1805,9 @@
         "urania": 0
       },
       "requiredEpochId": "flamenco-fire-period",
-      "requiredEpochName": "Flamenco Fire Period"
+      "requiredEpochName": "Flamenco Fire Period",
+      "imagePath": "/assets/artists/shawl-spin-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "palmas-poet",
@@ -1727,7 +1831,9 @@
         "urania": 0
       },
       "requiredEpochId": "flamenco-fire-period",
-      "requiredEpochName": "Flamenco Fire Period"
+      "requiredEpochName": "Flamenco Fire Period",
+      "imagePath": "/assets/artists/palmas-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "flamenco-philosopher",
@@ -1751,7 +1857,9 @@
         "urania": 0
       },
       "requiredEpochId": "flamenco-fire-period",
-      "requiredEpochName": "Flamenco Fire Period"
+      "requiredEpochName": "Flamenco Fire Period",
+      "imagePath": "/assets/artists/flamenco-philosopher.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "holo-canvas-crafter",
@@ -1775,7 +1883,9 @@
         "urania": 3
       },
       "requiredEpochId": "future-realms",
-      "requiredEpochName": "Future Realms"
+      "requiredEpochName": "Future Realms",
+      "imagePath": "/assets/artists/holo-canvas-crafter.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "bio-sculptor",
@@ -1799,7 +1909,9 @@
         "urania": 3
       },
       "requiredEpochId": "future-realms",
-      "requiredEpochName": "Future Realms"
+      "requiredEpochName": "Future Realms",
+      "imagePath": "/assets/artists/bio-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "holographic-balladeer",
@@ -1823,7 +1935,9 @@
         "urania": 1
       },
       "requiredEpochId": "future-realms",
-      "requiredEpochName": "Future Realms"
+      "requiredEpochName": "Future Realms",
+      "imagePath": "/assets/artists/holographic-balladeer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "quantum-verse-crafter",
@@ -1847,7 +1961,9 @@
         "urania": 2
       },
       "requiredEpochId": "future-realms",
-      "requiredEpochName": "Future Realms"
+      "requiredEpochName": "Future Realms",
+      "imagePath": "/assets/artists/quantum-verse-crafter.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "holo-sculptor",
@@ -1871,7 +1987,9 @@
         "urania": 1
       },
       "requiredEpochId": "future-realms",
-      "requiredEpochName": "Future Realms"
+      "requiredEpochName": "Future Realms",
+      "imagePath": "/assets/artists/holo-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "holo-sculptor-2",
@@ -1895,7 +2013,9 @@
         "urania": 1
       },
       "requiredEpochId": "future-realms",
-      "requiredEpochName": "Future Realms"
+      "requiredEpochName": "Future Realms",
+      "imagePath": "/assets/artists/holo-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "stained-glass-alchemist",
@@ -1919,7 +2039,9 @@
         "urania": 1
       },
       "requiredEpochId": "gothic-cathedral-age",
-      "requiredEpochName": "Gothic Cathedral Age"
+      "requiredEpochName": "Gothic Cathedral Age",
+      "imagePath": "/assets/artists/stained-glass-alchemist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "spire-carver",
@@ -1943,7 +2065,9 @@
         "urania": 2
       },
       "requiredEpochId": "gothic-cathedral-age",
-      "requiredEpochName": "Gothic Cathedral Age"
+      "requiredEpochName": "Gothic Cathedral Age",
+      "imagePath": "/assets/artists/spire-carver.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "chanting-chronicler",
@@ -1967,7 +2091,9 @@
         "urania": 1
       },
       "requiredEpochId": "gothic-cathedral-age",
-      "requiredEpochName": "Gothic Cathedral Age"
+      "requiredEpochName": "Gothic Cathedral Age",
+      "imagePath": "/assets/artists/chanting-chronicler.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "rose-window-dancer",
@@ -1991,7 +2117,9 @@
         "urania": 1
       },
       "requiredEpochId": "gothic-cathedral-age",
-      "requiredEpochName": "Gothic Cathedral Age"
+      "requiredEpochName": "Gothic Cathedral Age",
+      "imagePath": "/assets/artists/rose-window-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "stained-glass-painter",
@@ -2015,7 +2143,9 @@
         "urania": 0
       },
       "requiredEpochId": "gothic-cathedral-age",
-      "requiredEpochName": "Gothic Cathedral Age"
+      "requiredEpochName": "Gothic Cathedral Age",
+      "imagePath": "/assets/artists/stained-glass-painter.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "stained-glass-painter-2",
@@ -2039,7 +2169,9 @@
         "urania": 0
       },
       "requiredEpochId": "gothic-cathedral-age",
-      "requiredEpochName": "Gothic Cathedral Age"
+      "requiredEpochName": "Gothic Cathedral Age",
+      "imagePath": "/assets/artists/stained-glass-painter.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "jazz-verse-weaver",
@@ -2063,7 +2195,9 @@
         "urania": 1
       },
       "requiredEpochId": "harlem-renaissance",
-      "requiredEpochName": "Harlem Renaissance"
+      "requiredEpochName": "Harlem Renaissance",
+      "imagePath": "/assets/artists/jazz-verse-weaver.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "speakeasy-crooner",
@@ -2087,7 +2221,9 @@
         "urania": 2
       },
       "requiredEpochId": "harlem-renaissance",
-      "requiredEpochName": "Harlem Renaissance"
+      "requiredEpochName": "Harlem Renaissance",
+      "imagePath": "/assets/artists/speakeasy-crooner.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "bronzeville-brush",
@@ -2111,7 +2247,9 @@
         "urania": 0
       },
       "requiredEpochId": "harlem-renaissance",
-      "requiredEpochName": "Harlem Renaissance"
+      "requiredEpochName": "Harlem Renaissance",
+      "imagePath": "/assets/artists/bronzeville-brush.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "juke-joint-jazz-poet",
@@ -2135,7 +2273,9 @@
         "urania": 0
       },
       "requiredEpochId": "harlem-renaissance",
-      "requiredEpochName": "Harlem Renaissance"
+      "requiredEpochName": "Harlem Renaissance",
+      "imagePath": "/assets/artists/juke-joint-jazz-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "lindy-hop-luminary",
@@ -2159,7 +2299,9 @@
         "urania": 0
       },
       "requiredEpochId": "harlem-renaissance",
-      "requiredEpochName": "Harlem Renaissance"
+      "requiredEpochName": "Harlem Renaissance",
+      "imagePath": "/assets/artists/lindy-hop-luminary.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "neon-motion-choreographer",
@@ -2183,7 +2325,9 @@
         "urania": 3
       },
       "requiredEpochId": "hologram-showcase-age",
-      "requiredEpochName": "Hologram Showcase Age"
+      "requiredEpochName": "Hologram Showcase Age",
+      "imagePath": "/assets/artists/neon-motion-choreographer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "data-drift-musician",
@@ -2207,7 +2351,9 @@
         "urania": 1
       },
       "requiredEpochId": "hologram-showcase-age",
-      "requiredEpochName": "Hologram Showcase Age"
+      "requiredEpochName": "Hologram Showcase Age",
+      "imagePath": "/assets/artists/data-drift-musician.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "holographic-calligrapher",
@@ -2231,7 +2377,9 @@
         "urania": 3
       },
       "requiredEpochId": "hologram-showcase-age",
-      "requiredEpochName": "Hologram Showcase Age"
+      "requiredEpochName": "Hologram Showcase Age",
+      "imagePath": "/assets/artists/holographic-calligrapher.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "laser-lyricist",
@@ -2255,7 +2403,9 @@
         "urania": 0
       },
       "requiredEpochId": "hologram-showcase-age",
-      "requiredEpochName": "Hologram Showcase Age"
+      "requiredEpochName": "Hologram Showcase Age",
+      "imagePath": "/assets/artists/laser-lyricist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "photon-dance-pioneer",
@@ -2279,7 +2429,9 @@
         "urania": 1
       },
       "requiredEpochId": "hologram-showcase-age",
-      "requiredEpochName": "Hologram Showcase Age"
+      "requiredEpochName": "Hologram Showcase Age",
+      "imagePath": "/assets/artists/photon-dance-pioneer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "lightcatcher",
@@ -2303,7 +2455,9 @@
         "urania": 1
       },
       "requiredEpochId": "bohemian-paris",
-      "requiredEpochName": "Bohemian Paris"
+      "requiredEpochName": "Bohemian Paris",
+      "imagePath": "/assets/artists/lightcatcher.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "garden-harmonist",
@@ -2327,7 +2481,9 @@
         "urania": 1
       },
       "requiredEpochId": "bohemian-paris",
-      "requiredEpochName": "Bohemian Paris"
+      "requiredEpochName": "Bohemian Paris",
+      "imagePath": "/assets/artists/garden-harmonist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "riverside-sketcher",
@@ -2351,7 +2507,9 @@
         "urania": 2
       },
       "requiredEpochId": "bohemian-paris",
-      "requiredEpochName": "Bohemian Paris"
+      "requiredEpochName": "Bohemian Paris",
+      "imagePath": "/assets/artists/riverside-sketcher.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "sunflower-sonneteer",
@@ -2375,7 +2533,9 @@
         "urania": 0
       },
       "requiredEpochId": "bohemian-paris",
-      "requiredEpochName": "Bohemian Paris"
+      "requiredEpochName": "Bohemian Paris",
+      "imagePath": "/assets/artists/sunflower-sonneteer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "water-lily-waltzer",
@@ -2399,7 +2559,9 @@
         "urania": 0
       },
       "requiredEpochId": "bohemian-paris",
-      "requiredEpochName": "Bohemian Paris"
+      "requiredEpochName": "Bohemian Paris",
+      "imagePath": "/assets/artists/water-lily-waltzer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "furnace-songstress",
@@ -2423,7 +2585,9 @@
         "urania": 2
       },
       "requiredEpochId": "industrial-age",
-      "requiredEpochName": "Industrial Age"
+      "requiredEpochName": "Industrial Age",
+      "imagePath": "/assets/artists/furnace-songstress.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ironwork-architect",
@@ -2447,7 +2611,9 @@
         "urania": 3
       },
       "requiredEpochId": "industrial-age",
-      "requiredEpochName": "Industrial Age"
+      "requiredEpochName": "Industrial Age",
+      "imagePath": "/assets/artists/ironwork-architect.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "steam-whistle-balladeer",
@@ -2471,7 +2637,9 @@
         "urania": 0
       },
       "requiredEpochId": "industrial-age",
-      "requiredEpochName": "Industrial Age"
+      "requiredEpochName": "Industrial Age",
+      "imagePath": "/assets/artists/steam-whistle-balladeer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "steam-organist",
@@ -2495,7 +2663,9 @@
         "urania": 0
       },
       "requiredEpochId": "industrial-age",
-      "requiredEpochName": "Industrial Age"
+      "requiredEpochName": "Industrial Age",
+      "imagePath": "/assets/artists/steam-organist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "steam-epic-poet",
@@ -2519,7 +2689,9 @@
         "urania": 0
       },
       "requiredEpochId": "industrial-age",
-      "requiredEpochName": "Industrial Age"
+      "requiredEpochName": "Industrial Age",
+      "imagePath": "/assets/artists/steam-epic-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "geometric-visionary",
@@ -2543,7 +2715,9 @@
         "urania": 3
       },
       "requiredEpochId": "islamic-golden-age",
-      "requiredEpochName": "Islamic Golden Age"
+      "requiredEpochName": "Islamic Golden Age",
+      "imagePath": "/assets/artists/geometric-visionary.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "calligraphy-artisan",
@@ -2567,7 +2741,9 @@
         "urania": 1
       },
       "requiredEpochId": "islamic-golden-age",
-      "requiredEpochName": "Islamic Golden Age"
+      "requiredEpochName": "Islamic Golden Age",
+      "imagePath": "/assets/artists/calligraphy-artisan.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "oud-storyteller",
@@ -2591,7 +2767,9 @@
         "urania": 1
       },
       "requiredEpochId": "islamic-golden-age",
-      "requiredEpochName": "Islamic Golden Age"
+      "requiredEpochName": "Islamic Golden Age",
+      "imagePath": "/assets/artists/oud-storyteller.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ode-to-the-oud",
@@ -2615,7 +2793,9 @@
         "urania": 0
       },
       "requiredEpochId": "islamic-golden-age",
-      "requiredEpochName": "Islamic Golden Age"
+      "requiredEpochName": "Islamic Golden Age",
+      "imagePath": "/assets/artists/ode-to-the-oud.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "oud-composer",
@@ -2639,7 +2819,9 @@
         "urania": 0
       },
       "requiredEpochId": "islamic-golden-age",
-      "requiredEpochName": "Islamic Golden Age"
+      "requiredEpochName": "Islamic Golden Age",
+      "imagePath": "/assets/artists/oud-composer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "illuminated-quill",
@@ -2663,7 +2845,9 @@
         "urania": 0
       },
       "requiredEpochId": "medieval-europe",
-      "requiredEpochName": "Medieval Europe"
+      "requiredEpochName": "Medieval Europe",
+      "imagePath": "/assets/artists/illuminated-quill.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "cloistered-cantor",
@@ -2687,7 +2871,9 @@
         "urania": 1
       },
       "requiredEpochId": "medieval-europe",
-      "requiredEpochName": "Medieval Europe"
+      "requiredEpochName": "Medieval Europe",
+      "imagePath": "/assets/artists/cloistered-cantor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "jesters-quip",
@@ -2711,7 +2897,9 @@
         "urania": 3
       },
       "requiredEpochId": "medieval-europe",
-      "requiredEpochName": "Medieval Europe"
+      "requiredEpochName": "Medieval Europe",
+      "imagePath": "/assets/artists/jesters-quip.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "morris-dance-maestro",
@@ -2735,7 +2923,9 @@
         "urania": 0
       },
       "requiredEpochId": "medieval-europe",
-      "requiredEpochName": "Medieval Europe"
+      "requiredEpochName": "Medieval Europe",
+      "imagePath": "/assets/artists/morris-dance-maestro.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "monastic-hymnist",
@@ -2759,7 +2949,9 @@
         "urania": 0
       },
       "requiredEpochId": "medieval-europe",
-      "requiredEpochName": "Medieval Europe"
+      "requiredEpochName": "Medieval Europe",
+      "imagePath": "/assets/artists/monastic-hymnist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "trance-channeler",
@@ -2783,7 +2975,9 @@
         "urania": 0
       },
       "requiredEpochId": "oracle-temples",
-      "requiredEpochName": "Oracle Temples"
+      "requiredEpochName": "Oracle Temples",
+      "imagePath": "/assets/artists/trance-channeler.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "incense-carver",
@@ -2807,7 +3001,9 @@
         "urania": 1
       },
       "requiredEpochId": "oracle-temples",
-      "requiredEpochName": "Oracle Temples"
+      "requiredEpochName": "Oracle Temples",
+      "imagePath": "/assets/artists/incense-carver.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ritual-rhythm-keeper",
@@ -2831,7 +3027,9 @@
         "urania": 1
       },
       "requiredEpochId": "oracle-temples",
-      "requiredEpochName": "Oracle Temples"
+      "requiredEpochName": "Oracle Temples",
+      "imagePath": "/assets/artists/ritual-rhythm-keeper.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "sacred-dancer",
@@ -2855,7 +3053,9 @@
         "urania": 0
       },
       "requiredEpochId": "oracle-temples",
-      "requiredEpochName": "Oracle Temples"
+      "requiredEpochName": "Oracle Temples",
+      "imagePath": "/assets/artists/sacred-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "oracles-lament-singer",
@@ -2879,7 +3079,9 @@
         "urania": 0
       },
       "requiredEpochId": "oracle-temples",
-      "requiredEpochName": "Oracle Temples"
+      "requiredEpochName": "Oracle Temples",
+      "imagePath": "/assets/artists/oracles-lament-singer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "comic-strip-icon",
@@ -2903,7 +3105,9 @@
         "urania": 1
       },
       "requiredEpochId": "1960s-counterculture",
-      "requiredEpochName": "1960s Counterculture"
+      "requiredEpochName": "1960s Counterculture",
+      "imagePath": "/assets/artists/comic-strip-icon.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "soup-can-visionary",
@@ -2927,7 +3131,9 @@
         "urania": 2
       },
       "requiredEpochId": "1960s-counterculture",
-      "requiredEpochName": "1960s Counterculture"
+      "requiredEpochName": "1960s Counterculture",
+      "imagePath": "/assets/artists/soup-can-visionary.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "neon-sign-sorcerer",
@@ -2951,7 +3157,9 @@
         "urania": 2
       },
       "requiredEpochId": "1960s-counterculture",
-      "requiredEpochName": "1960s Counterculture"
+      "requiredEpochName": "1960s Counterculture",
+      "imagePath": "/assets/artists/neon-sign-sorcerer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "vinyl-verse-virtuoso",
@@ -2975,7 +3183,9 @@
         "urania": 0
       },
       "requiredEpochId": "1960s-counterculture",
-      "requiredEpochName": "1960s Counterculture"
+      "requiredEpochName": "1960s Counterculture",
+      "imagePath": "/assets/artists/vinyl-verse-virtuoso.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "vinyl-dj",
@@ -2999,7 +3209,9 @@
         "urania": 0
       },
       "requiredEpochId": "1960s-counterculture",
-      "requiredEpochName": "1960s Counterculture"
+      "requiredEpochName": "1960s Counterculture",
+      "imagePath": "/assets/artists/vinyl-dj.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "chiaroscuro-creator",
@@ -3023,7 +3235,9 @@
         "urania": 1
       },
       "requiredEpochId": "renaissance",
-      "requiredEpochName": "Renaissance"
+      "requiredEpochName": "Renaissance",
+      "imagePath": "/assets/artists/chiaroscuro-creator.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "madrigal-maestro",
@@ -3047,7 +3261,9 @@
         "urania": 1
       },
       "requiredEpochId": "renaissance",
-      "requiredEpochName": "Renaissance"
+      "requiredEpochName": "Renaissance",
+      "imagePath": "/assets/artists/madrigal-maestro.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "renaissance-tinkerer",
@@ -3071,7 +3287,9 @@
         "urania": 3
       },
       "requiredEpochId": "renaissance",
-      "requiredEpochName": "Renaissance"
+      "requiredEpochName": "Renaissance",
+      "imagePath": "/assets/artists/renaissance-tinkerer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "madrigal-muse",
@@ -3095,7 +3313,9 @@
         "urania": 0
       },
       "requiredEpochId": "renaissance",
-      "requiredEpochName": "Renaissance"
+      "requiredEpochName": "Renaissance",
+      "imagePath": "/assets/artists/madrigal-muse.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "fresco-dance-innovator",
@@ -3119,7 +3339,9 @@
         "urania": 1
       },
       "requiredEpochId": "renaissance",
-      "requiredEpochName": "Renaissance"
+      "requiredEpochName": "Renaissance",
+      "imagePath": "/assets/artists/fresco-dance-innovator.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "melancholy-maestro",
@@ -3143,7 +3365,9 @@
         "urania": 0
       },
       "requiredEpochId": "romantic-era",
-      "requiredEpochName": "Romantic Era"
+      "requiredEpochName": "Romantic Era",
+      "imagePath": "/assets/artists/melancholy-maestro.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "sonnet-shadow-dancer",
@@ -3167,7 +3391,9 @@
         "urania": 0
       },
       "requiredEpochId": "romantic-era",
-      "requiredEpochName": "Romantic Era"
+      "requiredEpochName": "Romantic Era",
+      "imagePath": "/assets/artists/sonnet-shadow-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "byronic-balladeer",
@@ -3191,7 +3417,9 @@
         "urania": 1
       },
       "requiredEpochId": "romantic-era",
-      "requiredEpochName": "Romantic Era"
+      "requiredEpochName": "Romantic Era",
+      "imagePath": "/assets/artists/byronic-balladeer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "elegy-pianist",
@@ -3215,7 +3443,9 @@
         "urania": 0
       },
       "requiredEpochId": "romantic-era",
-      "requiredEpochName": "Romantic Era"
+      "requiredEpochName": "Romantic Era",
+      "imagePath": "/assets/artists/elegy-pianist.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "romantic-rhetorician",
@@ -3239,7 +3469,9 @@
         "urania": 1
       },
       "requiredEpochId": "romantic-era",
-      "requiredEpochName": "Romantic Era"
+      "requiredEpochName": "Romantic Era",
+      "imagePath": "/assets/artists/romantic-rhetorician.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "silhouette-puppeteer",
@@ -3263,7 +3495,9 @@
         "urania": 0
       },
       "requiredEpochId": "shadow-lantern-age",
-      "requiredEpochName": "Shadow Lantern Age"
+      "requiredEpochName": "Shadow Lantern Age",
+      "imagePath": "/assets/artists/silhouette-puppeteer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "mournful-minstrel",
@@ -3287,7 +3521,9 @@
         "urania": 3
       },
       "requiredEpochId": "shadow-lantern-age",
-      "requiredEpochName": "Shadow Lantern Age"
+      "requiredEpochName": "Shadow Lantern Age",
+      "imagePath": "/assets/artists/mournful-minstrel.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ephemeral-echo-dancer",
@@ -3311,7 +3547,9 @@
         "urania": 1
       },
       "requiredEpochId": "shadow-lantern-age",
-      "requiredEpochName": "Shadow Lantern Age"
+      "requiredEpochName": "Shadow Lantern Age",
+      "imagePath": "/assets/artists/ephemeral-echo-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "shadow-puppeteer",
@@ -3335,7 +3573,9 @@
         "urania": 0
       },
       "requiredEpochId": "shadow-lantern-age",
-      "requiredEpochName": "Shadow Lantern Age"
+      "requiredEpochName": "Shadow Lantern Age",
+      "imagePath": "/assets/artists/shadow-puppeteer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "caravan-cartographer",
@@ -3359,7 +3599,9 @@
         "urania": 2
       },
       "requiredEpochId": "silk-road-exchange",
-      "requiredEpochName": "Silk Road Exchange"
+      "requiredEpochName": "Silk Road Exchange",
+      "imagePath": "/assets/artists/caravan-cartographer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ceramic-storyteller",
@@ -3383,7 +3625,9 @@
         "urania": 1
       },
       "requiredEpochId": "silk-road-exchange",
-      "requiredEpochName": "Silk Road Exchange"
+      "requiredEpochName": "Silk Road Exchange",
+      "imagePath": "/assets/artists/ceramic-storyteller.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "spice-merchants-muse",
@@ -3407,7 +3651,9 @@
         "urania": 2
       },
       "requiredEpochId": "silk-road-exchange",
-      "requiredEpochName": "Silk Road Exchange"
+      "requiredEpochName": "Silk Road Exchange",
+      "imagePath": "/assets/artists/spice-merchants-muse.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "caravan-chantress",
@@ -3431,7 +3677,9 @@
         "urania": 0
       },
       "requiredEpochId": "silk-road-exchange",
-      "requiredEpochName": "Silk Road Exchange"
+      "requiredEpochName": "Silk Road Exchange",
+      "imagePath": "/assets/artists/caravan-chantress.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "spice-route-poet",
@@ -3455,7 +3703,9 @@
         "urania": 0
       },
       "requiredEpochId": "silk-road-exchange",
-      "requiredEpochName": "Silk Road Exchange"
+      "requiredEpochName": "Silk Road Exchange",
+      "imagePath": "/assets/artists/spice-route-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "zero-g-painter",
@@ -3479,7 +3729,9 @@
         "urania": 3
       },
       "requiredEpochId": "space-age",
-      "requiredEpochName": "Space Age"
+      "requiredEpochName": "Space Age",
+      "imagePath": "/assets/artists/zero-g-painter.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "satellite-sculptor",
@@ -3503,7 +3755,9 @@
         "urania": 3
       },
       "requiredEpochId": "space-age",
-      "requiredEpochName": "Space Age"
+      "requiredEpochName": "Space Age",
+      "imagePath": "/assets/artists/satellite-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "astronauts-muse",
@@ -3527,7 +3781,9 @@
         "urania": 2
       },
       "requiredEpochId": "space-age",
-      "requiredEpochName": "Space Age"
+      "requiredEpochName": "Space Age",
+      "imagePath": "/assets/artists/astronauts-muse.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "cosmic-chorus-composer",
@@ -3551,7 +3807,9 @@
         "urania": 1
       },
       "requiredEpochId": "space-age",
-      "requiredEpochName": "Space Age"
+      "requiredEpochName": "Space Age",
+      "imagePath": "/assets/artists/cosmic-chorus-composer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "cosmic-chronicler",
@@ -3575,7 +3833,9 @@
         "urania": 2
       },
       "requiredEpochId": "space-age",
-      "requiredEpochName": "Space Age"
+      "requiredEpochName": "Space Age",
+      "imagePath": "/assets/artists/cosmic-chronicler.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ai-muse-collaborator",
@@ -3599,7 +3859,9 @@
         "urania": 3
       },
       "requiredEpochId": "cyber-renaissance",
-      "requiredEpochName": "Cyber Renaissance"
+      "requiredEpochName": "Cyber Renaissance",
+      "imagePath": "/assets/artists/ai-muse-collaborator.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "zero-g-sculptor",
@@ -3623,7 +3885,9 @@
         "urania": 3
       },
       "requiredEpochId": "cyber-renaissance",
-      "requiredEpochName": "Cyber Renaissance"
+      "requiredEpochName": "Cyber Renaissance",
+      "imagePath": "/assets/artists/zero-g-sculptor.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "nano-canvas-crafter",
@@ -3647,7 +3911,9 @@
         "urania": 3
       },
       "requiredEpochId": "cyber-renaissance",
-      "requiredEpochName": "Cyber Renaissance"
+      "requiredEpochName": "Cyber Renaissance",
+      "imagePath": "/assets/artists/nano-canvas-crafter.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "ai-lyric-oracle",
@@ -3671,7 +3937,9 @@
         "urania": 0
       },
       "requiredEpochId": "cyber-renaissance",
-      "requiredEpochName": "Cyber Renaissance"
+      "requiredEpochName": "Cyber Renaissance",
+      "imagePath": "/assets/artists/ai-lyric-oracle.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "nano-dance-pioneer",
@@ -3695,7 +3963,9 @@
         "urania": 1
       },
       "requiredEpochId": "cyber-renaissance",
-      "requiredEpochName": "Cyber Renaissance"
+      "requiredEpochName": "Cyber Renaissance",
+      "imagePath": "/assets/artists/nano-dance-pioneer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "steamwork-sketcher",
@@ -3719,7 +3989,9 @@
         "urania": 1
       },
       "requiredEpochId": "victorian-curiosity-age",
-      "requiredEpochName": "Victorian Curiosity Age"
+      "requiredEpochName": "Victorian Curiosity Age",
+      "imagePath": "/assets/artists/steamwork-sketcher.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "cabinet-curator",
@@ -3743,7 +4015,9 @@
         "urania": 2
       },
       "requiredEpochId": "victorian-curiosity-age",
-      "requiredEpochName": "Victorian Curiosity Age"
+      "requiredEpochName": "Victorian Curiosity Age",
+      "imagePath": "/assets/artists/cabinet-curator.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "gaslight-balladeer",
@@ -3767,7 +4041,9 @@
         "urania": 2
       },
       "requiredEpochId": "victorian-curiosity-age",
-      "requiredEpochName": "Victorian Curiosity Age"
+      "requiredEpochName": "Victorian Curiosity Age",
+      "imagePath": "/assets/artists/gaslight-balladeer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "phono-poet",
@@ -3791,7 +4067,9 @@
         "urania": 0
       },
       "requiredEpochId": "victorian-curiosity-age",
-      "requiredEpochName": "Victorian Curiosity Age"
+      "requiredEpochName": "Victorian Curiosity Age",
+      "imagePath": "/assets/artists/phono-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "cabinet-of-curios-dancer",
@@ -3815,7 +4093,9 @@
         "urania": 1
       },
       "requiredEpochId": "victorian-curiosity-age",
-      "requiredEpochName": "Victorian Curiosity Age"
+      "requiredEpochName": "Victorian Curiosity Age",
+      "imagePath": "/assets/artists/cabinet-of-curios-dancer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "stone-sermon-poet",
@@ -3839,7 +4119,9 @@
         "urania": 2
       },
       "requiredEpochId": "zen-garden-era",
-      "requiredEpochName": "Zen Garden Era"
+      "requiredEpochName": "Zen Garden Era",
+      "imagePath": "/assets/artists/stone-sermon-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "bamboo-flute-philosopher",
@@ -3863,7 +4145,9 @@
         "urania": 0
       },
       "requiredEpochId": "zen-garden-era",
-      "requiredEpochName": "Zen Garden Era"
+      "requiredEpochName": "Zen Garden Era",
+      "imagePath": "/assets/artists/bamboo-flute-philosopher.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "koi-pond-poet",
@@ -3887,7 +4171,9 @@
         "urania": 0
       },
       "requiredEpochId": "zen-garden-era",
-      "requiredEpochName": "Zen Garden Era"
+      "requiredEpochName": "Zen Garden Era",
+      "imagePath": "/assets/artists/koi-pond-poet.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "sand-rake-choreographer",
@@ -3911,7 +4197,9 @@
         "urania": 1
       },
       "requiredEpochId": "zen-garden-era",
-      "requiredEpochName": "Zen Garden Era"
+      "requiredEpochName": "Zen Garden Era",
+      "imagePath": "/assets/artists/sand-rake-choreographer.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     },
     {
       "id": "zen-stone-chronicler",
@@ -3935,7 +4223,9 @@
         "urania": 0
       },
       "requiredEpochId": "zen-garden-era",
-      "requiredEpochName": "Zen Garden Era"
+      "requiredEpochName": "Zen Garden Era",
+      "imagePath": "/assets/artists/zen-stone-chronicler.png",
+      "backImagePath": "/assets/artists/artist-back.png"
     }
   ],
   "actions": [

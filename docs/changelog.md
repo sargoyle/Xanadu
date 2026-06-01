@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- 2026-05-27: Added physical Muse card thumbnails and an enlarged inspect-before-choose preview to New Game Step 3. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-27: Added current-Muse score values to each Legal Set choice so players can compare valid Epoch + Artist plays before selecting. Files affected: `public/app.js`, `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-24: Added an Artist card JPG export script and generated 150 downloadable Artist card JPGs plus a zip archive. Files affected: `scripts/export-artist-jpgs.mjs`, `exports/artist-cards-jpg/`, `exports/xanadu-artist-cards-jpg.zip`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-06: Initial project setup. Files affected: `docs/masterplan.md`, `docs/implementation.md`, `docs/design.md`, `docs/app-flow.md`, `docs/tasks.md`, `docs/rules.md`, `README.md`, `package.json`, `data/seed.json`, `db/schema.sql`, `public/`, `scripts/`, `src/domain/`, `tests/`.
@@ -32,6 +33,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- 2026-06-01: Imported uploaded Artist card fronts and back, renamed active fronts to canonical Artist IDs, mapped all 145 active Artist records to 141 uploaded artwork files, and replaced generated Artist faces with the supplied printed card images throughout the app. Files affected: `public/assets/artists/`, `data/seed.json`, `public/data/seed.json`, `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-27: Renamed Muse and Epoch image assets from numbered filenames to canonical card IDs, renamed card backs to kebab-case, and updated seed/app references to use those stable names. Files affected: `public/assets/muses/`, `public/assets/epochs/`, `data/seed.json`, `public/data/seed.json`, `public/app.js`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-27: Updated active card assets to use the new numbered Muse/Epoch images and backs, retired `Stone Age Visions`, removed its five Artists from active play, and adjusted deck totals to 87 Epoch cards and 145 Artist cards. Files affected: `data/seed.json`, `public/data/seed.json`, `public/app.js`, `docs/rules.md`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-27: Removed old Muse card filename references and made the new numbered Muse fronts plus `MuseBack.png` the only active Muse artwork set. Files affected: `data/seed.json`, `public/data/seed.json`, `public/app.js`, `public/assets/muses/`, `docs/tasks.md`, `docs/changelog.md`.
@@ -62,6 +64,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- 2026-06-01: Fixed the nine-player Play board seat grid so NPC 7 and NPC 8 no longer occupy overlapping top-right tableau positions. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-27: Corrected mismapped Epoch artwork filenames so rendered Epoch cards visually match their canonical `epochId`, preventing valid data matches from appearing as incorrect Artist/Epoch pairs on the board. Files affected: `public/assets/epochs/`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed Artist/Epoch tableau validation to use persisted canonical `requiredEpochId` to `epochId` matching across seed data, NPC autoplay, player legal-set play, manual play, scoring guards, and startup data audit logging. Files affected: `data/seed.json`, `public/data/seed.json`, `public/app.js`, `docs/tasks.md`, `docs/changelog.md`.
 - 2026-05-25: Fixed Play board layout spacing by giving player rows full height, compacting the Shared Table deck grid, and removing the heavy active-player glow that made one NPC panel look inconsistent. Files affected: `public/styles.css`, `docs/tasks.md`, `docs/changelog.md`.

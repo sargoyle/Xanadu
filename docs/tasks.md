@@ -99,6 +99,9 @@
 - [x] Rename Muse and Epoch image assets from numbered filenames to canonical card IDs and update app references.
 - [x] Correct mismapped Epoch artwork filenames so visual Epoch cards match their canonical `epochId`.
 - [x] Show current-Muse score values on each Legal Set choice.
+- [x] Add inspectable physical Muse cards to New Game Step 3 before Muse selection is confirmed.
+- [x] Fix the nine-player Play board seat layout so NPC 7 is not covered by another tableau panel.
+- [x] Import uploaded Artist card fronts and back, map active Artists to canonical image filenames, and replace generated Artist faces in gameplay.
 
 ## Backlog
 
